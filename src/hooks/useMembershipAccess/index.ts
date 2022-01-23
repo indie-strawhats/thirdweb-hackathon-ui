@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 // Get the Membership NFT info from your dashboard. (thirdweb.com/dashboard)
 const MEMBERSHIP_NFT_CONTRACT_ADDRESS =
-  '0x4465aE876e5263cB4Eaf42948723E28bB30C65E8';
-const MEMBERSHIP_NFT_TOKEN_ID = '0';
+  '0x9dba0b76852c23176FaAc6082491e2138FfF2EDa';
+const MEMBERSHIP_NFT_TOKEN_ID = '3';
 
-const useWalletMembershipAccess = () => {
+export const useWalletMembershipAccess = () => {
   // react states for chechking if user can access or not
   const [access, setAccess] = useState(false);
   const { account, library } = useWeb3React();
@@ -25,7 +25,11 @@ const useWalletMembershipAccess = () => {
     const module = new ThirdwebSDK(signer).getBundleDropModule(
       MEMBERSHIP_NFT_CONTRACT_ADDRESS
     );
+    // console.log(module);
+
     const balance = await module.balance(MEMBERSHIP_NFT_TOKEN_ID);
+    // console.log(balance.toNumber());
+
     return balance.toNumber() >= 1;
   }
 

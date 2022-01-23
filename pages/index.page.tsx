@@ -41,22 +41,27 @@ const Home: NextPage = () => {
         uri: item.metadata.uri,
       }));
 
+      console.log(response);
+
       if (nfts) {
         setAllAudiobooks(nfts);
       }
     })();
   }, [dropBundleModule]);
 
-  const handlePurchase = useCallback(() => {
-    dropBundleModule?.claim(1, 1);
-  }, [dropBundleModule]);
+  const handlePurchase = useCallback(
+    (tokenId: number, quantity: number = 1) => {
+      dropBundleModule?.claim(tokenId, quantity);
+    },
+    [dropBundleModule]
+  );
 
   const renderAllAudiobooks = () => {
     return (
       <Grid container spacing={2}>
         {allAudiobooks.map((ab) => (
           <Grid item key={ab.id} xs={4}>
-            <PurchaseCard data={ab} />
+            <PurchaseCard data={ab} onPurchase={handlePurchase} />
           </Grid>
         ))}
       </Grid>

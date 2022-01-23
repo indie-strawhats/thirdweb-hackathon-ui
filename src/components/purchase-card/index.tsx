@@ -18,9 +18,10 @@ interface IAudiobookCard {
 
 interface PurchaseCardProps {
   data: IAudiobookCard;
+  onPurchase: (tokenId: number, quantity?: number) => void;
 }
 
-const PurchaseCard: FC<PurchaseCardProps> = ({ data }) => {
+const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -33,7 +34,9 @@ const PurchaseCard: FC<PurchaseCardProps> = ({ data }) => {
         <Typography variant="body2">{data.desc}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Purchase</Button>
+        <Button size="small" onClick={() => onPurchase(Number(data.id))}>
+          Purchase
+        </Button>
       </CardActions>
     </Card>
   );
