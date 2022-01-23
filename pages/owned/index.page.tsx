@@ -4,13 +4,17 @@ import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useMemo, useState } from 'react';
+import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../src/components/header';
 import PurchaseCard from '../../src/components/purchase-card';
+import { useWalletMembershipAccess } from '../../src/hooks/useMembershipAccess';
 
 const OwnedPage: NextPage = () => {
-  const { library } = useEthers();
-
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
+  const [file, setFile] = useState<string>('');
+
+  const { library } = useEthers();
+  const hasAccess = useWalletMembershipAccess();
 
   const sdk = useMemo(
     () => (library ? new ThirdwebSDK(library.getSigner()) : undefined),
@@ -35,7 +39,7 @@ const OwnedPage: NextPage = () => {
         desc: item.metadata.description,
         properties: item.metadata.properties,
         image: item.metadata.image,
-        uri: item.metadata.uri,
+        uri: item.metadata.animation_url,
       }));
 
       if (claimed) {
@@ -44,12 +48,29 @@ const OwnedPage: NextPage = () => {
     })();
   }, [dropBundleModule]);
 
+  useEffect(() => {
+    (async () => {
+      const response = await fetch('/api/get-audiobooks', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          tokenId: '0',
+        }),
+      });
+
+      const getAudiobookUrl = await response.json();
+      setFile(getAudiobookUrl['0']);
+    })();
+  }, []);
+
   const renderPurchasedAudiobooks = () => {
     return (
       <Grid container spacing={2}>
         {purchasedAudiobooks.map((ab) => (
           <Grid item key={ab.id} xs={4}>
-            <PurchaseCard data={ab} />
+            <PurchaseCard data={ab} onPurchase={(id: number) => {}} />
           </Grid>
         ))}
       </Grid>
@@ -72,6 +93,11 @@ const OwnedPage: NextPage = () => {
         <br />
 
         {renderPurchasedAudiobooks()}
+
+        <br />
+        <br />
+
+        {file && <ReactAudioPlayer src={file} controls />}
       </Container>
     </>
   );
