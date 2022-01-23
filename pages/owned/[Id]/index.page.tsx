@@ -30,17 +30,14 @@ const OwnedAudiobookPage: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container maxWidth="xl">
-        <Header />
-        <Typography variant="h5" style={{ marginBottom: 10 }}>
-          Audiobook #{Id}
-        </Typography>
-        <br />
-        <br />
+      <Typography variant="h5" style={{ marginBottom: 10 }}>
+        Audiobook #{Id}
+      </Typography>
+      <br />
+      <br />
 
-        {hasAccess ? 'You have access' : 'You dont have access'}
-        {/* {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()} */}
-      </Container>
+      {hasAccess ? 'You have access' : 'You dont have access'}
+      {/* {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()} */}
     </>
   );
 };
