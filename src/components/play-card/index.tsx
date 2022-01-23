@@ -26,7 +26,13 @@ interface PlayCardProps {
 
 const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   const router = useRouter();
-  const { setAudiobookData } = useContext<any>(AudioPlayerContext);
+  const { setAudiobookData, setIsVisible } =
+    useContext<any>(AudioPlayerContext);
+
+  const handlePlay = () => {
+    setAudiobookData(data);
+    setIsVisible(true);
+  };
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -47,7 +53,7 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
         <Typography variant="body2">{data.desc}</Typography>
       </CardContent>
       <CardActions>
-        <Button variant="outlined" onClick={() => setAudiobookData(data)}>
+        <Button variant="outlined" onClick={handlePlay}>
           Play
         </Button>
       </CardActions>

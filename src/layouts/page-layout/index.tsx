@@ -1,4 +1,4 @@
-import { Container, Drawer } from '@mui/material';
+import { Button, Container, Drawer, Stack } from '@mui/material';
 import React, { useContext } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../components/header';
@@ -16,27 +16,24 @@ const PageLayout = ({ children }: any) => {
       <Header />
       {children}
 
-      <Drawer
-        anchor="bottom"
-        variant="persistent"
-        ModalProps={{ keepMounted: true, hideBackdrop: true }}
-        open={isVisible}
-      >
-        <div
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            padding: 24,
-          }}
+      {isVisible && (
+        <Drawer
+          anchor="bottom"
+          variant="persistent"
+          ModalProps={{ keepMounted: true, hideBackdrop: true }}
+          open
         >
-          <ReactAudioPlayer
-            src={audiobookData.fileUrl}
-            controls
-            autoPlay
-            style={{ width: '100%' }}
-          />
-        </div>
-      </Drawer>
+          <Stack sx={{ padding: 1 }} direction="row" spacing={2}>
+            <ReactAudioPlayer
+              src={audiobookData.fileUrl}
+              controls
+              autoPlay
+              style={{ width: '100%' }}
+            />
+            <Button onClick={() => setIsVisible(false)}>Close</Button>
+          </Stack>
+        </Drawer>
+      )}
     </Container>
   );
 };

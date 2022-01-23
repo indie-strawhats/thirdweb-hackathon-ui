@@ -110,8 +110,6 @@ const OwnedPage: NextPage = () => {
 
       <br />
       <br />
-
-      <Button onClick={() => setIsVisible(!isVisible)}>Toggle</Button>
     </>
   );
 };

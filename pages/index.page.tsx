@@ -41,8 +41,6 @@ const Home: NextPage = () => {
         uri: item.metadata.uri,
       }));
 
-      console.log(response);
-
       if (nfts) {
         setAllAudiobooks(nfts);
       }
