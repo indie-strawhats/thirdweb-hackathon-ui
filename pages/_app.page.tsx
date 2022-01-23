@@ -10,6 +10,8 @@ import '../styles/globals.scss';
 import theme from '../styles/theme';
 import Head from 'next/head';
 import { Config, DAppProvider, Rinkeby } from '@usedapp/core';
+import { AudioPlayerProvider } from '../src/providers/audio-player';
+import PageLayout from '../src/layouts/page-layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -40,7 +42,11 @@ function MyApp({
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <AudioPlayerProvider>
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
+          </AudioPlayerProvider>
         </ThemeProvider>
       </CacheProvider>
     </DAppProvider>

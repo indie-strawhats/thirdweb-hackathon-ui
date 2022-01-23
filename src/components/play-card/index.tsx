@@ -1,7 +1,13 @@
-import { Card, CardActions, CardContent, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from '@mui/material';
 import { useRouter } from 'next/router';
-import React, { FC } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
+import React, { FC, useContext } from 'react';
+import { AudioPlayerContext } from '../../providers/audio-player';
 
 interface IAudiobookCard {
   id: string;
@@ -20,6 +26,7 @@ interface PlayCardProps {
 
 const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   const router = useRouter();
+  const { setAudiobookData } = useContext<any>(AudioPlayerContext);
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -40,7 +47,9 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
         <Typography variant="body2">{data.desc}</Typography>
       </CardContent>
       <CardActions>
-        <ReactAudioPlayer src={data.fileUrl} controls />
+        <Button variant="outlined" onClick={() => setAudiobookData(data)}>
+          Play
+        </Button>
       </CardActions>
     </Card>
   );

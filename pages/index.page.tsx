@@ -60,7 +60,7 @@ const Home: NextPage = () => {
     return (
       <Grid container spacing={2}>
         {allAudiobooks.map((ab) => (
-          <Grid item key={ab.id} xs={4}>
+          <Grid item key={ab.id} xs={6}>
             <PurchaseCard data={ab} onPurchase={handlePurchase} />
           </Grid>
         ))}
@@ -75,17 +75,13 @@ const Home: NextPage = () => {
         <meta name="description" content="Awesome Audiobooks - Collection" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container maxWidth="xl">
-        <Header />
-        <br />
-        <Typography variant="h5" style={{ marginBottom: 10 }}>
-          Collection
-        </Typography>
-        <br />
-        <br />
+      <Typography variant="h5" style={{ marginBottom: 10 }}>
+        Collection
+      </Typography>
+      <br />
+      <br />
 
-        {renderAllAudiobooks()}
-      </Container>
+      {renderAllAudiobooks()}
     </>
   );
 };

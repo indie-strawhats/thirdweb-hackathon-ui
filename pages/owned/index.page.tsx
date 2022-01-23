@@ -1,17 +1,19 @@
 import { ThirdwebSDK } from '@3rdweb/sdk';
-import { Container, Grid, Typography } from '@mui/material';
+import { Button, Container, Grid, Typography } from '@mui/material';
 import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../src/components/header';
 import PlayCard from '../../src/components/play-card';
 import PurchaseCard from '../../src/components/purchase-card';
 import { useWalletMembershipAccess } from '../../src/hooks/useMembershipAccess';
+import { AudioPlayerContext } from '../../src/providers/audio-player';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
+  const { isVisible, setIsVisible } = useContext<any>(AudioPlayerContext);
 
   const { library } = useEthers();
   const hasAccess = useWalletMembershipAccess();
@@ -83,7 +85,7 @@ const OwnedPage: NextPage = () => {
     return (
       <Grid container spacing={2}>
         {purchasedAudiobooks.map((ab) => (
-          <Grid item key={ab.id} xs={4}>
+          <Grid item key={ab.id} xs={6}>
             <PlayCard data={ab} onPurchase={(id: number) => {}} />
           </Grid>
         ))}
@@ -98,16 +100,18 @@ const OwnedPage: NextPage = () => {
         <meta name="description" content="Awesome Audiobooks - Owned" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container maxWidth="xl">
-        <Header />
-        <Typography variant="h5" style={{ marginBottom: 10 }}>
-          Collection
-        </Typography>
-        <br />
-        <br />
+      <Typography variant="h5" style={{ marginBottom: 10 }}>
+        Collection
+      </Typography>
+      <br />
+      <br />
 
-        {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
-      </Container>
+      {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
+
+      <br />
+      <br />
+
+      <Button onClick={() => setIsVisible(!isVisible)}>Toggle</Button>
     </>
   );
 };
