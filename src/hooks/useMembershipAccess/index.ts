@@ -7,7 +7,9 @@ const MEMBERSHIP_NFT_CONTRACT_ADDRESS =
   '0x9dba0b76852c23176FaAc6082491e2138FfF2EDa';
 const MEMBERSHIP_NFT_TOKEN_ID = '3';
 
-export const useWalletMembershipAccess = () => {
+export const useWalletMembershipAccess = (
+  tokenId: string = MEMBERSHIP_NFT_TOKEN_ID
+) => {
   // react states for chechking if user can access or not
   const [access, setAccess] = useState(false);
   const { account, library } = useWeb3React();
@@ -27,7 +29,7 @@ export const useWalletMembershipAccess = () => {
     );
     // console.log(module);
 
-    const balance = await module.balance(MEMBERSHIP_NFT_TOKEN_ID);
+    const balance = await module.balance(tokenId);
     // console.log(balance.toNumber());
 
     return balance.toNumber() >= 1;
