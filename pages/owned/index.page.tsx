@@ -6,12 +6,12 @@ import Head from 'next/head';
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../src/components/header';
+import PlayCard from '../../src/components/play-card';
 import PurchaseCard from '../../src/components/purchase-card';
 import { useWalletMembershipAccess } from '../../src/hooks/useMembershipAccess';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
-  const [file, setFile] = useState<string>('');
 
   const { library } = useEthers();
   const hasAccess = useWalletMembershipAccess();
@@ -31,15 +31,32 @@ const OwnedPage: NextPage = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await dropBundleModule?.getOwned();
+      const ownedABResponse = await dropBundleModule?.getOwned();
 
-      const claimed = response?.map((item) => ({
+      let claimed = ownedABResponse?.map((item) => ({
         id: item.metadata.id,
         name: item.metadata.name,
         desc: item.metadata.description,
         properties: item.metadata.properties,
         image: item.metadata.image,
         uri: item.metadata.animation_url,
+      }));
+
+      const audiobookUrlsResponse = await fetch('/api/get-audiobooks', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          tokenIds: claimed?.map((item) => item.id),
+        }),
+      });
+
+      const audiobookUrls = await audiobookUrlsResponse.json();
+
+      claimed = claimed?.map((item) => ({
+        ...item,
+        fileUrl: audiobookUrls[item.id],
       }));
 
       if (claimed) {
@@ -56,12 +73,9 @@ const OwnedPage: NextPage = () => {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          tokenId: '0',
+          tokenIds: '0',
         }),
       });
-
-      const getAudiobookUrl = await response.json();
-      setFile(getAudiobookUrl['0']);
     })();
   }, []);
 
@@ -70,7 +84,7 @@ const OwnedPage: NextPage = () => {
       <Grid container spacing={2}>
         {purchasedAudiobooks.map((ab) => (
           <Grid item key={ab.id} xs={4}>
-            <PurchaseCard data={ab} onPurchase={(id: number) => {}} />
+            <PlayCard data={ab} onPurchase={(id: number) => {}} />
           </Grid>
         ))}
       </Grid>
@@ -92,12 +106,7 @@ const OwnedPage: NextPage = () => {
         <br />
         <br />
 
-        {renderPurchasedAudiobooks()}
-
-        <br />
-        <br />
-
-        {file && <ReactAudioPlayer src={file} controls />}
+        {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
       </Container>
     </>
   );

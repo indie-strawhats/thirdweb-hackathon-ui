@@ -9,7 +9,14 @@ const Header = () => {
     <StyledHeader>
       <div>
         <Link href="/" passHref>
-          <Typography variant="h4">Awesome Audiobooks</Typography>
+          <Typography
+            variant="h4"
+            style={{
+              cursor: 'pointer',
+            }}
+          >
+            Awesome Audiobooks
+          </Typography>
         </Link>
       </div>
       <div>
