@@ -1,5 +1,4 @@
 import { ThirdwebSDK } from '@3rdweb/sdk';
-import { Grid, Typography } from '@mui/material';
 import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
@@ -75,13 +74,11 @@ const OwnedPage: NextPage = () => {
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <Grid container spacing={2}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {purchasedAudiobooks.map((ab) => (
-          <Grid item key={ab.id} xs={6}>
-            <PlayCard data={ab} onPurchase={(id: number) => {}} />
-          </Grid>
+          <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
         ))}
-      </Grid>
+      </div>
     );
   };
 
@@ -92,9 +89,7 @@ const OwnedPage: NextPage = () => {
         <meta name="description" content="Awesome Audiobooks - Owned" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Typography variant="h5" style={{ marginBottom: 10 }}>
-        Collection
-      </Typography>
+      <h5 style={{ marginBottom: 10 }}>Collection</h5>
       <br />
       <br />
 

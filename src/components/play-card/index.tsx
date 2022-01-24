@@ -1,10 +1,3 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { FC, useContext } from 'react';
 import { AudioPlayerContext } from '../../providers/audio-player';
@@ -35,29 +28,23 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          #{data.id}
-        </Typography>
-        <Typography
-          variant="h5"
-          component="div"
+    <div>
+      <div>
+        <h3>#{data.id}</h3>
+        <h5
           style={{
             cursor: 'pointer',
           }}
           onClick={() => router.push('/owned/' + data.id)}
         >
           {data.name}
-        </Typography>
-        <Typography variant="body2">{data.desc}</Typography>
-      </CardContent>
-      <CardActions>
-        <Button variant="outlined" onClick={handlePlay}>
-          Play
-        </Button>
-      </CardActions>
-    </Card>
+        </h5>
+        <p>{data.desc}</p>
+      </div>
+      <div>
+        <button onClick={handlePlay}>Play</button>
+      </div>
+    </div>
   );
 };
 

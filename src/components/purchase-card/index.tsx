@@ -1,10 +1,3 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from '@mui/material';
 import React, { FC } from 'react';
 
 interface IAudiobookCard {
@@ -23,22 +16,16 @@ interface PurchaseCardProps {
 
 const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          #{data.id}
-        </Typography>
-        <Typography variant="h5" component="div">
-          {data.name}
-        </Typography>
-        <Typography variant="body2">{data.desc}</Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => onPurchase(Number(data.id))}>
-          Purchase
-        </Button>
-      </CardActions>
-    </Card>
+    <div>
+      <div>
+        <h3>#{data.id}</h3>
+        <h5>{data.name}</h5>
+        <p>{data.desc}</p>
+      </div>
+      <div>
+        <button onClick={() => onPurchase(Number(data.id))}>Purchase</button>
+      </div>
+    </div>
   );
 };
 

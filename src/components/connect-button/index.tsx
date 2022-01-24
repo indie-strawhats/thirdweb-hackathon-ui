@@ -1,8 +1,7 @@
-import { formatEther } from '@ethersproject/units';
-import { Button } from '@mui/material';
 import { useEtherBalance, useEthers } from '@usedapp/core';
 import Link from 'next/link';
 import React from 'react';
+import Button from '../button';
 
 const ConnectButton = () => {
   const { account, activateBrowserWallet, deactivate } = useEthers();
@@ -10,18 +9,11 @@ const ConnectButton = () => {
 
   return (
     <>
-      {/* <p>
-        Balance -{' '}
-        {accountBalance && formatEther(accountBalance).substring(0, 8) + ' ETH'}
-      </p> */}
-      <Link href="/owned" passHref>
-        <Button>My Audiobooks</Button>
-      </Link>
       <Button
-        variant="outlined"
+        variant="primary"
         onClick={() => (account ? deactivate() : activateBrowserWallet())}
       >
-        {account ? 'DisConnect' : 'Connect'}
+        {account ? 'Disconnect' : 'Connect'}
       </Button>
     </>
   );
