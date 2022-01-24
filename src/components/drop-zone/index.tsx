@@ -1,4 +1,3 @@
-import { Button, Card, CardActions, CardContent } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -41,8 +40,8 @@ const DropZone = (props: any) => {
 
   return (
     <section className="container">
-      <Card variant="outlined">
-        <CardContent>
+      <div>
+        <div>
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
             <p>
@@ -53,11 +52,11 @@ const DropZone = (props: any) => {
             <h4>Files</h4>
             <ul>{files}</ul>
           </aside>
-        </CardContent>
-        <CardActions>
-          <Button onClick={mintNewSword}>Mint</Button>
-        </CardActions>
-      </Card>
+        </div>
+        <div>
+          <button onClick={mintNewSword}>Mint</button>
+        </div>
+      </div>
     </section>
   );
 };

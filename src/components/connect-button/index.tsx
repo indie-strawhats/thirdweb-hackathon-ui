@@ -1,5 +1,3 @@
-import { formatEther } from '@ethersproject/units';
-import { Button } from '@mui/material';
 import { useEtherBalance, useEthers } from '@usedapp/core';
 import Link from 'next/link';
 import React from 'react';
@@ -15,14 +13,13 @@ const ConnectButton = () => {
         {accountBalance && formatEther(accountBalance).substring(0, 8) + ' ETH'}
       </p> */}
       <Link href="/owned" passHref>
-        <Button>My Audiobooks</Button>
+        <button>My Audiobooks</button>
       </Link>
-      <Button
-        variant="outlined"
+      <button
         onClick={() => (account ? deactivate() : activateBrowserWallet())}
       >
         {account ? 'DisConnect' : 'Connect'}
-      </Button>
+      </button>
     </>
   );
 };

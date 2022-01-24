@@ -1,4 +1,3 @@
-import { Button, Container, Drawer, Stack } from '@mui/material';
 import React, { useContext } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../components/header';
@@ -12,11 +11,11 @@ const PageLayout = ({ children }: any) => {
   } = useContext<any>(AudioPlayerContext);
 
   return (
-    <Container maxWidth="xl">
+    <div>
       <Header />
       {children}
 
-      {isVisible && (
+      {/* {isVisible && (
         <Drawer
           anchor="bottom"
           variant="persistent"
@@ -33,8 +32,8 @@ const PageLayout = ({ children }: any) => {
             <Button onClick={() => setIsVisible(false)}>Close</Button>
           </Stack>
         </Drawer>
-      )}
-    </Container>
+      )} */}
+    </div>
   );
 };
 

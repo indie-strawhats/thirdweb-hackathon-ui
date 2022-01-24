@@ -1,6 +1,3 @@
-import { ThirdwebSDK } from '@3rdweb/sdk';
-import { Container, Grid, Typography } from '@mui/material';
-import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -27,9 +24,7 @@ const OwnedAudiobookPage: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Typography variant="h5" style={{ marginBottom: 10 }}>
-        Audiobook #{Id}
-      </Typography>
+      <h5 style={{ marginBottom: 10 }}>Audiobook #{Id}</h5>
       <br />
       <br />
 

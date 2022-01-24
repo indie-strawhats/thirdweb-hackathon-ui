@@ -11,15 +11,10 @@
     "@3rdweb/hooks": "^1.8.0",
     "@3rdweb/react": "^1.8.1",
     "@3rdweb/sdk": "^1.36.4",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.6.0",
     "@ethersproject/units": "^5.5.0",
-    "@mui/icons-material": "^5.0.0-rc.1",
-    "@mui/material": "^5.0.0-rc.1",
     "@usedapp/core": "^0.9.0",
     "next": "12.0.7",
+    "next-themes": "^0.0.15",
     "react": "17.0.2",
     "react-audio-player": "^0.17.0",
     "react-dom": "17.0.2",
@@ -29,8 +24,11 @@
   "devDependencies": {
     "@types/node": "17.0.8",
     "@types/react": "17.0.38",
+    "autoprefixer": "^10.4.2",
     "eslint": "8.6.0",
     "eslint-config-next": "12.0.7",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.15",
     "typescript": "4.5.4"
   }
 }
