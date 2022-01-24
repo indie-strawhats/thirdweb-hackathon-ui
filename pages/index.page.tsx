@@ -68,11 +68,11 @@ const Home: NextPage = () => {
         <meta name="description" content="Awesome Audiobooks - Collection" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h5 style={{ marginBottom: 10 }}>Collection</h5>
-      <br />
-      <br />
+      <div className="">
+        <h4 className="font-semibold text-3xl text-gray-800">Collection</h4>
 
-      {renderAllAudiobooks()}
+        {renderAllAudiobooks()}
+      </div>
     </>
   );
 };

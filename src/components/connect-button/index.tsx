@@ -1,6 +1,7 @@
 import { useEtherBalance, useEthers } from '@usedapp/core';
 import Link from 'next/link';
 import React from 'react';
+import Button from '../button';
 
 const ConnectButton = () => {
   const { account, activateBrowserWallet, deactivate } = useEthers();
@@ -8,18 +9,12 @@ const ConnectButton = () => {
 
   return (
     <>
-      {/* <p>
-        Balance -{' '}
-        {accountBalance && formatEther(accountBalance).substring(0, 8) + ' ETH'}
-      </p> */}
-      <Link href="/owned" passHref>
-        <button>My Audiobooks</button>
-      </Link>
-      <button
+      <Button
+        variant="primary"
         onClick={() => (account ? deactivate() : activateBrowserWallet())}
       >
-        {account ? 'DisConnect' : 'Connect'}
-      </button>
+        {account ? 'Disconnect' : 'Connect'}
+      </Button>
     </>
   );
 };

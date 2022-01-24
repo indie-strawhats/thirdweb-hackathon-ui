@@ -74,11 +74,9 @@ const OwnedPage: NextPage = () => {
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {purchasedAudiobooks.map((ab) => (
-          <div key={ab.id}>
-            <PlayCard data={ab} onPurchase={(id: number) => {}} />
-          </div>
+          <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
         ))}
       </div>
     );

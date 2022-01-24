@@ -11,9 +11,9 @@ const PageLayout = ({ children }: any) => {
   } = useContext<any>(AudioPlayerContext);
 
   return (
-    <div>
+    <div className="h-screen w-screen">
       <Header />
-      {children}
+      <div className="max-w-6xl m-auto pt-8">{children}</div>
 
       {/* {isVisible && (
         <Drawer
