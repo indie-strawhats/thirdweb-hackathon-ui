@@ -1,19 +1,15 @@
-import { BundleDropMetadata, ThirdwebSDK } from '@3rdweb/sdk';
-import { formatEther } from '@ethersproject/units';
-import { Button, Container, Divider, Grid, Typography } from '@mui/material';
-import { useEthers, useEtherBalance } from '@usedapp/core';
+import { ThirdwebSDK } from '@3rdweb/sdk';
+import { Grid, Typography } from '@mui/material';
+import { useEthers } from '@usedapp/core';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import DropZone from '../src/components/drop-zone';
-import Header from '../src/components/header';
 import PurchaseCard from '../src/components/purchase-card';
 
 const Home: NextPage = () => {
-  const { account, library } = useEthers();
+  const { library } = useEthers();
 
   const [allAudiobooks, setAllAudiobooks] = useState<any[]>([]);
-  const [claimed, setClaimed] = useState<any[]>([]);
 
   const sdk = useMemo(
     () => (library ? new ThirdwebSDK(library.getSigner()) : undefined),

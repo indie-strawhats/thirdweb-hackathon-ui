@@ -10,9 +10,6 @@ import Header from '../../../src/components/header';
 import { useWalletMembershipAccess } from '../../../src/hooks/useMembershipAccess';
 
 const OwnedAudiobookPage: NextPage = () => {
-  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
-
-  const { library } = useEthers();
   const router = useRouter();
   const {
     query: { Id },
@@ -37,7 +34,6 @@ const OwnedAudiobookPage: NextPage = () => {
       <br />
 
       {hasAccess ? 'You have access' : 'You dont have access'}
-      {/* {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()} */}
     </>
   );
 };

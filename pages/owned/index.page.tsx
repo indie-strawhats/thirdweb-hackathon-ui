@@ -1,22 +1,14 @@
 import { ThirdwebSDK } from '@3rdweb/sdk';
-import { Button, Container, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
-import Header from '../../src/components/header';
+import React, { useEffect, useMemo, useState } from 'react';
 import PlayCard from '../../src/components/play-card';
-import PurchaseCard from '../../src/components/purchase-card';
-import { useWalletMembershipAccess } from '../../src/hooks/useMembershipAccess';
-import { AudioPlayerContext } from '../../src/providers/audio-player';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
-  const { isVisible, setIsVisible } = useContext<any>(AudioPlayerContext);
-
   const { library } = useEthers();
-  const hasAccess = useWalletMembershipAccess();
 
   const sdk = useMemo(
     () => (library ? new ThirdwebSDK(library.getSigner()) : undefined),
