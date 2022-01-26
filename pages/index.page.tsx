@@ -1,9 +1,10 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
+import { getAllAudiobooks } from '../src/services/web3';
 
 const Home: NextPage = () => {
   const [allAudiobooks, setAllAudiobooks] = useState<any[]>([]);
@@ -14,34 +15,10 @@ const Home: NextPage = () => {
     (async () => {
       if (!dropBundleModule) return;
 
-      const response = await dropBundleModule?.getAll();
+      const allNFTs = await getAllAudiobooks(dropBundleModule);
 
-      const claimConditionsPromiseArr = response?.map((item) =>
-        dropBundleModule?.getActiveClaimCondition(item.metadata.id)
-      ) as Promise<any>[];
-
-      const claimConditions = await Promise.all([...claimConditionsPromiseArr]);
-
-      const balancePromiseArr = response?.map((item) =>
-        dropBundleModule?.balance(item.metadata.id)
-      ) as Promise<any>[];
-
-      const balances = await Promise.all([...balancePromiseArr]);
-
-      const nfts = response?.map((item, index) => ({
-        id: item.metadata.id,
-        name: item.metadata.name,
-        desc: item.metadata.description,
-        properties: item.metadata.properties,
-        image: item.metadata.image,
-        uri: item.metadata.uri,
-        price: claimConditions[index].currencyMetadata.displayValue,
-        currencyUnit: 'ETH',
-        balance: (balances[index] as BigNumber).toNumber(),
-      }));
-
-      if (nfts) {
-        setAllAudiobooks(nfts);
+      if (allNFTs) {
+        setAllAudiobooks(allNFTs);
       }
     })();
   }, [dropBundleModule]);

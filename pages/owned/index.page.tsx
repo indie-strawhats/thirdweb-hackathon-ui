@@ -2,10 +2,12 @@ import { ThirdwebSDK } from '@3rdweb/sdk';
 import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../src/components/button';
 import PlayCard from '../../src/components/play-card';
 import { AppWeb3Context } from '../../src/providers/app-web3';
+import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
+import { getClaimedAudiobooks } from '../../src/services/web3';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
@@ -15,43 +17,19 @@ const OwnedPage: NextPage = () => {
 
   useEffect(() => {
     (async () => {
-      const ownedABResponse = await dropBundleModule?.getOwned();
+      if (!dropBundleModule) return;
 
-      let claimed = ownedABResponse?.map((item) => ({
-        id: item.metadata.id,
-        name: item.metadata.name,
-        desc: item.metadata.description,
-        properties: item.metadata.properties,
-        image: item.metadata.image,
-        uri: item.metadata.animation_url,
-      }));
+      const claimedNFTs = await getClaimedAudiobooks(dropBundleModule);
 
-      const audiobookUrlsResponse = await fetch('/api/get-audiobooks', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          tokenIds: claimed?.map((item) => item.id),
-        }),
-      });
-
-      const audiobookUrls = await audiobookUrlsResponse.json();
-
-      claimed = claimed?.map((item) => ({
-        ...item,
-        fileUrl: audiobookUrls[item.id],
-      }));
-
-      if (claimed) {
-        setPurchasedAudiobooks(claimed);
+      if (claimedNFTs) {
+        setPurchasedAudiobooks(claimedNFTs);
       }
     })();
   }, [dropBundleModule, account]);
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <div className="grid grid-cols-1-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid gap-4 grid-cols-1-1 sm:grid-cols-2 lg:grid-cols-4">
         {purchasedAudiobooks.map((ab) => (
           <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
         ))}
