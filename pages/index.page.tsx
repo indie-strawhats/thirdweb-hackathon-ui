@@ -50,14 +50,14 @@ const Home: NextPage = () => {
         <meta name='description' content='Awesome Audiobooks - Collection' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='relative h-20'>
+      <div className='relative h-45'>
         <div className='absolute w-full bg-gray-200 h-1/2'></div>
         <SearchBox />
       </div>
       <div className='max-w-6xl pt-8 pb-4 m-auto'>
-        <h4 className='pb-4 text-3xl font-semibold text-gray-800 '>
+        <h2 className='pb-4 text-3xl font-semibold text-gray-800 '>
           Collection
-        </h4>
+        </h2>
         {renderAllAudiobooks()}
       </div>
     </>

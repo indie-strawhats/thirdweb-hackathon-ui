@@ -3,11 +3,11 @@ import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../../src/components/button';
 import PlayCard from '../../src/components/play-card';
 import { AppWeb3Context } from '../../src/providers/app-web3';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 import { getClaimedAudiobooks } from '../../src/services/web3';
+import SearchBox from '../../src/components/search-box';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
@@ -44,9 +44,14 @@ const OwnedPage: NextPage = () => {
         <meta name='description' content='Awesome Audiobooks - Owned' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <div className='relative h-45'>
+        <div className='absolute w-full bg-gray-200 h-1/2'></div>
+        <SearchBox />
+      </div>
       <div className='max-w-6xl pt-8 m-auto'>
-        <h5 style={{ marginBottom: 10 }}>Collection</h5>
-
+        <h2 className='pb-4 text-3xl font-semibold text-gray-800 '>
+          Collection
+        </h2>
         {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
       </div>
     </>

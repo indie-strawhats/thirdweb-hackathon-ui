@@ -2,6 +2,7 @@ import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Button from '../../../src/components/button';
@@ -45,35 +46,77 @@ const OwnedAudiobookPage: NextPage = () => {
   };
 
   return (
-    <>
+    <div>
       <Head>
         <title>Awesome Audiobooks - Audiobook #{Id}</title>
         <meta
-          name="description"
+          name='description'
           content={`Awesome Audiobooks - Audiobook #${Id}`}
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <h5 style={{ marginBottom: 10 }}>Audiobook #{Id}</h5>
-      <br />
-      <br />
-
-      <p className="mb-8 text-2xl font-semibold">
-        {hasAccess ? 'You have access' : 'You dont have access'}
-      </p>
-
+      {console.log(audiobookData)}
       {audiobookData && (
-        <li className="flow-root mb-8 text-2xl text-gray-600">
-          {Object.keys(audiobookData).map((item) => (
-            <ol key={item}>{`${item} - ${audiobookData[item]}`}</ol>
-          ))}
-        </li>
+        <div className='relative flex flex-col items-center max-h-screen p-20'>
+          <div className='bg-white rounded-lg shadow-2xl'>
+            <div className='px-20 py-20 bg-orange-200 '></div>
+            <div className='flex flex-row justify-between px-4 pt-2 '>
+              <div>
+                <h1 className='mb-2 font-semibold text-gray-600 hover:cursor-pointer'>
+                  #{audiobookData.id}
+                </h1>
+              </div>
+              <div className='mb-2 text-sm text-gray-600'>
+                {`owned - ${audiobookData.balance}`}
+              </div>
+            </div>
+            <div className='relative flex flex-col items-center -top-20'>
+              <Image
+                src={audiobookData.image}
+                width={'100%'}
+                height={'100%'}
+                layout='fixed'
+                alt='Laptop on Desk'
+                className='object-cover rounded-full'
+              />
+            </div>
+            <div className='flex flex-row justify-between px-4'>
+              <div>
+                <h1 className='mb-2 font-bold text-gray-600 hover:cursor-pointer'>
+                  {audiobookData.name}
+                </h1>
+                <p className='block mb-2 overflow-hidden text-sm text-gray-600'>
+                  {audiobookData.desc}
+                </p>
+              </div>
+              <div className='mb-2 text-sm text-gray-600'>
+                {`${audiobookData.currencyUnit} : ${audiobookData.price}`}
+              </div>
+            </div>
+            <div className='flex h-20 border-t rounded-bl-lg rounded-br-lg w-80 hover:border-transparent'>
+              <div
+                className='grid w-full h-full text-sm border-r rounded-bl-lg hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                onClick={handleGiftAudiobook}
+              >
+                Purchase
+              </div>
+              <div
+                className='grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                onClick={handleGiftAudiobook}
+              >
+                Play
+              </div>
+              <div
+                className='grid w-full h-full text-sm border-l rounded-br-lg hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                onClick={handleGiftAudiobook}
+              >
+                Gift
+              </div>
+            </div>
+          </div>
+        </div>
       )}
-
-      <Button variant="primary" onClick={handleGiftAudiobook}>
-        Gift Audiobook
-      </Button>
-    </>
+    </div>
   );
 };
 

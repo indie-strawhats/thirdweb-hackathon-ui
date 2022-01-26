@@ -48,7 +48,7 @@ const PageLayout = ({ children }: any) => {
   return (
     <div className={`w-screen ${isVisible && 'mb-32'}`}>
       <Header />
-      <div className='max-w-6xl pt-8 m-auto'>{children}</div>
+      {children}
 
       {/* {isVisible && ( */}
       <Transition
