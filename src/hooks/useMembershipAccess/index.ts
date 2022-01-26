@@ -27,10 +27,7 @@ export const useWalletMembershipAccess = (
     const module = new ThirdwebSDK(signer).getBundleDropModule(
       MEMBERSHIP_NFT_CONTRACT_ADDRESS
     );
-    // console.log(module);
-
     const balance = await module.balance(tokenId);
-    // console.log(balance.toNumber());
 
     return balance.toNumber() >= 1;
   }

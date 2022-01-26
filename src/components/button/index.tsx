@@ -3,13 +3,24 @@ import React from 'react';
 enum ButtonVariants {
   primary = 'primary',
   secondary = 'secondary',
+  ghost = 'ghost',
 }
 
-const Button = ({ children, variant, onClick }: any) => {
+interface ButtonProps {
+  variant: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
+  children: React.ReactNode | string;
+}
+
+const Button = (props: ButtonProps) => {
+  const { variant, icon, onClick, children } = props;
   const getVariantClass = () => {
     switch (variant) {
       case ButtonVariants.primary:
-        return 'bg-green-600 hover:bg-green-700 text-white';
+        return 'hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border-gray-400 rounded shadow';
+      case ButtonVariants.ghost:
+        return 'text-red group group-hover:text-red font-medium text-sm text-center mr-2 mb-2';
       default:
         return 'bg-gray-400 hover:bg-gray-500 text-white';
     }
@@ -17,10 +28,13 @@ const Button = ({ children, variant, onClick }: any) => {
 
   return (
     <button
-      className={`px-4 py-2 rounded-lg  mr-2 ${getVariantClass()}`}
+      className={`px-4 py-2 mr-2 ${getVariantClass()} inline-flex items-center`}
       onClick={onClick}
     >
-      {children}
+      <>
+        {icon}
+        {children}
+      </>
     </button>
   );
 };

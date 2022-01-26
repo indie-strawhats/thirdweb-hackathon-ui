@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { AudioCard } from '../audio-card';
 
 interface IAudiobookCard {
   id: string;
@@ -15,17 +16,15 @@ interface PurchaseCardProps {
 }
 
 const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
+  const { id, name, desc, image } = data;
   return (
-    <div>
-      <div>
-        <h3>#{data.id}</h3>
-        <h5>{data.name}</h5>
-        <p>{data.desc}</p>
-      </div>
-      <div>
-        <button onClick={() => onPurchase(Number(data.id))}>Purchase</button>
-      </div>
-    </div>
+    <AudioCard
+      id={id}
+      name={name}
+      desc={desc}
+      image={image}
+      onClick={onPurchase}
+    />
   );
 };
 
