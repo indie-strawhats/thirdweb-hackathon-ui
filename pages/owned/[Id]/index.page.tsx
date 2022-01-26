@@ -1,3 +1,4 @@
+import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -7,16 +8,29 @@ import Button from '../../../src/components/button';
 import Header from '../../../src/components/header';
 import { useWalletMembershipAccess } from '../../../src/hooks/useMembershipAccess';
 import { AppWeb3Context } from '../../../src/providers/app-web3';
-import { giftAudiobook } from '../../../src/services/web3';
+import { getAudiobook, giftAudiobook } from '../../../src/services/web3';
 
 const OwnedAudiobookPage: NextPage = () => {
+  const [audiobookData, setAudiobookData] = useState<any>(null);
+
   const {
     query: { Id },
   } = useRouter();
 
+  const { account } = useEthers();
   const { dropBundleModule } = useContext(AppWeb3Context);
 
   const hasAccess = useWalletMembershipAccess(Id as string);
+
+  useEffect(() => {
+    (async () => {
+      if (!dropBundleModule) return;
+
+      const audiobookData = await getAudiobook(dropBundleModule, Id as string);
+
+      setAudiobookData(audiobookData);
+    })();
+  }, [dropBundleModule, Id, account]);
 
   const handleGiftAudiobook = async () => {
     if (!dropBundleModule) return;
@@ -28,8 +42,6 @@ const OwnedAudiobookPage: NextPage = () => {
       Id as string,
       1
     );
-
-    console.log(response);
   };
 
   return (
@@ -46,9 +58,19 @@ const OwnedAudiobookPage: NextPage = () => {
       <br />
       <br />
 
-      {hasAccess ? 'You have access' : 'You dont have access'}
+      <p className="mb-8 text-2xl font-semibold">
+        {hasAccess ? 'You have access' : 'You dont have access'}
+      </p>
 
-      <Button variant="ghost" onClick={handleGiftAudiobook}>
+      {audiobookData && (
+        <li className="flow-root mb-8 text-2xl text-gray-600">
+          {Object.keys(audiobookData).map((item) => (
+            <ol key={item}>{`${item} - ${audiobookData[item]}`}</ol>
+          ))}
+        </li>
+      )}
+
+      <Button variant="primary" onClick={handleGiftAudiobook}>
         Gift Audiobook
       </Button>
     </>

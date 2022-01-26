@@ -48,7 +48,19 @@ export const getClaimedAudiobooks = async (
 
   const balances = await Promise.all([...balancePromiseArr]);
 
-  let claimedNFTs = ownedABResponse?.map((item, index) => ({
+  const audiobookUrlsResponse = await fetch('/api/get-audiobooks', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      tokenIds: ownedABResponse?.map((item) => item.metadata.id),
+    }),
+  });
+
+  const audiobookUrls = await audiobookUrlsResponse.json();
+
+  const claimedNFTs = ownedABResponse?.map((item, index) => ({
     id: item.metadata.id,
     name: item.metadata.name,
     desc: item.metadata.description,
@@ -58,9 +70,23 @@ export const getClaimedAudiobooks = async (
     price: claimConditions[index].currencyMetadata.displayValue,
     currencyUnit: 'ETH',
     balance: (balances[index] as BigNumber).toNumber(),
+    fileUrl: audiobookUrls[item.metadata.id],
   }));
 
-  console.log(claimedNFTs);
+  return claimedNFTs;
+};
+
+export const getAudiobook = async (
+  dropBundleModule: BundleDropModule,
+  tokenId: string
+) => {
+  const response = await dropBundleModule?.get(tokenId);
+
+  const claimConditions = await dropBundleModule?.getActiveClaimCondition(
+    response.metadata.id
+  );
+
+  const balance = await dropBundleModule?.balance(response.metadata.id);
 
   const audiobookUrlsResponse = await fetch('/api/get-audiobooks', {
     method: 'POST',
@@ -68,18 +94,26 @@ export const getClaimedAudiobooks = async (
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      tokenIds: claimedNFTs?.map((item) => item.id),
+      tokenIds: [tokenId],
     }),
   });
 
   const audiobookUrls = await audiobookUrlsResponse.json();
 
-  claimedNFTs = claimedNFTs?.map((item) => ({
-    ...item,
-    fileUrl: audiobookUrls[item.id],
-  }));
+  const audiobookData = {
+    id: response.metadata.id,
+    name: response.metadata.name,
+    desc: response.metadata.description,
+    properties: response.metadata.properties,
+    image: response.metadata.image,
+    uri: response.metadata.animation_url,
+    price: claimConditions.currencyMetadata?.displayValue,
+    currencyUnit: 'ETH',
+    balance: (balance as BigNumber).toNumber(),
+    fileUrl: audiobookUrls[tokenId],
+  };
 
-  return claimedNFTs;
+  return audiobookData;
 };
 
 export const giftAudiobook = async (
