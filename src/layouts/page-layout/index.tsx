@@ -1,5 +1,5 @@
 import { useEthers } from '@usedapp/core';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
@@ -7,6 +7,7 @@ import { isOnSupportedChain } from '../../helpers/web3';
 import { AudioPlayerContext } from '../../providers/audio-player';
 
 const PageLayout = ({ children }: any) => {
+  const [readyToCheck, setReadyToCheck] = useState(false);
   const { chainId, library } = useEthers();
 
   const {
@@ -15,8 +16,13 @@ const PageLayout = ({ children }: any) => {
     audiobookData,
   } = useContext<any>(AudioPlayerContext);
 
+  useEffect(() => {
+    setTimeout(() => setReadyToCheck(true), 1000);
+  }, []);
+
   const renderWarning = () => {
-    if (!library?.provider.isMetaMask) {
+    // readyToCheck is being used to wait for metamask provider to load. Before metamask, infura provider loads which does not help.
+    if (readyToCheck && !library?.provider.isMetaMask) {
       return (
         <Modal title="Warning!" description="Please install the Metamask" />
       );
