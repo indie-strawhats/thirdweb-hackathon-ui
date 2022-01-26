@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
+import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 
 const Home: NextPage = () => {
   const [allAudiobooks, setAllAudiobooks] = useState<any[]>([]);
@@ -15,11 +16,17 @@ const Home: NextPage = () => {
 
       const response = await dropBundleModule?.getAll();
 
-      const promiseArr = response?.map((item) =>
+      const claimConditionsPromiseArr = response?.map((item) =>
         dropBundleModule?.getActiveClaimCondition(item.metadata.id)
       ) as Promise<any>[];
 
-      const claimConditions = await Promise.all([...promiseArr]);
+      const claimConditions = await Promise.all([...claimConditionsPromiseArr]);
+
+      const balancePromiseArr = response?.map((item) =>
+        dropBundleModule?.balance(item.metadata.id)
+      ) as Promise<any>[];
+
+      const balances = await Promise.all([...balancePromiseArr]);
 
       const nfts = response?.map((item, index) => ({
         id: item.metadata.id,
@@ -30,7 +37,7 @@ const Home: NextPage = () => {
         uri: item.metadata.uri,
         price: claimConditions[index].currencyMetadata.displayValue,
         currencyUnit: 'ETH',
-        balance: item.supply.toNumber(),
+        balance: (balances[index] as BigNumber).toNumber(),
       }));
 
       if (nfts) {
