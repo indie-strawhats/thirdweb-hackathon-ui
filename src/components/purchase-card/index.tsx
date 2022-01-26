@@ -21,9 +21,11 @@ const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
     <AudioCard
       id={id}
       name={name}
+      nameHandle={() => {}}
       desc={desc}
       image={image}
-      onClick={onPurchase}
+      buttonName='Purchase'
+      buttonHandle={onPurchase}
     />
   );
 };

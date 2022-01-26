@@ -27,8 +27,8 @@ const PageLayout = ({ children }: any) => {
     if (readyToCheck && !library?.provider.isMetaMask) {
       return (
         <Modal
-          title="Warning!"
-          description="Please make sure you have active Metamask connection."
+          title='Warning!'
+          description='Please make sure you have active Metamask connection.'
         />
       );
     }
@@ -36,8 +36,8 @@ const PageLayout = ({ children }: any) => {
     if (!isOnSupportedChain(chainId as number)) {
       return (
         <Modal
-          title="Warning!"
-          description="Change to Rinkeby Testnet to use application."
+          title='Warning!'
+          description='Change to Rinkeby Testnet to use application.'
         />
       );
     }
@@ -48,27 +48,27 @@ const PageLayout = ({ children }: any) => {
   return (
     <div className={`w-screen ${isVisible && 'mb-32'}`}>
       <Header />
-      <div className="max-w-6xl pt-8 m-auto">{children}</div>
+      <div className='max-w-6xl pt-8 m-auto'>{children}</div>
 
       {/* {isVisible && ( */}
       <Transition
         show={isVisible}
-        enter="transition-opacity duration-1000"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-1000"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+        enter='transition-opacity duration-1000'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='transition-opacity duration-1000'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
       >
-        <div className="fixed bottom-0 flex items-center w-full h-24 bg-white border-t">
-          <div className="flex items-center flex-grow px-4">
+        <div className='fixed bottom-0 flex items-center w-full h-24 bg-white border-t'>
+          <div className='flex items-center flex-grow px-4'>
             <ReactAudioPlayer
               src={audiobookData.fileUrl}
               controls
               autoPlay
-              className="flex-grow mr-4"
+              className='flex-grow mr-4'
             />
-            <Button variant="primary" onClick={() => setIsVisible(false)}>
+            <Button variant='primary' onClick={() => setIsVisible(false)}>
               Close
             </Button>
           </div>

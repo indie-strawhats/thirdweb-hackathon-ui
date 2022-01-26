@@ -18,17 +18,17 @@ const Button = (props: ButtonProps) => {
   const getVariantClass = () => {
     switch (variant) {
       case ButtonVariants.primary:
-        return 'hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border-gray-400 rounded shadow';
+        return 'px-4 py-2 font-semibold text-gray-800 border-gray-400 rounded shadow hover:bg-gray-100 hover:text-yellow-500';
       case ButtonVariants.ghost:
-        return 'text-red group group-hover:text-red font-medium text-sm text-center mr-2 mb-2';
+        return 'mb-2 mr-2 text-sm font-semibold text-center text-gray-800 hover:text-yellow-500';
       default:
-        return 'bg-gray-400 hover:bg-gray-500 text-white';
+        return 'text-white bg-gray-400 hover:bg-gray-500';
     }
   };
 
   return (
     <button
-      className={`px-4 py-2 mr-2 ${getVariantClass()} inline-flex items-center`}
+      className={`px-4 py-2 mr-2 ${getVariantClass()} inline-flex items-center `}
       onClick={onClick}
     >
       <>
