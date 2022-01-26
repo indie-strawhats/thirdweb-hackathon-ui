@@ -8,7 +8,6 @@ const DropZone = (props: any) => {
 
   useEffect(() => {
     if (!acceptedFiles.length) return;
-    // console.log(acceptedFiles[0]);
     (async () => {
       const file = acceptedFiles[0];
       const reader = new FileReader();
@@ -39,7 +38,7 @@ const DropZone = (props: any) => {
   ));
 
   return (
-    <section className="container">
+    <section className='container'>
       <div>
         <div>
           <div {...getRootProps({ className: 'dropzone' })}>

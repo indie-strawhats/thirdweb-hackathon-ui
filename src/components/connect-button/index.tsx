@@ -1,6 +1,7 @@
 import { useEtherBalance, useEthers } from '@usedapp/core';
 import Link from 'next/link';
 import React from 'react';
+import { SVGMetaMask } from '../../icons/metamask';
 import Button from '../button';
 
 const ConnectButton = () => {
@@ -10,8 +11,9 @@ const ConnectButton = () => {
   return (
     <>
       <Button
-        variant="primary"
+        variant='primary'
         onClick={() => (account ? deactivate() : activateBrowserWallet())}
+        icon={<SVGMetaMask />}
       >
         {account ? 'Disconnect' : 'Connect'}
       </Button>
