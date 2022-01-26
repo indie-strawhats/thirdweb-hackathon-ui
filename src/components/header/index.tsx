@@ -15,7 +15,7 @@ const Header = () => {
       </div>
       <div>
         <Link href='/owned' passHref>
-          <Button variant='lite'>My Audiobooks</Button>
+          <Button variant='ghost'>My Audiobooks</Button>
         </Link>
         <ConnectButton />
       </div>
