@@ -1,5 +1,5 @@
 import { useEthers } from '@usedapp/core';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
@@ -7,13 +7,32 @@ import { isOnSupportedChain } from '../../helpers/web3';
 import { AudioPlayerContext } from '../../providers/audio-player';
 
 const PageLayout = ({ children }: any) => {
-  const { chainId } = useEthers();
+  const { chainId, library } = useEthers();
 
   const {
     isVisible = true,
     setIsVisible,
     audiobookData,
   } = useContext<any>(AudioPlayerContext);
+
+  const renderWarning = () => {
+    if (!library?.provider.isMetaMask) {
+      return (
+        <Modal title="Warning!" description="Please install the Metamask" />
+      );
+    }
+
+    if (!isOnSupportedChain(chainId as number)) {
+      return (
+        <Modal
+          title="Warning!"
+          description="Change to Rinkeby Testnet to use application."
+        />
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="h-screen w-screen">
@@ -39,12 +58,7 @@ const PageLayout = ({ children }: any) => {
         </Drawer>
       )} */}
 
-      {!isOnSupportedChain(chainId as number) && (
-        <Modal
-          title="Warning!"
-          description="Change to Rinkeby Testnet to use application."
-        />
-      )}
+      {renderWarning()}
     </div>
   );
 };
