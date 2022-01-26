@@ -5,6 +5,7 @@ import { Config, DAppProvider, Rinkeby } from '@usedapp/core';
 import { AudioPlayerProvider } from '../src/providers/audio-player';
 import PageLayout from '../src/layouts/page-layout';
 import { ThemeProvider } from 'next-themes';
+import { AppWeb3Provider } from '../src/providers/app-web3';
 
 const config: Config = {
   readOnlyChainId: Rinkeby.chainId,
@@ -17,13 +18,15 @@ const config: Config = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <DAppProvider config={config}>
-      <AudioPlayerProvider>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <PageLayout>
-            <Component {...pageProps} />
-          </PageLayout>
-        </ThemeProvider>
-      </AudioPlayerProvider>
+      <AppWeb3Provider>
+        <AudioPlayerProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
+          </ThemeProvider>
+        </AudioPlayerProvider>
+      </AppWeb3Provider>
     </DAppProvider>
   );
 }

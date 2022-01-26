@@ -2,25 +2,16 @@ import { ThirdwebSDK } from '@3rdweb/sdk';
 import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import Button from '../../src/components/button';
 import PlayCard from '../../src/components/play-card';
+import { AppWeb3Context } from '../../src/providers/app-web3';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
-  const { library } = useEthers();
 
-  const sdk = useMemo(
-    () => (library ? new ThirdwebSDK(library.getSigner()) : undefined),
-    [library]
-  );
-
-  const dropBundleModule = useMemo(
-    () =>
-      sdk
-        ? sdk.getBundleDropModule('0x9dba0b76852c23176FaAc6082491e2138FfF2EDa')
-        : undefined,
-    [sdk]
-  );
+  const { account } = useEthers();
+  const { dropBundleModule } = useContext(AppWeb3Context);
 
   useEffect(() => {
     (async () => {
@@ -56,25 +47,11 @@ const OwnedPage: NextPage = () => {
         setPurchasedAudiobooks(claimed);
       }
     })();
-  }, [dropBundleModule]);
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetch('/api/get-audiobooks', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          tokenIds: '0',
-        }),
-      });
-    })();
-  }, []);
+  }, [dropBundleModule, account]);
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {purchasedAudiobooks.map((ab) => (
           <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
         ))}
