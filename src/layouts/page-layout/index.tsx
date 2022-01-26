@@ -24,7 +24,10 @@ const PageLayout = ({ children }: any) => {
     // readyToCheck is being used to wait for metamask provider to load. Before metamask, infura provider loads which does not help.
     if (readyToCheck && !library?.provider.isMetaMask) {
       return (
-        <Modal title="Warning!" description="Please install the Metamask" />
+        <Modal
+          title="Warning!"
+          description="Please make sure you have active Metamask connection."
+        />
       );
     }
 
@@ -41,9 +44,9 @@ const PageLayout = ({ children }: any) => {
   };
 
   return (
-    <div className="h-screen w-screen">
+    <div className="w-screen h-screen">
       <Header />
-      <div className="max-w-6xl m-auto pt-8">{children}</div>
+      <div className="max-w-6xl pt-8 m-auto">{children}</div>
 
       {/* {isVisible && (
         <Drawer
