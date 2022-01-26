@@ -25,8 +25,8 @@ const PageLayout = ({ children }: any) => {
     if (readyToCheck && !library?.provider.isMetaMask) {
       return (
         <Modal
-          title="Warning!"
-          description="Please make sure you have active Metamask connection."
+          title='Warning!'
+          description='Please make sure you have active Metamask connection.'
         />
       );
     }
@@ -34,8 +34,8 @@ const PageLayout = ({ children }: any) => {
     if (!isOnSupportedChain(chainId as number)) {
       return (
         <Modal
-          title="Warning!"
-          description="Change to Rinkeby Testnet to use application."
+          title='Warning!'
+          description='Change to Rinkeby Testnet to use application.'
         />
       );
     }
@@ -44,10 +44,9 @@ const PageLayout = ({ children }: any) => {
   };
 
   return (
-    <div className="w-screen h-screen">
+    <div className='w-screen h-screen'>
       <Header />
-      <div className="max-w-6xl pt-8 m-auto">{children}</div>
-
+      {children}
       {/* {isVisible && (
         <Drawer
           anchor="bottom"

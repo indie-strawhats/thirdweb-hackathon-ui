@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { FC, useContext } from 'react';
+import Image from 'next/image';
 import { AudioPlayerContext } from '../../providers/audio-player';
+import { AudioCard } from '../audio-card';
 
 interface IAudiobookCard {
   id: string;
@@ -18,6 +20,7 @@ interface PlayCardProps {
 }
 
 const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
+  const { id, name, desc, image } = data;
   const router = useRouter();
   const { setAudiobookData, setIsVisible } =
     useContext<any>(AudioPlayerContext);
@@ -27,24 +30,20 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
     setIsVisible(true);
   };
 
+  const handleName = (id: string) => {
+    router.push('/owned/' + id);
+  };
+
   return (
-    <div>
-      <div>
-        <h3>#{data.id}</h3>
-        <h5
-          style={{
-            cursor: 'pointer',
-          }}
-          onClick={() => router.push('/owned/' + data.id)}
-        >
-          {data.name}
-        </h5>
-        <p>{data.desc}</p>
-      </div>
-      <div>
-        <button onClick={handlePlay}>Play</button>
-      </div>
-    </div>
+    <AudioCard
+      id={id}
+      name={name}
+      nameHandle={handleName}
+      desc={desc}
+      image={image}
+      buttonName='Play'
+      buttonHandle={handlePlay}
+    />
   );
 };
 

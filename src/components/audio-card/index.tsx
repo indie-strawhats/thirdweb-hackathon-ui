@@ -4,15 +4,17 @@ import Image from 'next/image';
 interface AudioCardProps {
   id: string;
   name: string;
+  nameHandle?: (data: any) => void;
   desc?: string;
   image: string;
-  onClick: (data: any) => void;
+  buttonName: string;
+  buttonHandle: (data: any) => void;
 }
 
 export const AudioCard = (props: AudioCardProps) => {
-  const { id, name, desc, image, onClick } = props;
+  const { id, name, nameHandle, desc, image, buttonName, buttonHandle } = props;
   return (
-    <div className='bg-white border border-gray-200 rounded-lg shadow-m'>
+    <div className='block bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl'>
       <div className='rounded-t-lg aspect-square'>
         <Image
           src={image}
@@ -22,19 +24,27 @@ export const AudioCard = (props: AudioCardProps) => {
           layout='responsive'
         />
       </div>
-      <div className='px-6 pt-4 pb-2'>
-        <span className='inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full'>
+      <div className='px-4 pt-4'>
+        <span className='inline-block px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full'>
           #{id}
         </span>
+        <h2
+          className='mt-2 mb-2 font-bold text-gray-600 hover:cursor-pointer'
+          onClick={() => nameHandle(id)}
+        >
+          {name}
+        </h2>
+        <p className='block mb-2 overflow-hidden text-sm text-gray-600'>
+          {desc}
+        </p>
       </div>
-      <div className='p-5'>
-        <a href='#'>
-          <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900'>
-            {name}
-          </h5>
-        </a>
-        <p className='mb-3 font-normal text-gray-700'>{desc}</p>
-        <button onClick={() => onClick(Number(id))}>Purchase</button>
+      <div className='p-2 px-6 text-sm border-t'>
+        <button
+          className='mr-2 font-bold text-white hover:text-gray-600'
+          onClick={() => buttonHandle(Number(id))}
+        >
+          {buttonName}
+        </button>
       </div>
     </div>
   );

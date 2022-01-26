@@ -51,7 +51,11 @@ const OwnedPage: NextPage = () => {
 
   const renderPurchasedAudiobooks = () => {
     return (
+<<<<<<< HEAD
       <div className="grid grid-cols-1-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+=======
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+>>>>>>> f5a2521 (added search box and updated card component)
         {purchasedAudiobooks.map((ab) => (
           <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
         ))}
@@ -63,17 +67,14 @@ const OwnedPage: NextPage = () => {
     <>
       <Head>
         <title>Awesome Audiobooks - Owned</title>
-        <meta name="description" content="Awesome Audiobooks - Owned" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Awesome Audiobooks - Owned' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <h5 style={{ marginBottom: 10 }}>Collection</h5>
-      <br />
-      <br />
+      <div className='max-w-6xl pt-8 m-auto'>
+        <h5 style={{ marginBottom: 10 }}>Collection</h5>
 
-      {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
-
-      <br />
-      <br />
+        {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
+      </div>
     </>
   );
 };
