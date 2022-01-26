@@ -1,6 +1,8 @@
+import { Transition } from '@headlessui/react';
 import { useEthers } from '@usedapp/core';
 import React, { useContext, useEffect, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import Button from '../../components/button';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
 import { isOnSupportedChain } from '../../helpers/web3';
@@ -44,28 +46,35 @@ const PageLayout = ({ children }: any) => {
   };
 
   return (
-    <div className="w-screen h-screen">
+    <div className={`w-screen ${isVisible && 'mb-32'}`}>
       <Header />
       <div className="max-w-6xl pt-8 m-auto">{children}</div>
 
-      {/* {isVisible && (
-        <Drawer
-          anchor="bottom"
-          variant="persistent"
-          ModalProps={{ keepMounted: true, hideBackdrop: true }}
-          open
-        >
-          <Stack sx={{ padding: 1 }} direction="row" spacing={2}>
+      {/* {isVisible && ( */}
+      <Transition
+        show={isVisible}
+        enter="transition-opacity duration-1000"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-1000"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="fixed bottom-0 flex items-center w-full h-24 bg-white border-t">
+          <div className="flex items-center flex-grow px-4">
             <ReactAudioPlayer
               src={audiobookData.fileUrl}
               controls
               autoPlay
-              style={{ width: '100%' }}
+              className="flex-grow mr-4"
             />
-            <Button onClick={() => setIsVisible(false)}>Close</Button>
-          </Stack>
-        </Drawer>
-      )} */}
+            <Button variant="primary" onClick={() => setIsVisible(false)}>
+              Close
+            </Button>
+          </div>
+        </div>
+      </Transition>
+      {/* )} */}
 
       {renderWarning()}
     </div>
