@@ -9,10 +9,15 @@ import Button from '../../../src/components/button';
 import Header from '../../../src/components/header';
 import { useWalletMembershipAccess } from '../../../src/hooks/useMembershipAccess';
 import { AppWeb3Context } from '../../../src/providers/app-web3';
-import { getAudiobook, giftAudiobook } from '../../../src/services/web3';
+import {
+  getAudiobook,
+  giftAudiobook,
+  purchaseAudiobook,
+} from '../../../src/services/web3';
+import { AudioPlayerContext } from '../../../src/providers/audio-player';
 
 const OwnedAudiobookPage: NextPage = () => {
-  const [audiobookData, setAudiobookData] = useState<any>(null);
+  const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
 
   const {
     query: { Id },
@@ -20,6 +25,8 @@ const OwnedAudiobookPage: NextPage = () => {
 
   const { account } = useEthers();
   const { dropBundleModule } = useContext(AppWeb3Context);
+  const { setAudiobookData, setIsVisible } =
+    useContext<any>(AudioPlayerContext);
 
   const hasAccess = useWalletMembershipAccess(Id as string);
 
@@ -29,7 +36,7 @@ const OwnedAudiobookPage: NextPage = () => {
 
       const audiobookData = await getAudiobook(dropBundleModule, Id as string);
 
-      setAudiobookData(audiobookData);
+      setLocalAudiobookData(audiobookData);
     })();
   }, [dropBundleModule, Id, account]);
 
@@ -45,71 +52,87 @@ const OwnedAudiobookPage: NextPage = () => {
     );
   };
 
+  const handlePurchase = async () => {
+    if (!dropBundleModule) return;
+
+    const response = await purchaseAudiobook(
+      dropBundleModule,
+      localAudiobookData.id,
+      1
+    );
+
+    console.log(response);
+  };
+
+  const handlePlay = () => {
+    setAudiobookData(localAudiobookData);
+    setIsVisible(true);
+  };
+
   return (
     <div>
       <Head>
         <title>Awesome Audiobooks - Audiobook #{Id}</title>
         <meta
-          name='description'
+          name="description"
           content={`Awesome Audiobooks - Audiobook #${Id}`}
         />
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      {console.log(audiobookData)}
-      {audiobookData && (
-        <div className='relative flex flex-col items-center max-h-screen p-20'>
-          <div className='overflow-hidden bg-white rounded-lg shadow-2xl'>
-            <div className='h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500'>
-              <div className='flex flex-row justify-between text-white'>
-                <h1 className='mb-2 font-semibold hover:cursor-pointer'>
-                  #{audiobookData.id}
+      {localAudiobookData && (
+        <div className="relative flex flex-col items-center max-h-screen p-20">
+          <div className="overflow-hidden bg-white rounded-lg shadow-2xl">
+            <div className="h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+              <div className="flex items-center justify-between text-white">
+                <h1 className="mb-2 text-3xl font-semibold hover:cursor-pointer">
+                  #{localAudiobookData.id}
                 </h1>
 
-                <p className='mb-2 text-sm'>
-                  {`owned - ${audiobookData.balance}`}
+                <p className="px-2 mb-2 text-white bg-[#fff2] rounded-full">
+                  {`Owned - ${localAudiobookData.balance}`}
                 </p>
               </div>
             </div>
-            <div className='relative flex flex-col items-center -top-14'>
-              <div className='overflow-hidden rounded-lg ring-2 ring-slate-100 ring-offset-2'>
+            <div className="relative flex flex-col items-center">
+              <div className="mb-4 -mt-20 overflow-hidden bg-white rounded-lg w-36 h-36 ring-2 ring-slate-100 ring-offset-2">
                 <Image
-                  src={audiobookData.image}
-                  width={'100%'}
-                  height={'100%'}
-                  layout='fixed'
-                  alt='Laptop on Desk'
-                  className='object-cover '
+                  src={localAudiobookData.image}
+                  width="100%"
+                  height="100%"
+                  layout="responsive"
+                  alt="Laptop on Desk"
+                  className="object-cover "
                 />
               </div>
             </div>
-            <div className='flex flex-row justify-between px-4'>
+            <div className="flex flex-row justify-between px-4 py-4">
               <div>
-                <h1 className='mb-2 font-bold text-gray-600 hover:cursor-pointer'>
-                  {audiobookData.name}
+                <h1 className="mb-2 font-bold text-gray-600 hover:cursor-pointer">
+                  {localAudiobookData.name}
                 </h1>
-                <p className='block mb-2 overflow-hidden text-sm text-gray-600'>
-                  {audiobookData.desc}
+                <p className="block mb-2 overflow-hidden text-sm text-gray-600">
+                  {localAudiobookData.desc}
                 </p>
               </div>
-              <div className='mb-2 text-sm text-gray-600'>
-                {`${audiobookData.currencyUnit} : ${audiobookData.price}`}
+              <div className="mb-2 text-sm text-gray-600">
+                {`${localAudiobookData.currencyUnit} : ${localAudiobookData.price}`}
               </div>
             </div>
-            <div className='flex h-20 border-t w-80 hover:border-transparent'>
+            <div className="flex border-t h-14 w-80 hover:border-transparent">
               <div
-                className='grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
-                onClick={handleGiftAudiobook}
+                className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
+                onClick={handlePurchase}
               >
                 Purchase
               </div>
               <div
-                className='grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
-                onClick={handleGiftAudiobook}
+                className="grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
+                onClick={handlePlay}
               >
                 Play
               </div>
               <div
-                className='grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                className="grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
                 onClick={handleGiftAudiobook}
               >
                 Gift

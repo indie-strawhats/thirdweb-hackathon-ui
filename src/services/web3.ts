@@ -120,7 +120,15 @@ export const giftAudiobook = async (
   dropBundleModule: BundleDropModule,
   toAccountAddress: string,
   tokenId: string,
-  amount: number = 1
+  quantity: number = 1
 ) => {
-  return dropBundleModule?.transfer(toAccountAddress, tokenId, amount);
+  return dropBundleModule?.transfer(toAccountAddress, tokenId, quantity);
+};
+
+export const purchaseAudiobook = async (
+  dropBundleModule: BundleDropModule,
+  tokenId: string,
+  quantity: number = 1
+) => {
+  return dropBundleModule?.claim(tokenId, quantity);
 };

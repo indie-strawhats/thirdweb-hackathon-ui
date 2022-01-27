@@ -3,14 +3,14 @@ import { AudioCard, AudioCardProps } from '../audio-card';
 
 interface PurchaseCardProps {
   data: AudioCardProps;
-  onPurchase: (tokenId: number, quantity?: number) => void;
+  onPurchase: (tokenId: string, quantity?: number) => void;
 }
 
 const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
   return (
     <AudioCard
       {...data}
-      buttonName='Purchase'
+      buttonName="Purchase"
       buttonHandle={onPurchase}
       nameHandle={() => {}}
     />
