@@ -1,19 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { FC, useContext } from 'react';
+import Image from 'next/image';
 import { AudioPlayerContext } from '../../providers/audio-player';
-
-interface IAudiobookCard {
-  id: string;
-  name: string;
-  desc: string;
-  image: string;
-  uri: string;
-  fileUrl: string;
-  properties: any;
-}
+import { AudioCard, AudioCardProps } from '../audio-card';
 
 interface PlayCardProps {
-  data: IAudiobookCard;
+  data: AudioCardProps;
   onPurchase: (tokenId: number, quantity?: number) => void;
 }
 
@@ -27,24 +19,17 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
     setIsVisible(true);
   };
 
+  const handleName = (id: string) => {
+    router.push('/owned/' + id);
+  };
+
   return (
-    <div>
-      <div>
-        <h3>#{data.id}</h3>
-        <h5
-          style={{
-            cursor: 'pointer',
-          }}
-          onClick={() => router.push('/owned/' + data.id)}
-        >
-          {data.name}
-        </h5>
-        <p>{data.desc}</p>
-      </div>
-      <div>
-        <button onClick={handlePlay}>Play</button>
-      </div>
-    </div>
+    <AudioCard
+      {...data}
+      nameHandle={handleName}
+      buttonName='Play'
+      buttonHandle={handlePlay}
+    />
   );
 };
 

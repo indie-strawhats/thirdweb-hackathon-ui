@@ -1,18 +1,39 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface AudioCardProps {
+export interface AudioCardProps {
   id: string;
   name: string;
+  currencyUnit: string;
+  price: string;
+  balance: number;
+  nameHandle: (data: any) => void;
   desc?: string;
   image: string;
-  onClick: (data: any) => void;
+  buttonName: string;
+  buttonHandle: (data: any) => void;
 }
 
 export const AudioCard = (props: AudioCardProps) => {
-  const { id, name, desc, image, onClick } = props;
+  const {
+    id,
+    name,
+    nameHandle,
+    desc,
+    image,
+    buttonName,
+    buttonHandle,
+    balance,
+    price,
+    currencyUnit,
+  } = props;
+
+  const renderBalance = () => {
+    return `owned : ${balance}`;
+  };
+
   return (
-    <div className='bg-white border border-gray-200 rounded-lg shadow-m'>
+    <div className='block bg-white rounded-lg shadow-md hover:shadow-xl'>
       <div className='rounded-t-lg aspect-square'>
         <Image
           src={image}
@@ -20,21 +41,42 @@ export const AudioCard = (props: AudioCardProps) => {
           width={'100%'}
           height={'100%'}
           layout='responsive'
+          className='rounded-t-lg'
         />
       </div>
-      <div className='px-6 pt-4 pb-2'>
-        <span className='inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full'>
+      <div className='flex flex-row justify-between px-4 pt-4 '>
+        <span className='px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full '>
           #{id}
         </span>
+        {balance > 0 && (
+          <span className='py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercas'>
+            {renderBalance()}
+          </span>
+        )}
       </div>
-      <div className='p-5'>
-        <a href='#'>
-          <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900'>
+      <div className='flex flex-row justify-between px-4 pt-3 '>
+        <div>
+          <h1
+            className='mb-2 font-bold text-gray-600 hover:cursor-pointer'
+            onClick={() => nameHandle(id)}
+          >
             {name}
-          </h5>
-        </a>
-        <p className='mb-3 font-normal text-gray-700'>{desc}</p>
-        <button onClick={() => onClick(Number(id))}>Purchase</button>
+          </h1>
+          <p className='block mb-2 overflow-hidden text-sm text-gray-600'>
+            {desc}
+          </p>
+        </div>
+        <div className='mb-2 text-sm text-gray-600'>
+          {`${currencyUnit} : ${price}`}
+        </div>
+      </div>
+      <div className='h-10 border-t hover:border-transparent'>
+        <div
+          className='grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+          onClick={() => buttonHandle(Number(id))}
+        >
+          {buttonName}
+        </div>
       </div>
     </div>
   );

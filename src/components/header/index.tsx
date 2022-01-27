@@ -5,17 +5,19 @@ import ConnectButton from '../connect-button';
 
 const Header = () => {
   return (
-    <div className="flex items-center justify-between h-16 px-8 border-b border-gray-300 shadow-sm bg-gray-50">
+    <div className='flex items-center justify-between h-16 px-8 border-b border-gray-300 shadow-sm bg-gray-50'>
       <div>
-        <Link href="/" passHref>
-          <a className="text-xl font-semibold text-gray-600 hover:text-gray-800">
+        <Link href='/' passHref>
+          <a className='text-xl font-semibold text-gray-600 hover:text-gray-800'>
             Awesome Audiobooks
           </a>
         </Link>
       </div>
-      <div className="flex items-center">
-        <Link href="/owned" passHref>
-          <Button variant="primary">My Audiobooks</Button>
+      <div className='flex items-center'>
+        <Link href='/owned' passHref>
+          <Button className='mr-2' variant='primary'>
+            My Audiobooks
+          </Button>
         </Link>
         <ConnectButton />
       </div>

@@ -4,7 +4,8 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
-import { getAllAudiobooks } from '../src/services/web3';
+import { getAllAudiobooks, purchaseAudiobook } from '../src/services/web3';
+import SearchBox from '../src/components/search-box';
 
 const Home: NextPage = () => {
   const [allAudiobooks, setAllAudiobooks] = useState<any[]>([]);
@@ -24,8 +25,10 @@ const Home: NextPage = () => {
   }, [dropBundleModule]);
 
   const handlePurchase = useCallback(
-    (tokenId: number, quantity: number = 1) => {
-      dropBundleModule?.claim(tokenId, quantity);
+    (tokenId: string, quantity: number = 1) => {
+      if (!dropBundleModule) return;
+
+      purchaseAudiobook(dropBundleModule, tokenId, quantity);
     },
     [dropBundleModule]
   );
@@ -49,9 +52,14 @@ const Home: NextPage = () => {
         <meta name="description" content="Awesome Audiobooks - Collection" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="">
-        <h4 className="text-3xl font-semibold text-gray-800">Collection</h4>
-
+      <div className="relative h-45">
+        <div className="absolute w-full bg-gray-200 h-1/2"></div>
+        <SearchBox />
+      </div>
+      <div className="max-w-6xl pt-8 pb-4 m-auto">
+        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">
+          Collection
+        </h2>
         {renderAllAudiobooks()}
       </div>
     </>
