@@ -58,27 +58,29 @@ const OwnedAudiobookPage: NextPage = () => {
       {console.log(audiobookData)}
       {audiobookData && (
         <div className='relative flex flex-col items-center max-h-screen p-20'>
-          <div className='bg-white rounded-lg shadow-2xl'>
-            <div className='px-20 py-20 bg-orange-200 '></div>
-            <div className='flex flex-row justify-between px-4 pt-2 '>
-              <div>
-                <h1 className='mb-2 font-semibold text-gray-600 hover:cursor-pointer'>
+          <div className='overflow-hidden bg-white rounded-lg shadow-2xl'>
+            <div className='h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500'>
+              <div className='flex flex-row justify-between text-white'>
+                <h1 className='mb-2 font-semibold hover:cursor-pointer'>
                   #{audiobookData.id}
                 </h1>
-              </div>
-              <div className='mb-2 text-sm text-gray-600'>
-                {`owned - ${audiobookData.balance}`}
+
+                <p className='mb-2 text-sm'>
+                  {`owned - ${audiobookData.balance}`}
+                </p>
               </div>
             </div>
-            <div className='relative flex flex-col items-center -top-20'>
-              <Image
-                src={audiobookData.image}
-                width={'100%'}
-                height={'100%'}
-                layout='fixed'
-                alt='Laptop on Desk'
-                className='object-cover rounded-full'
-              />
+            <div className='relative flex flex-col items-center -top-14'>
+              <div className='overflow-hidden rounded-lg ring-2 ring-slate-100 ring-offset-2'>
+                <Image
+                  src={audiobookData.image}
+                  width={'100%'}
+                  height={'100%'}
+                  layout='fixed'
+                  alt='Laptop on Desk'
+                  className='object-cover '
+                />
+              </div>
             </div>
             <div className='flex flex-row justify-between px-4'>
               <div>
@@ -93,9 +95,9 @@ const OwnedAudiobookPage: NextPage = () => {
                 {`${audiobookData.currencyUnit} : ${audiobookData.price}`}
               </div>
             </div>
-            <div className='flex h-20 border-t rounded-bl-lg rounded-br-lg w-80 hover:border-transparent'>
+            <div className='flex h-20 border-t w-80 hover:border-transparent'>
               <div
-                className='grid w-full h-full text-sm border-r rounded-bl-lg hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                className='grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
                 onClick={handleGiftAudiobook}
               >
                 Purchase
@@ -107,7 +109,7 @@ const OwnedAudiobookPage: NextPage = () => {
                 Play
               </div>
               <div
-                className='grid w-full h-full text-sm border-l rounded-br-lg hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+                className='grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
                 onClick={handleGiftAudiobook}
               >
                 Gift
