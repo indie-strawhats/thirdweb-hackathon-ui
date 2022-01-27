@@ -6,9 +6,13 @@ import { AppWeb3Context } from '../src/providers/app-web3';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 import { getAllAudiobooks, purchaseAudiobook } from '../src/services/web3';
 import SearchBox from '../src/components/search-box';
+import { IAudiobookData } from '../src/models/audiobook';
 
 const Home: NextPage = () => {
-  const [allAudiobooks, setAllAudiobooks] = useState<any[]>([]);
+  const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
+  const [filteredAudiobooks, setFilteredAudiobooks] = useState<
+    IAudiobookData[]
+  >([]);
 
   const { dropBundleModule } = useContext(AppWeb3Context);
 
@@ -20,6 +24,7 @@ const Home: NextPage = () => {
 
       if (allNFTs) {
         setAllAudiobooks(allNFTs);
+        setFilteredAudiobooks(allNFTs);
       }
     })();
   }, [dropBundleModule]);
@@ -33,10 +38,23 @@ const Home: NextPage = () => {
     [dropBundleModule]
   );
 
+  const handleSearch = (query: string) => {
+    const filteredAudiobooks = allAudiobooks.filter((ab) => {
+      const lowercaseQuery = query.toLowerCase();
+
+      return (
+        (ab.name as string).toLowerCase().includes(lowercaseQuery) ||
+        (ab.desc as string).toLowerCase().includes(lowercaseQuery)
+      );
+    });
+
+    setFilteredAudiobooks(filteredAudiobooks);
+  };
+
   const renderAllAudiobooks = () => {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {allAudiobooks.map((ab) => (
+        {filteredAudiobooks.map((ab) => (
           <div key={ab.id}>
             <PurchaseCard data={ab} onPurchase={handlePurchase} />
           </div>
@@ -54,7 +72,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="relative h-45">
         <div className="absolute w-full bg-gray-200 h-1/2"></div>
-        <SearchBox />
+        <SearchBox onSearch={handleSearch} />
       </div>
       <div className="max-w-6xl pt-8 pb-4 m-auto">
         <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">

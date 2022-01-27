@@ -1,5 +1,6 @@
 import { BundleDropModule } from '@3rdweb/sdk';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
+import { IAudiobookData } from '../models/audiobook';
 
 export const getAllAudiobooks = async (dropBundleModule: BundleDropModule) => {
   const response = await dropBundleModule?.getAll();
@@ -16,12 +17,12 @@ export const getAllAudiobooks = async (dropBundleModule: BundleDropModule) => {
 
   const balances = await Promise.all([...balancePromiseArr]);
 
-  const allNFTs = response?.map((item, index) => ({
+  const allNFTs = response?.map<IAudiobookData>((item, index) => ({
     id: item.metadata.id,
-    name: item.metadata.name,
-    desc: item.metadata.description,
+    name: item.metadata.name as string,
+    desc: item.metadata.description as string,
     properties: item.metadata.properties,
-    image: item.metadata.image,
+    image: item.metadata.image as string,
     uri: item.metadata.uri,
     price: claimConditions[index].currencyMetadata.displayValue,
     currencyUnit: 'ETH',
@@ -60,13 +61,13 @@ export const getClaimedAudiobooks = async (
 
   const audiobookUrls = await audiobookUrlsResponse.json();
 
-  const claimedNFTs = ownedABResponse?.map((item, index) => ({
+  const claimedNFTs = ownedABResponse?.map<IAudiobookData>((item, index) => ({
     id: item.metadata.id,
-    name: item.metadata.name,
-    desc: item.metadata.description,
+    name: item.metadata.name as string,
+    desc: item.metadata.description as string,
     properties: item.metadata.properties,
-    image: item.metadata.image,
-    uri: item.metadata.animation_url,
+    image: item.metadata.image as string,
+    uri: item.metadata.uri as string,
     price: claimConditions[index].currencyMetadata.displayValue,
     currencyUnit: 'ETH',
     balance: (balances[index] as BigNumber).toNumber(),
@@ -100,14 +101,14 @@ export const getAudiobook = async (
 
   const audiobookUrls = await audiobookUrlsResponse.json();
 
-  const audiobookData = {
+  const audiobookData: IAudiobookData = {
     id: response.metadata.id,
-    name: response.metadata.name,
-    desc: response.metadata.description,
+    name: response.metadata.name as string,
+    desc: response.metadata.description as string,
     properties: response.metadata.properties,
-    image: response.metadata.image,
-    uri: response.metadata.animation_url,
-    price: claimConditions.currencyMetadata?.displayValue,
+    image: response.metadata.image as string,
+    uri: response.metadata.uri as string,
+    price: claimConditions.currencyMetadata?.displayValue as string,
     currencyUnit: 'ETH',
     balance: (balance as BigNumber).toNumber(),
     fileUrl: audiobookUrls[tokenId],

@@ -28,11 +28,9 @@ const OwnedAudiobookPage: NextPage = () => {
   const { setAudiobookData, setIsVisible } =
     useContext<any>(AudioPlayerContext);
 
-  const hasAccess = useWalletMembershipAccess(Id as string);
-
   useEffect(() => {
     (async () => {
-      if (!dropBundleModule) return;
+      if (!dropBundleModule || !Id) return;
 
       const audiobookData = await getAudiobook(dropBundleModule, Id as string);
 
@@ -60,8 +58,6 @@ const OwnedAudiobookPage: NextPage = () => {
       localAudiobookData.id,
       1
     );
-
-    console.log(response);
   };
 
   const handlePlay = () => {
@@ -119,24 +115,25 @@ const OwnedAudiobookPage: NextPage = () => {
               </div>
             </div>
             <div className="flex border-t h-14 w-80 hover:border-transparent">
-              <div
-                className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
+              <button
+                className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-yellow-400"
                 onClick={handlePurchase}
               >
                 Purchase
-              </div>
-              <div
-                className="grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
+              </button>
+              <button
+                className="grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:text-white hover:bg-yellow-400"
                 onClick={handlePlay}
+                disabled={localAudiobookData.balance === 0}
               >
                 Play
-              </div>
-              <div
-                className="grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400"
+              </button>
+              <button
+                className="grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-yellow-400"
                 onClick={handleGiftAudiobook}
               >
                 Gift
-              </div>
+              </button>
             </div>
           </div>
         </div>

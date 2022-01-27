@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { AudioCard, AudioCardProps } from '../audio-card';
+import { IAudiobookData } from '../../models/audiobook';
+import { AudioCard } from '../audio-card';
 
 interface PurchaseCardProps {
-  data: AudioCardProps;
+  data: IAudiobookData;
   onPurchase: (tokenId: string, quantity?: number) => void;
 }
 

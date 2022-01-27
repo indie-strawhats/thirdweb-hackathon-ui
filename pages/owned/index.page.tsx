@@ -8,9 +8,15 @@ import { AppWeb3Context } from '../../src/providers/app-web3';
 import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 import { getClaimedAudiobooks } from '../../src/services/web3';
 import SearchBox from '../../src/components/search-box';
+import { IAudiobookData } from '../../src/models/audiobook';
 
 const OwnedPage: NextPage = () => {
-  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<any[]>([]);
+  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<
+    IAudiobookData[]
+  >([]);
+  const [filteredAudiobooks, setFilteredAudiobooks] = useState<
+    IAudiobookData[]
+  >([]);
 
   const { account } = useEthers();
   const { dropBundleModule } = useContext(AppWeb3Context);
@@ -23,15 +29,29 @@ const OwnedPage: NextPage = () => {
 
       if (claimedNFTs) {
         setPurchasedAudiobooks(claimedNFTs);
+        setFilteredAudiobooks(claimedNFTs);
       }
     })();
   }, [dropBundleModule, account]);
 
+  const handleSearch = (query: string) => {
+    const filteredAudiobooks = purchasedAudiobooks.filter((ab) => {
+      const lowercaseQuery = query.toLowerCase();
+
+      return (
+        (ab.name as string).toLowerCase().includes(lowercaseQuery) ||
+        (ab.desc as string).toLowerCase().includes(lowercaseQuery)
+      );
+    });
+
+    setFilteredAudiobooks(filteredAudiobooks);
+  };
+
   const renderPurchasedAudiobooks = () => {
     return (
-      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-        {purchasedAudiobooks.map((ab) => (
-          <PlayCard key={ab.id} data={ab} onPurchase={(id: number) => {}} />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {filteredAudiobooks.map((ab) => (
+          <PlayCard key={ab.id} data={ab} onPurchase={(_: number) => {}} />
         ))}
       </div>
     );
@@ -41,15 +61,15 @@ const OwnedPage: NextPage = () => {
     <>
       <Head>
         <title>Awesome Audiobooks - Owned</title>
-        <meta name='description' content='Awesome Audiobooks - Owned' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta name="description" content="Awesome Audiobooks - Owned" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='relative h-45'>
-        <div className='absolute w-full bg-gray-200 h-1/2'></div>
-        <SearchBox />
+      <div className="relative h-45">
+        <div className="absolute w-full bg-gray-200 h-1/2"></div>
+        <SearchBox onSearch={handleSearch} />
       </div>
-      <div className='max-w-6xl pt-8 m-auto'>
-        <h2 className='pb-4 text-3xl font-semibold text-gray-800 '>
+      <div className="max-w-6xl pt-8 m-auto">
+        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">
           Collection
         </h2>
         {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}

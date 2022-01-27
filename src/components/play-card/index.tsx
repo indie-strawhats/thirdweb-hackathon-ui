@@ -2,10 +2,11 @@ import { useRouter } from 'next/router';
 import React, { FC, useContext } from 'react';
 import Image from 'next/image';
 import { AudioPlayerContext } from '../../providers/audio-player';
-import { AudioCard, AudioCardProps } from '../audio-card';
+import { AudioCard } from '../audio-card';
+import { IAudiobookData } from '../../models/audiobook';
 
 interface PlayCardProps {
-  data: AudioCardProps;
+  data: IAudiobookData;
   onPurchase: (tokenId: number, quantity?: number) => void;
 }
 
@@ -27,7 +28,7 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
     <AudioCard
       {...data}
       nameHandle={handleName}
-      buttonName='Play'
+      buttonName="Play"
       buttonHandle={handlePlay}
     />
   );
