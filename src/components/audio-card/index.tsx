@@ -1,5 +1,6 @@
-import React from 'react';
 import Image from 'next/image';
+import React, { useRef, useState } from 'react';
+// import ColorThief from 'colorthief';
 
 export interface AudioCardProps {
   id: string;
@@ -35,6 +36,8 @@ export const AudioCard = (props: AudioCardProps) => {
   const renderBalance = () => {
     return `owned : ${balance}`;
   };
+
+  const [cardBgColor, setCardBgColor] = useState()
 
   return (
     <div className={`block bg-white rounded-lg shadow-md hover:shadow-xl ${className}`}>
