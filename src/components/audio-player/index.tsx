@@ -1,9 +1,9 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AudioPlayerContext } from '../../providers/audio-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons';
 
-export interface Props {}
+export interface Props { }
 
 export default function CustomAudioPlayer({ }: Props) {
 
@@ -12,11 +12,14 @@ export default function CustomAudioPlayer({ }: Props) {
         audiobookData,
     } = useContext<any>(AudioPlayerContext);
 
-    const audio = useRef<HTMLAudioElement | undefined>(
-        typeof Audio !== "undefined" ? new Audio(audiobookData.fileUrl) : undefined
-    )
+    const [audio, setAudio] = useState();
+    const [paused, setPaused] = useState(true);
 
-    console.log("audio : ", audio.current)
+    useEffect(() => {
+        setAudio(typeof Audio !== "undefined" ? new Audio(audiobookData.fileUrl) : undefined);
+    }, []);
+
+    // console.log("audio : ", audio);
 
     return (
         <div className="fixed bottom-0 flex w-full">
@@ -39,15 +42,25 @@ export default function CustomAudioPlayer({ }: Props) {
                     </div>
                 </div>
                 <div className="w-full inline-flex px-3 gap-3">
-                    <div className="rounded-full bg-red-400 shadow-lg">
-                        <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z" /></svg>
-                    </div>
+                    {
+                        paused ?
+                            <FontAwesomeIcon icon={faPlayCircle}
+                                size="lg"
+                                onClick={() => {
+                                    audio?.play();
+                                    setPaused(false)
+                                }} />
+                            :
+                            <FontAwesomeIcon icon={faPauseCircle}
+                                size="lg"
+                                onClick={() => {
+                                    audio?.pause()
+                                    setPaused(true)
+                                }} />
+                    }
                     <div className="flex justify-between text-lg text-grey-darker">
-                        <p>0:40</p>
+                        <p>0:00</p>
                     </div>
-                    {/* <div className="flex w-3/5 bg-gray-200 h-1 mb-6">
-        <div className="bg-blue-600 h-1" style={{ width: 20 + "%" }}></div>
-      </div> */}
                     <input type="range"
                         className="form-range w-4/6 h-6 p-0 focus:outline-none focus:ring-0 focus:shadow-none"
                         defaultValue={10}
