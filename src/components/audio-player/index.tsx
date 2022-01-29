@@ -13,13 +13,20 @@ export default function CustomAudioPlayer({ }: Props) {
     } = useContext<any>(AudioPlayerContext);
 
     const [audio, setAudio] = useState();
-    const [paused, setPaused] = useState(true);
+    const [paused, setPaused] = useState(false);
 
     useEffect(() => {
+        console.log("new url");
+        audio?.pause();
+        setPaused(false);
         setAudio(typeof Audio !== "undefined" ? new Audio(audiobookData.fileUrl) : undefined);
-    }, []);
 
-    // console.log("audio : ", audio);
+    }, [audiobookData.fileUrl])
+
+    useEffect(() => {
+        audio?.load();
+        audio?.play();
+    }, [audio])
 
     return (
         <div className="fixed bottom-0 flex w-full">
@@ -64,6 +71,7 @@ export default function CustomAudioPlayer({ }: Props) {
                     <input type="range"
                         className="form-range w-4/6 h-6 p-0 focus:outline-none focus:ring-0 focus:shadow-none"
                         defaultValue={10}
+                        onChange={(e) => { console.log("range event : ", e.target.value) }}
                     />
                     <div className="flex justify-between text-lg text-grey-darker">
                         <p>4:20</p>
