@@ -18,10 +18,10 @@ const Button = (props: ButtonProps) => {
   const { variant, icon, onClick, children, className } = props;
   const getVariantClass = () => {
     switch (variant) {
-      case ButtonVariants.primary:
-        return 'px-4 py-2 font-semibold text-gray-800 border-gray-400 rounded shadow hover:bg-gray-100 hover:text-yellow-500';
       case ButtonVariants.ghost:
-        return 'px-4 py-2 text-sm font-semibold text-center text-gray-800 hover:text-yellow-500';
+        return 'px-4 py-2 text-m font-semibold text-center text-gray-800 hover:text-indigo-500';
+      case ButtonVariants.primary:
+        return 'px-4 py-2 text-m font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-indigo-500 focus:z-10 focus:ring-2 focus:ring-indigo-500 focus:text-indigo-500';
       default:
         return 'text-white bg-gray-400 hover:bg-gray-500';
     }
@@ -29,7 +29,7 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      className={`inline-flex items-center ${getVariantClass()} ${className}`}
+      className={`inline-flex items-center text-m ${getVariantClass()} ${className}`}
       onClick={onClick}
     >
       <>

@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 
   const renderAllAudiobooks = () => {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
         {filteredAudiobooks.map((ab) => (
           <div key={ab.id}>
             <PurchaseCard data={ab} onPurchase={handlePurchase} />
@@ -67,15 +67,16 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Awesome Audiobooks - Collection</title>
-        <meta name="description" content="Awesome Audiobooks - Collection" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Awesome Audiobooks - Collection' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className="relative h-45">
-        <div className="absolute w-full bg-gray-200 h-1/2"></div>
-        <SearchBox onSearch={handleSearch} />
+      <div className='w-full bg-gray-100 shadow-inner h-30'>
+        <div className='relative w-full -bottom-7'>
+          <SearchBox onSearch={handleSearch} />
+        </div>
       </div>
-      <div className="max-w-6xl pt-8 pb-4 m-auto">
-        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">
+      <div className='max-w-6xl pt-8 pb-4 m-auto'>
+        <h2 className='pb-4 text-3xl font-semibold text-gray-800 '>
           Collection
         </h2>
         {renderAllAudiobooks()}
