@@ -20,12 +20,12 @@ const PageLayout = ({ children }: any) => {
   } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
-    setTimeout(() => setReadyToCheck(true), 1000);
+    setTimeout(() => setReadyToCheck(true), 2000);
   }, []);
 
   const renderWarning = () => {
     // readyToCheck is being used to wait for metamask provider to load. Before metamask, infura provider loads which does not help.
-    if (readyToCheck && !(provider?.connection.url === 'metamask')) {
+    if (readyToCheck && !provider) {
       return (
         <Modal
           title='Warning!'
@@ -34,7 +34,7 @@ const PageLayout = ({ children }: any) => {
       );
     }
 
-    if (!isOnSupportedChain(chainId as number)) {
+    if (readyToCheck && !isOnSupportedChain(chainId as number)) {
       return (
         <Modal
           title='Warning!'
@@ -51,7 +51,6 @@ const PageLayout = ({ children }: any) => {
       <Header />
       {children}
 
-      {/* {isVisible && ( */}
       <Transition
         show={isVisible}
         enter='transition-opacity duration-1000'
