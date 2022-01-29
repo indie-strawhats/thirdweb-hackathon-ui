@@ -1,8 +1,7 @@
-import { useEthers } from '@usedapp/core';
+import { ConnectWallet } from '@3rdweb/react';
 import Link from 'next/link';
 import React from 'react';
 import Button from '../button';
-import ConnectButton from '../connect-button';
 
 const Header = () => (
   <div className='flex items-center justify-between h-16 px-8 border-b border-gray-300 shadow-sm bg-gray-50'>
@@ -15,11 +14,11 @@ const Header = () => (
     </div>
     <div className='flex items-center'>
       <Link href='/owned' passHref>
-        <Button className='mr-2' variant='primary'>
+        <Button className='mr-4' variant='primary'>
           My Audiobooks
         </Button>
       </Link>
-      <ConnectButton />
+      <ConnectWallet />
     </div>
   </div>
 );

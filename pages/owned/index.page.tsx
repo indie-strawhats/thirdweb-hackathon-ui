@@ -1,14 +1,12 @@
-import { ThirdwebSDK } from '@3rdweb/sdk';
-import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useContext, useEffect, useState } from 'react';
 import PlayCard from '../../src/components/play-card';
 import { AppWeb3Context } from '../../src/providers/app-web3';
-import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 import { getClaimedAudiobooks } from '../../src/services/web3';
 import SearchBox from '../../src/components/search-box';
 import { IAudiobookData } from '../../src/models/audiobook';
+import { useWeb3 } from '@3rdweb/hooks';
 
 const OwnedPage: NextPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<
@@ -18,7 +16,7 @@ const OwnedPage: NextPage = () => {
     IAudiobookData[]
   >([]);
 
-  const { account } = useEthers();
+  const { address } = useWeb3();
   const { dropBundleModule } = useContext(AppWeb3Context);
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const OwnedPage: NextPage = () => {
         setFilteredAudiobooks(claimedNFTs);
       }
     })();
-  }, [dropBundleModule, account]);
+  }, [dropBundleModule, address]);
 
   const handleSearch = (query: string) => {
     const filteredAudiobooks = purchasedAudiobooks.filter((ab) => {

@@ -1,13 +1,8 @@
-import { useEthers } from '@usedapp/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
-import Button from '../../../src/components/button';
-import Header from '../../../src/components/header';
-import { useWalletMembershipAccess } from '../../../src/hooks/useMembershipAccess';
 import { AppWeb3Context } from '../../../src/providers/app-web3';
 import {
   getAudiobook,
@@ -15,6 +10,7 @@ import {
   purchaseAudiobook,
 } from '../../../src/services/web3';
 import { AudioPlayerContext } from '../../../src/providers/audio-player';
+import { useWeb3 } from '@3rdweb/hooks';
 
 const OwnedAudiobookPage: NextPage = () => {
   const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
@@ -23,7 +19,8 @@ const OwnedAudiobookPage: NextPage = () => {
     query: { Id },
   } = useRouter();
 
-  const { account } = useEthers();
+  const { address } = useWeb3();
+
   const { dropBundleModule } = useContext(AppWeb3Context);
   const { setAudiobookData, setIsVisible } =
     useContext<any>(AudioPlayerContext);
@@ -36,7 +33,7 @@ const OwnedAudiobookPage: NextPage = () => {
 
       setLocalAudiobookData(audiobookData);
     })();
-  }, [dropBundleModule, Id, account]);
+  }, [dropBundleModule, Id, address]);
 
   const handleGiftAudiobook = async () => {
     if (!dropBundleModule) return;
@@ -121,19 +118,24 @@ const OwnedAudiobookPage: NextPage = () => {
               >
                 Purchase
               </button>
-              <button
-                className='grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:text-white hover:bg-indigo-500'
-                onClick={handlePlay}
-                disabled={localAudiobookData.balance === 0}
-              >
-                Play
-              </button>
-              <button
-                className='grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500'
-                onClick={handleGiftAudiobook}
-              >
-                Gift
-              </button>
+
+              {localAudiobookData.balance > 0 && (
+                <>
+                  <button
+                    className='grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:text-white hover:bg-indigo-500'
+                    onClick={handlePlay}
+                    disabled={localAudiobookData.balance === 0}
+                  >
+                    Play
+                  </button>
+                  <button
+                    className='grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500'
+                    onClick={handleGiftAudiobook}
+                  >
+                    Gift
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
