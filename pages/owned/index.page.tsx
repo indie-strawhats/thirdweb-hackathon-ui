@@ -10,12 +10,8 @@ import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../src/layouts/page-layout';
 
 const OwnedPage = () => {
-  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<
-    IAudiobookData[]
-  >([]);
-  const [filteredAudiobooks, setFilteredAudiobooks] = useState<
-    IAudiobookData[]
-  >([]);
+  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IAudiobookData[]>([]);
+  const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
 
   const { address } = useWeb3();
   const { dropBundleModule } = useContext(AppWeb3Context);
@@ -48,7 +44,7 @@ const OwnedPage = () => {
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filteredAudiobooks.map((ab) => (
           <PlayCard key={ab.id} data={ab} onPurchase={(_: number) => {}} />
         ))}
@@ -60,18 +56,16 @@ const OwnedPage = () => {
     <>
       <Head>
         <title>Awesome Audiobooks - Owned</title>
-        <meta name='description' content='Awesome Audiobooks - Owned' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta name="description" content="Awesome Audiobooks - Owned" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='w-full bg-gray-100 shadow-inner h-30'>
-        <div className='relative w-full -bottom-7'>
+      <div className="w-full bg-gray-100 shadow-inner h-30">
+        <div className="relative w-full -bottom-7">
           <SearchBox onSearch={handleSearch} />
         </div>
       </div>
-      <div className='max-w-6xl pt-8 m-auto'>
-        <h2 className='pb-4 text-3xl font-semibold text-gray-800 '>
-          Collection
-        </h2>
+      <div className="max-w-6xl pt-8 m-auto">
+        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">Collection</h2>
         {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
       </div>
     </>

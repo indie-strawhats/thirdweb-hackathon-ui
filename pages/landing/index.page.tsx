@@ -8,8 +8,8 @@ const LandingPage: NextPage = () => {
     <div>
       <Head>
         <title>Awesome Audiobooks</title>
-        <meta name='description' content='Awesome Audiobooks' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta name="description" content="Awesome Audiobooks" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       Landing Page
     </div>

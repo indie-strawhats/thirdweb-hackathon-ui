@@ -13,11 +13,7 @@ const PageLayout = ({ children }: any) => {
   const [readyToCheck, setReadyToCheck] = useState(false);
   const { chainId, provider } = useWeb3();
 
-  const {
-    isVisible = true,
-    setIsVisible,
-    audiobookData,
-  } = useContext<any>(AudioPlayerContext);
+  const { isVisible = true, setIsVisible, audiobookData } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
     setTimeout(() => setReadyToCheck(true), 2000);
@@ -28,19 +24,14 @@ const PageLayout = ({ children }: any) => {
     if (readyToCheck && !provider) {
       return (
         <Modal
-          title='Warning!'
-          description='Please make sure you have active Metamask connection.'
+          title="Warning!"
+          description="Please make sure you have active Metamask connection."
         />
       );
     }
 
     if (readyToCheck && !isOnSupportedChain(chainId as number)) {
-      return (
-        <Modal
-          title='Warning!'
-          description='Change to Rinkeby Testnet to use application.'
-        />
-      );
+      return <Modal title="Warning!" description="Change to Rinkeby Testnet to use application." />;
     }
 
     return null;
@@ -53,22 +44,22 @@ const PageLayout = ({ children }: any) => {
 
       <Transition
         show={isVisible}
-        enter='transition-opacity duration-1000'
-        enterFrom='opacity-0'
-        enterTo='opacity-100'
-        leave='transition-opacity duration-1000'
-        leaveFrom='opacity-100'
-        leaveTo='opacity-0'
+        enter="transition-opacity duration-1000"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-1000"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
-        <div className='fixed bottom-0 flex items-center w-full h-24 bg-white border-t'>
-          <div className='flex items-center flex-grow px-4'>
+        <div className="fixed bottom-0 flex items-center w-full h-24 bg-white border-t">
+          <div className="flex items-center flex-grow px-4">
             <ReactAudioPlayer
               src={audiobookData.fileUrl}
               controls
               autoPlay
-              className='flex-grow mr-4'
+              className="flex-grow mr-4"
             />
-            <Button variant='primary' onClick={() => setIsVisible(false)}>
+            <Button variant="primary" onClick={() => setIsVisible(false)}>
               Close
             </Button>
           </div>

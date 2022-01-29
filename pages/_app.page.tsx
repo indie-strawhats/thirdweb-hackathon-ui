@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     >
       <AppWeb3Provider>
         <AudioPlayerProvider>
-          <ThemeProvider attribute='class' defaultTheme='light'>
+          <ThemeProvider attribute="class" defaultTheme="light">
             {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
         </AudioPlayerProvider>

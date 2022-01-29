@@ -38,14 +38,12 @@ const DropZone = (props: any) => {
   ));
 
   return (
-    <section className='container'>
+    <section className="container">
       <div>
         <div>
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
-            <p>
-              Drag &apos;n&apos; drop some files here, or click to select files
-            </p>
+            <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
           </div>
           <aside>
             <h4>Files</h4>

@@ -17,15 +17,12 @@ export const AppWeb3Provider = ({ children }: any) => {
 
   const sdk = useMemo(
     () => (provider ? new ThirdwebSDK(provider?.getSigner()) : undefined),
-    [provider]
+    [provider],
   );
 
   const dropBundleModule = useMemo(
-    () =>
-      sdk
-        ? sdk.getBundleDropModule('0x9dba0b76852c23176FaAc6082491e2138FfF2EDa')
-        : undefined,
-    [sdk]
+    () => (sdk ? sdk.getBundleDropModule('0x9dba0b76852c23176FaAc6082491e2138FfF2EDa') : undefined),
+    [sdk],
   );
 
   const value: IAppWeb3Context = {
@@ -33,7 +30,5 @@ export const AppWeb3Provider = ({ children }: any) => {
     dropBundleModule,
   };
 
-  return (
-    <AppWeb3Context.Provider value={value}>{children}</AppWeb3Context.Provider>
-  );
+  return <AppWeb3Context.Provider value={value}>{children}</AppWeb3Context.Provider>;
 };
