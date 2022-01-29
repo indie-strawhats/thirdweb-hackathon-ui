@@ -4,7 +4,7 @@ import { AudioCard } from '../audio-card';
 
 interface PurchaseCardProps {
   data: IAudiobookData;
-  onPurchase: (tokenId: string, quantity?: number) => void;
+  onPurchase: (name: string, tokenId: string, quantity?: number) => void;
 }
 
 const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {

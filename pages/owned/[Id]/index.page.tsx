@@ -8,8 +8,10 @@ import { getAudiobook, giftAudiobook, purchaseAudiobook } from '../../../src/ser
 import { AudioPlayerContext } from '../../../src/providers/audio-player';
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../../src/layouts/page-layout';
+import { toast } from 'react-toastify';
 
 const OwnedAudiobookPage = () => {
+  const [rerender, triggerRerender] = useState(false);
   const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
 
   const {
@@ -29,24 +31,56 @@ const OwnedAudiobookPage = () => {
 
       setLocalAudiobookData(audiobookData);
     })();
-  }, [dropBundleModule, Id, address]);
+  }, [dropBundleModule, Id, address, rerender]);
 
   const handleGiftAudiobook = async () => {
     if (!dropBundleModule) return;
 
-    const response = await giftAudiobook(
-      dropBundleModule,
-      '0x0585Ab27743a0C0248166Ef169372B12f7C24C45',
-      // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
-      Id as string,
-      1,
-    );
+    try {
+      const response = await toast.promise(
+        giftAudiobook(
+          dropBundleModule,
+          '0x0585Ab27743a0C0248166Ef169372B12f7C24C45',
+          // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
+          Id as string,
+          1,
+        ),
+        {
+          pending: `Gifting - ${localAudiobookData.name}`,
+          error: 'Something went wrong',
+          success: 'Gifted successful!',
+        },
+        {
+          position: 'bottom-right',
+        },
+      );
+
+      triggerRerender(!rerender);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handlePurchase = async () => {
     if (!dropBundleModule) return;
 
-    const response = await purchaseAudiobook(dropBundleModule, localAudiobookData.id, 1);
+    try {
+      const response = await toast.promise(
+        purchaseAudiobook(dropBundleModule, localAudiobookData.id, 1),
+        {
+          pending: `Purchasing - ${localAudiobookData.name}`,
+          error: 'Something went wrong',
+          success: 'Purchase successful!',
+        },
+        {
+          position: 'bottom-right',
+        },
+      );
+
+      triggerRerender(!rerender);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handlePlay = () => {

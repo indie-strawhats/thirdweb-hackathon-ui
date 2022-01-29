@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import type { NextPage } from 'next';
 import { ReactElement, useCallback, useContext, useEffect, useState } from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
@@ -8,8 +7,10 @@ import SearchBox from '../src/components/search-box';
 import { IAudiobookData } from '../src/models/audiobook';
 
 import PageLayout from '../src/layouts/page-layout';
+import { toast } from 'react-toastify';
 
 const Home = () => {
+  const [rerender, triggerRerender] = useState(false);
   const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
   const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
 
@@ -26,16 +27,29 @@ const Home = () => {
         setFilteredAudiobooks(allNFTs);
       }
     })();
-  }, [dropBundleModule]);
+  }, [dropBundleModule, rerender]);
 
-  const handlePurchase = useCallback(
-    (tokenId: string, quantity: number = 1) => {
-      if (!dropBundleModule) return;
+  const handlePurchase = async (name: string, tokenId: string, quantity: number = 1) => {
+    if (!dropBundleModule) return;
 
-      purchaseAudiobook(dropBundleModule, tokenId, quantity);
-    },
-    [dropBundleModule],
-  );
+    try {
+      const response = await toast.promise(
+        purchaseAudiobook(dropBundleModule, tokenId, quantity),
+        {
+          pending: `Purchasing - ${name}`,
+          error: 'Something went wrong',
+          success: 'Purchase successful!',
+        },
+        {
+          position: 'bottom-right',
+        },
+      );
+
+      triggerRerender(!rerender);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSearch = (query: string) => {
     const filteredAudiobooks = allAudiobooks.filter((ab) => {
