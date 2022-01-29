@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
-import { BigNumber } from '@3rdweb/sdk/node_modules/ethers';
 import { getAllAudiobooks, purchaseAudiobook } from '../src/services/web3';
 import SearchBox from '../src/components/search-box';
 import { IAudiobookData } from '../src/models/audiobook';

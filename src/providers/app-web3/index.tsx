@@ -1,5 +1,5 @@
+import { useWeb3 } from '@3rdweb/hooks';
 import { BundleDropModule, ThirdwebSDK } from '@3rdweb/sdk';
-import { useEthers } from '@usedapp/core';
 import { createContext, useMemo, useState } from 'react';
 
 export interface IAppWeb3Context {
@@ -13,11 +13,11 @@ export const AppWeb3Context = createContext<IAppWeb3Context>({
 });
 
 export const AppWeb3Provider = ({ children }: any) => {
-  const { library } = useEthers();
+  const { provider } = useWeb3();
 
   const sdk = useMemo(
-    () => (library ? new ThirdwebSDK(library.getSigner()) : undefined),
-    [library]
+    () => (provider ? new ThirdwebSDK(provider?.getSigner()) : undefined),
+    [provider]
   );
 
   const dropBundleModule = useMemo(
