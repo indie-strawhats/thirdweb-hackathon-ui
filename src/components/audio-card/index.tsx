@@ -72,7 +72,7 @@ export const AudioCard = (props: AudioCardProps) => {
       </div>
       <div className='h-10 border-t hover:border-transparent'>
         <div
-          className='grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-yellow-400'
+          className='grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-indigo-500'
           onClick={() => buttonHandle(Number(id))}
         >
           {buttonName}
