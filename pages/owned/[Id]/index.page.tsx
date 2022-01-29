@@ -2,7 +2,13 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { AppWeb3Context } from '../../../src/providers/app-web3';
 import {
   getAudiobook,
@@ -11,8 +17,9 @@ import {
 } from '../../../src/services/web3';
 import { AudioPlayerContext } from '../../../src/providers/audio-player';
 import { useWeb3 } from '@3rdweb/hooks';
+import PageLayout from '../../../src/layouts/page-layout';
 
-const OwnedAudiobookPage: NextPage = () => {
+const OwnedAudiobookPage = () => {
   const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
 
   const {
@@ -145,3 +152,7 @@ const OwnedAudiobookPage: NextPage = () => {
 };
 
 export default OwnedAudiobookPage;
+
+OwnedAudiobookPage.getLayout = function getLayout(page: ReactElement) {
+  return <PageLayout>{page}</PageLayout>;
+};

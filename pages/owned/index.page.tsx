@@ -1,14 +1,15 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import PlayCard from '../../src/components/play-card';
 import { AppWeb3Context } from '../../src/providers/app-web3';
 import { getClaimedAudiobooks } from '../../src/services/web3';
 import SearchBox from '../../src/components/search-box';
 import { IAudiobookData } from '../../src/models/audiobook';
 import { useWeb3 } from '@3rdweb/hooks';
+import PageLayout from '../../src/layouts/page-layout';
 
-const OwnedPage: NextPage = () => {
+const OwnedPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<
     IAudiobookData[]
   >([]);
@@ -78,3 +79,7 @@ const OwnedPage: NextPage = () => {
 };
 
 export default OwnedPage;
+
+OwnedPage.getLayout = function getLayout(page: ReactElement) {
+  return <PageLayout>{page}</PageLayout>;
+};

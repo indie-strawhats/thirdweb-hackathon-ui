@@ -1,13 +1,21 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import PurchaseCard from '../src/components/purchase-card';
 import { AppWeb3Context } from '../src/providers/app-web3';
 import { getAllAudiobooks, purchaseAudiobook } from '../src/services/web3';
 import SearchBox from '../src/components/search-box';
 import { IAudiobookData } from '../src/models/audiobook';
 
-const Home: NextPage = () => {
+import PageLayout from '../src/layouts/page-layout';
+
+const Home = () => {
   const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
   const [filteredAudiobooks, setFilteredAudiobooks] = useState<
     IAudiobookData[]
@@ -85,3 +93,7 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <PageLayout>{page}</PageLayout>;
+};

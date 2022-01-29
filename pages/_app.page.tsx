@@ -6,8 +6,20 @@ import PageLayout from '../src/layouts/page-layout';
 import { ThemeProvider } from 'next-themes';
 import { AppWeb3Provider } from '../src/providers/app-web3';
 import { ThirdwebProvider } from '@3rdweb/react';
+import { NextPage } from 'next';
+import { ReactElement, ReactNode } from 'react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <ThirdwebProvider
       supportedChainIds={[4]}
@@ -18,9 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AppWeb3Provider>
         <AudioPlayerProvider>
           <ThemeProvider attribute='class' defaultTheme='light'>
-            <PageLayout>
-              <Component {...pageProps} />
-            </PageLayout>
+            {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
         </AudioPlayerProvider>
       </AppWeb3Provider>
