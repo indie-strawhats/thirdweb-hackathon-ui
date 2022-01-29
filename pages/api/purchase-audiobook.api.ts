@@ -4,10 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 // This depend on your HTTP Server setup. In this example, we're using next.js
 // api handlers.
-export default function purchaseAudiobook(
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<any> {
+export default function purchaseAudiobook(req: NextApiRequest, res: NextApiResponse): Promise<any> {
   // the RPC URL to the blockchain that the NFT contract is deployed on.
   // "rinkeby" = rinkeby testnet,
   // "https://rpc-mumbai.maticvigil.com" = mumbai testnet.
@@ -18,14 +15,12 @@ export default function purchaseAudiobook(
   // you can assign MINTER role to the wallet through the NFT collection dashboard.
   const wallet = new ethers.Wallet(
     process.env.PRIVATE_KEY as string,
-    ethers.getDefaultProvider(rpcUrl)
+    ethers.getDefaultProvider(rpcUrl),
   );
 
   // initialize the SDK and get the NFT Collection module
   // get the contract address (0x...) from your dashboard!
-  const nft = new ThirdwebSDK(wallet).getNFTModule(
-    '0x68BC0Bf7784D28Efb7346587dfb796B20710C67D'
-  );
+  const nft = new ThirdwebSDK(wallet).getNFTModule('0x68BC0Bf7784D28Efb7346587dfb796B20710C67D');
 
   // returning the HTTP response. This depends on the HTTP server framework.
   return new Promise<void>((resolve) => {

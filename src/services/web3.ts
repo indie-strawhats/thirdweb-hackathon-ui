@@ -6,13 +6,13 @@ export const getAllAudiobooks = async (dropBundleModule: BundleDropModule) => {
   const response = await dropBundleModule?.getAll();
 
   const claimConditionsPromiseArr = response?.map((item) =>
-    dropBundleModule?.getActiveClaimCondition(item.metadata.id)
+    dropBundleModule?.getActiveClaimCondition(item.metadata.id),
   ) as Promise<any>[];
 
   const claimConditions = await Promise.all([...claimConditionsPromiseArr]);
 
   const balancePromiseArr = response?.map((item) =>
-    dropBundleModule?.balance(item.metadata.id)
+    dropBundleModule?.balance(item.metadata.id),
   ) as Promise<any>[];
 
   const balances = await Promise.all([...balancePromiseArr]);
@@ -32,19 +32,17 @@ export const getAllAudiobooks = async (dropBundleModule: BundleDropModule) => {
   return allNFTs;
 };
 
-export const getClaimedAudiobooks = async (
-  dropBundleModule: BundleDropModule
-) => {
+export const getClaimedAudiobooks = async (dropBundleModule: BundleDropModule) => {
   const ownedABResponse = await dropBundleModule?.getOwned();
 
   const claimConditionsPromiseArr = ownedABResponse?.map((item) =>
-    dropBundleModule?.getActiveClaimCondition(item.metadata.id)
+    dropBundleModule?.getActiveClaimCondition(item.metadata.id),
   ) as Promise<any>[];
 
   const claimConditions = await Promise.all([...claimConditionsPromiseArr]);
 
   const balancePromiseArr = ownedABResponse?.map((item) =>
-    dropBundleModule?.balance(item.metadata.id)
+    dropBundleModule?.balance(item.metadata.id),
   ) as Promise<any>[];
 
   const balances = await Promise.all([...balancePromiseArr]);
@@ -77,15 +75,10 @@ export const getClaimedAudiobooks = async (
   return claimedNFTs;
 };
 
-export const getAudiobook = async (
-  dropBundleModule: BundleDropModule,
-  tokenId: string
-) => {
+export const getAudiobook = async (dropBundleModule: BundleDropModule, tokenId: string) => {
   const response = await dropBundleModule?.get(tokenId);
 
-  const claimConditions = await dropBundleModule?.getActiveClaimCondition(
-    response.metadata.id
-  );
+  const claimConditions = await dropBundleModule?.getActiveClaimCondition(response.metadata.id);
 
   const balance = await dropBundleModule?.balance(response.metadata.id);
 
@@ -121,7 +114,7 @@ export const giftAudiobook = async (
   dropBundleModule: BundleDropModule,
   toAccountAddress: string,
   tokenId: string,
-  quantity: number = 1
+  quantity: number = 1,
 ) => {
   return dropBundleModule?.transfer(toAccountAddress, tokenId, quantity);
 };
@@ -129,7 +122,7 @@ export const giftAudiobook = async (
 export const purchaseAudiobook = async (
   dropBundleModule: BundleDropModule,
   tokenId: string,
-  quantity: number = 1
+  quantity: number = 1,
 ) => {
   return dropBundleModule?.claim(tokenId, quantity);
 };

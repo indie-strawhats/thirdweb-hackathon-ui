@@ -3,5 +3,4 @@
  */
 export const noop = () => {};
 
-export const isNotNullAndUndefined = (value: any) =>
-  value !== null && value !== undefined;
+export const isNotNullAndUndefined = (value: any) => value !== null && value !== undefined;

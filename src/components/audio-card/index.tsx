@@ -33,46 +33,42 @@ export const AudioCard = (props: AudioCardProps) => {
   };
 
   return (
-    <div className='block bg-white rounded-lg shadow-md hover:shadow-xl'>
-      <div className='rounded-t-lg aspect-square'>
+    <div className="block bg-white rounded-lg shadow-md hover:shadow-xl">
+      <div className="rounded-t-lg aspect-square">
         <Image
           src={image}
-          alt='audio card picture'
+          alt="audio card picture"
           width={'100%'}
           height={'100%'}
-          layout='responsive'
-          className='rounded-t-lg'
+          layout="responsive"
+          className="rounded-t-lg"
         />
       </div>
-      <div className='flex flex-row justify-between px-4 pt-4 '>
-        <span className='px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full '>
+      <div className="flex flex-row justify-between px-4 pt-4 ">
+        <span className="px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full ">
           #{id}
         </span>
         {balance > 0 && (
-          <span className='py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercas'>
+          <span className="py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercas">
             {renderBalance()}
           </span>
         )}
       </div>
-      <div className='flex flex-row justify-between px-4 pt-3 '>
+      <div className="flex flex-row justify-between px-4 pt-3 ">
         <div>
           <h1
-            className='mb-2 font-bold text-gray-600 hover:cursor-pointer'
+            className="mb-2 font-bold text-gray-600 hover:cursor-pointer"
             onClick={() => nameHandle(id)}
           >
             {name}
           </h1>
-          <p className='block mb-2 overflow-hidden text-sm text-gray-600'>
-            {desc}
-          </p>
+          <p className="block mb-2 overflow-hidden text-sm text-gray-600">{desc}</p>
         </div>
-        <div className='mb-2 text-sm text-gray-600'>
-          {`${currencyUnit} : ${price}`}
-        </div>
+        <div className="mb-2 text-sm text-gray-600">{`${currencyUnit} : ${price}`}</div>
       </div>
-      <div className='h-10 border-t hover:border-transparent'>
+      <div className="h-10 border-t hover:border-transparent">
         <div
-          className='grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-indigo-500'
+          className="grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center hover:cursor-pointer hover:text-white hover:bg-indigo-500"
           onClick={() => buttonHandle(Number(id))}
         >
           {buttonName}

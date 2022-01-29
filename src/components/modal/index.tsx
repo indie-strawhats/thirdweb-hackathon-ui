@@ -21,9 +21,7 @@ const Modal = ({ title, description, actions = [] }: IModalProps) => {
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
         <div className="relative bg-white rounded max-w-xl mx-auto w-[800px] p-4">
-          <Dialog.Title className="text-3xl font-semibold text-gray-800 mb-2">
-            {title}
-          </Dialog.Title>
+          <Dialog.Title className="text-3xl font-semibold text-gray-800 mb-2">{title}</Dialog.Title>
           <Dialog.Description>{description}</Dialog.Description>
 
           {actions.length > 0 && (

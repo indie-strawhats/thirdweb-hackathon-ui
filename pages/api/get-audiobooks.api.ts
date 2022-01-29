@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default function getAudiobooks(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default function getAudiobooks(req: NextApiRequest, res: NextApiResponse) {
   const audiobookMappings: { [key: string]: string } = {
     '0': 'https://tribeofnoisestorage.blob.core.windows.net/music/c9c84bcc00f348f658d608fdae8ba903.mp3',
     '1': 'https://tribeofnoisestorage.blob.core.windows.net/music/13bbe764d8c38dd77a1eb738058e5a3c.mp3',

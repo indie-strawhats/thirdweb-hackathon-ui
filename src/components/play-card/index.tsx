@@ -12,8 +12,7 @@ interface PlayCardProps {
 
 const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   const router = useRouter();
-  const { setAudiobookData, setIsVisible } =
-    useContext<any>(AudioPlayerContext);
+  const { setAudiobookData, setIsVisible } = useContext<any>(AudioPlayerContext);
 
   const handlePlay = () => {
     setAudiobookData(data);
@@ -25,12 +24,7 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   };
 
   return (
-    <AudioCard
-      {...data}
-      nameHandle={handleName}
-      buttonName="Play"
-      buttonHandle={handlePlay}
-    />
+    <AudioCard {...data} nameHandle={handleName} buttonName="Play" buttonHandle={handlePlay} />
   );
 };
 

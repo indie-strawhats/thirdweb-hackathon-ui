@@ -9,12 +9,7 @@ interface PurchaseCardProps {
 
 const PurchaseCard: FC<PurchaseCardProps> = ({ data, onPurchase }) => {
   return (
-    <AudioCard
-      {...data}
-      buttonName="Purchase"
-      buttonHandle={onPurchase}
-      nameHandle={() => {}}
-    />
+    <AudioCard {...data} buttonName="Purchase" buttonHandle={onPurchase} nameHandle={() => {}} />
   );
 };
 
