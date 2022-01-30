@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Dialog } from '@headlessui/react';
 import Button from '../button';
 import { noop } from '../../helpers/utils';
@@ -6,7 +6,7 @@ import LoadingBar from '../loading-bar';
 
 export interface IModalProps {
   title: string;
-  description: string;
+  description: ReactNode | string;
   loading?: boolean;
 }
 

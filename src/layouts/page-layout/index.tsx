@@ -4,14 +4,15 @@ import ReactAudioPlayer from 'react-audio-player';
 import Button from '../../components/button';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
-import { isOnSupportedChain } from '../../helpers/web3';
 import { AudioPlayerContext } from '../../providers/audio-player';
 
-import { useWeb3 } from '@3rdweb/hooks';
+import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
+import { RinkeByChainID } from '../../constants';
 
 const PageLayout = ({ children }: any) => {
   const [readyToCheck, setReadyToCheck] = useState(false);
-  const { chainId, provider } = useWeb3();
+  const { provider, error } = useWeb3();
+  const { switchNetwork } = useSwitchNetwork();
 
   const { isVisible = true, setIsVisible, audiobookData } = useContext<any>(AudioPlayerContext);
 
@@ -19,19 +20,46 @@ const PageLayout = ({ children }: any) => {
     setTimeout(() => setReadyToCheck(true), 2000);
   }, []);
 
+  const handleInstallMetamask = () => {
+    window.open('https://metamask.io/download/', '_blank');
+  };
+
+  const handleNetworkSwitch = () => {
+    switchNetwork(RinkeByChainID);
+  };
+
   const renderWarning = () => {
     // readyToCheck is being used to wait for metamask provider to load. Before metamask, infura provider loads which does not help.
     if (readyToCheck && !provider) {
       return (
         <Modal
           title="Warning!"
-          description="Please make sure you have active Metamask connection."
+          description={
+            <div className="flex flex-col gap-8">
+              <p className="text-gray-700">Please make sure you have Metamask installed.</p>
+              <Button variant="primary" className="self-end" onClick={handleInstallMetamask}>
+                Install metamask
+              </Button>
+            </div>
+          }
         />
       );
     }
 
-    if (readyToCheck && !isOnSupportedChain(chainId as number)) {
-      return <Modal title="Warning!" description="Change to Rinkeby Testnet to use application." />;
+    if (readyToCheck && error?.name === 'UnsupportedChainIdError') {
+      return (
+        <Modal
+          title="Warning!"
+          description={
+            <div className="flex flex-col gap-8">
+              <p className="text-gray-700">Please make sure you are on RinkeBy Network.</p>
+              <Button variant="primary" className="self-end" onClick={handleNetworkSwitch}>
+                Switch to RinkeBy
+              </Button>
+            </div>
+          }
+        />
+      );
     }
 
     return null;
@@ -66,7 +94,7 @@ const PageLayout = ({ children }: any) => {
         </div>
       </Transition>
 
-      {provider !== undefined && renderWarning()}
+      {(provider === undefined || error !== undefined) && renderWarning()}
     </div>
   );
 };

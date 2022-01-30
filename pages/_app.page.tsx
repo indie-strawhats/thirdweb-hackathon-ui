@@ -10,6 +10,7 @@ import { ThirdwebProvider } from '@3rdweb/react';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { RinkeByChainID } from '../src/constants';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,11 +21,11 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page);
+  const getLayout = Component.getLayout ?? ((page: ReactNode) => page);
 
   return (
     <ThirdwebProvider
-      supportedChainIds={[4]}
+      supportedChainIds={[RinkeByChainID]}
       connectors={{
         injected: {},
       }}
