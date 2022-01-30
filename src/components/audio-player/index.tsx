@@ -17,7 +17,6 @@ export default function CustomAudioPlayer({}: Props) {
   console.log(audiobookData);
 
   useEffect(() => {
-    console.log('New audio loading !');
     if (audio) audio.pause();
 
     setPaused(false);
@@ -33,9 +32,8 @@ export default function CustomAudioPlayer({}: Props) {
   useEffect(() => {
     if (!audio) return;
 
-    console.log('playig audio');
     audio.load();
-    // audio.play();
+    audio.play();
     audio.onloadedmetadata = function () {
       setAudioDuration(audio.duration);
       audio.ontimeupdate = () => {
