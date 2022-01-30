@@ -6,7 +6,6 @@ import Header from '../../components/header';
 import Modal from '../../components/modal';
 import { AudioPlayerContext } from '../../providers/audio-player';
 import CustomAudioPlayer from '../../components/audio-player';
-import { BiArrowFromBottom } from 'react-icons/bi';
 
 import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
 import { RinkeByChainID } from '../../constants';
@@ -18,7 +17,6 @@ const PageLayout = ({ children }: any) => {
 
   const {
     isVisible = true,
-    setIsVisible,
   } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
@@ -74,16 +72,6 @@ const PageLayout = ({ children }: any) => {
     <div className={`w-screen ${isVisible && 'mb-32'}`}>
       <Header />
       {children}
-
-      {!isVisible && (
-        <BiArrowFromBottom
-          size="3vh"
-          className='fixed bottom-0'
-          onClick={() => {
-            setIsVisible(true)
-          }}
-        />
-      )}
 
       <Transition
         show={isVisible}

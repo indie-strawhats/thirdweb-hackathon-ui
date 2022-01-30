@@ -18,23 +18,32 @@ export default function CustomAudioPlayer({ }: Props) {
     const [paused, setPaused] = useState(false);
 
     useEffect(() => {
-        audio?.pause();
+
+        console.log("New audio loading !");
+        if (audio) audio.pause();
+
         setPaused(false);
         setAudio(typeof Audio !== "undefined" ? new Audio(audiobookData.fileUrl) : undefined);
+        return () => {
+            if (!audio) return
+
+            audio.pause();
+            setPaused(false);
+        }
     }, [audiobookData.fileUrl])
 
     useEffect(() => {
-        audio?.load();
-        audio?.play();
-        audio ?
-            audio.onloadedmetadata = function () {
-                setAudioDuration(audio.duration)
-                audio.ontimeupdate = () => {
-                    setAudioCurrentTime(audio?.currentTime)
-                };
-            }
-            :
-            null;
+        if (!audio) return;
+
+        console.log("playig audio");
+        audio.load();
+        audio.play();
+        audio.onloadedmetadata = function () {
+            setAudioDuration(audio.duration)
+            audio.ontimeupdate = () => {
+                setAudioCurrentTime(audio?.currentTime)
+            };
+        }
     }, [audio])
 
     return (
@@ -43,6 +52,10 @@ export default function CustomAudioPlayer({ }: Props) {
                 <div className="">
                     <BiX size="3vh"
                         onClick={() => {
+                            if (!audio) return
+
+                            audio.pause();
+                            setPaused(false);
                             setIsVisible(false)
                         }}
                     />
@@ -82,7 +95,7 @@ export default function CustomAudioPlayer({ }: Props) {
                         max={`${audioDuration}`}
                         onChange={(e) => {
                             if (!audio) return
-                            
+
                             const newCurrentTimeValue = parseFloat(e.target.value);
                             audio.currentTime = newCurrentTimeValue
                             setAudioCurrentTime(newCurrentTimeValue)
