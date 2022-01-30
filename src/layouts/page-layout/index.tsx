@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
 import { AudioPlayerContext } from '../../providers/audio-player';
+import CustomAudioPlayer from '../../components/audio-player';
 
 import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
 import { RinkeByChainID } from '../../constants';
@@ -14,7 +15,7 @@ const PageLayout = ({ children }: any) => {
   const { provider, error } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
 
-  const { isVisible = true, setIsVisible, audiobookData } = useContext<any>(AudioPlayerContext);
+  const { isVisible = true } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
     setTimeout(() => setReadyToCheck(true), 2000);
@@ -79,19 +80,7 @@ const PageLayout = ({ children }: any) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="fixed bottom-0 flex items-center w-full h-24 bg-white border-t">
-          <div className="flex items-center flex-grow px-4">
-            <ReactAudioPlayer
-              src={audiobookData.fileUrl}
-              controls
-              autoPlay
-              className="flex-grow mr-4"
-            />
-            <Button variant="primary" onClick={() => setIsVisible(false)}>
-              Close
-            </Button>
-          </div>
-        </div>
+        <CustomAudioPlayer />
       </Transition>
 
       {(provider === undefined || error !== undefined) && renderWarning()}
