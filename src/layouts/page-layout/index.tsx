@@ -15,9 +15,7 @@ const PageLayout = ({ children }: any) => {
   const { provider, error } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
 
-  const {
-    isVisible = true,
-  } = useContext<any>(AudioPlayerContext);
+  const { isVisible = true } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
     setTimeout(() => setReadyToCheck(true), 2000);
