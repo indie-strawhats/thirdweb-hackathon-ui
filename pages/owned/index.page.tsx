@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import PlayCard from '../../src/components/play-card';
@@ -65,7 +64,7 @@ const OwnedPage = () => {
         </div>
       </div>
       <div className="max-w-6xl pt-8 m-auto">
-        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">Collection</h2>
+        <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">My Audiobooks</h2>
         {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
       </div>
     </>
