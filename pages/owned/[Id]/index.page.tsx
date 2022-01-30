@@ -10,13 +10,14 @@ import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
 import Modal from '../../../src/components/modal';
+import { IEntireAudiobookData } from '../../../src/models/audiobook';
 
 const OwnedAudiobookPage = () => {
   const [highlight, triggerHighlight] = useState(false);
   const [purchaseInProgress, setPurchaseInProgress] = useState(false);
   const [giftInProgress, setGiftInProgress] = useState(false);
   const [rerender, triggerRerender] = useState(false);
-  const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
+  const [localAudiobookData, setLocalAudiobookData] = useState<IEntireAudiobookData>();
 
   const {
     query: { Id },
@@ -73,7 +74,7 @@ const OwnedAudiobookPage = () => {
   };
 
   const handlePurchase = async () => {
-    if (!dropBundleModule) return;
+    if (!dropBundleModule || !localAudiobookData) return;
 
     try {
       setPurchaseInProgress(true);
@@ -111,11 +112,11 @@ const OwnedAudiobookPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {localAudiobookData && (
-        <div className="relative flex flex-col items-center max-h-screen p-20">
+        <div className="grid max-h-screen p-20 place-content-center">
           <div
-            className={`overflow-hidden bg-white rounded-lg shadow-2xl ${getHighlightClassIfAny()}`}
+            className={`overflow-hidden bg-white rounded-lg shadow-2xl w-[600px]  ${getHighlightClassIfAny()}`}
           >
-            <div className="h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+            <div className="h-64 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
               <div className="flex items-center justify-between text-white">
                 <h1 className="mb-2 text-3xl font-semibold hover:cursor-pointer">
                   #{localAudiobookData.id}
@@ -127,7 +128,7 @@ const OwnedAudiobookPage = () => {
               </div>
             </div>
             <div className="relative flex flex-col items-center">
-              <div className="mb-4 -mt-20 overflow-hidden bg-white rounded-lg w-36 h-36 ring-2 ring-slate-100 ring-offset-2">
+              <div className="w-64 h-64 mb-4 -mt-40 overflow-hidden bg-white rounded-lg ring-2 ring-slate-100 ring-offset-2">
                 <Image
                   src={localAudiobookData.image}
                   width="100%"
@@ -138,25 +139,54 @@ const OwnedAudiobookPage = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-row justify-between px-4 py-4">
-              <div>
-                <h1 className="mb-2 font-bold text-gray-600 hover:cursor-pointer">
-                  {localAudiobookData.name}
-                </h1>
-                <p className="block mb-2 overflow-hidden text-sm text-gray-600">
-                  {localAudiobookData.desc}
-                </p>
+            <div className="flex flex-col items-center px-8 py-4">
+              <h1 className="mb-2 text-2xl font-bold text-gray-600 hover:cursor-pointer">
+                {localAudiobookData.name}
+              </h1>
+              <p className="text-base text-gray-600 blockoverflow-hidden">
+                {localAudiobookData.desc}
+              </p>
+            </div>
+            <div className="flex flex-col items-start px-8 py-4 pt-0 text-gray-600">
+              <div className="flex items-start justify-between">
+                <p className="w-32 font-semibold text-gray-800">Written By</p>
+                <p>{localAudiobookData.writtenBy}</p>
               </div>
-              <div className="mb-2 text-sm text-gray-600">
-                {`${localAudiobookData.currencyUnit} : ${localAudiobookData.price}`}
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Narrated By</p>
+                <p>{localAudiobookData.narratedBy}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Ratings</p>
+                <p>{localAudiobookData.ratings}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Category</p>
+                <p>{localAudiobookData.category}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Language</p>
+                <p>{localAudiobookData.lang}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Length</p>
+                <p>{localAudiobookData.len}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Release Date</p>
+                <p>{localAudiobookData.releaseDate}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="w-32 font-semibold text-gray-800">Publisher</p>
+                <p>{localAudiobookData.publisher}</p>
               </div>
             </div>
-            <div className="flex border-t h-14 w-80 hover:border-transparent">
+            <div className="flex border-t h-14 hover:border-transparent">
               <button
                 className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
-                Purchase
+                Purchase @ {`${localAudiobookData.currencyUnit} : ${localAudiobookData.price}`}
               </button>
 
               {localAudiobookData.balance > 0 && (

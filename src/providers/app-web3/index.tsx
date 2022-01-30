@@ -21,7 +21,7 @@ export const AppWeb3Provider = ({ children }: any) => {
   );
 
   const dropBundleModule = useMemo(
-    () => (sdk ? sdk.getBundleDropModule('0x9dba0b76852c23176FaAc6082491e2138FfF2EDa') : undefined),
+    () => (sdk ? sdk.getBundleDropModule('0x815b11bA885E7f528BCBA97d38884aBbD3eebeEb') : undefined),
     [sdk],
   );
 

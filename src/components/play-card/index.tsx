@@ -7,10 +7,11 @@ import { IAudiobookData } from '../../models/audiobook';
 
 interface PlayCardProps {
   data: IAudiobookData;
+  className?: string;
   onPurchase: (tokenId: number, quantity?: number) => void;
 }
 
-const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
+const PlayCard: FC<PlayCardProps> = ({ data, className = '', onPurchase }) => {
   const router = useRouter();
   const { setAudiobookData, setIsVisible } = useContext<any>(AudioPlayerContext);
 
@@ -24,7 +25,13 @@ const PlayCard: FC<PlayCardProps> = ({ data, onPurchase }) => {
   };
 
   return (
-    <AudioCard {...data} nameHandle={handleName} buttonName="Play" buttonHandle={handlePlay} />
+    <AudioCard
+      {...data}
+      className={className}
+      nameHandle={handleName}
+      buttonName="Play"
+      buttonHandle={handlePlay}
+    />
   );
 };
 

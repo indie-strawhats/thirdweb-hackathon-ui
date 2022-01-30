@@ -4,13 +4,13 @@ import PlayCard from '../../src/components/play-card';
 import { AppWeb3Context } from '../../src/providers/app-web3';
 import { getClaimedAudiobooks } from '../../src/services/web3';
 import SearchBox from '../../src/components/search-box';
-import { IAudiobookData } from '../../src/models/audiobook';
+import { IAudiobookData, IOwnedAudiobookData } from '../../src/models/audiobook';
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../src/layouts/page-layout';
 
 const OwnedPage = () => {
-  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IAudiobookData[]>([]);
-  const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
+  const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IOwnedAudiobookData[]>([]);
+  const [filteredAudiobooks, setFilteredAudiobooks] = useState<IOwnedAudiobookData[]>([]);
 
   const { address } = useWeb3();
   const { dropBundleModule } = useContext(AppWeb3Context);
