@@ -12,12 +12,11 @@ import { toast } from 'react-toastify';
 import Modal from '../../../src/components/modal';
 
 const OwnedAudiobookPage = () => {
+  const [highlight, triggerHighlight] = useState(false);
   const [purchaseInProgress, setPurchaseInProgress] = useState(false);
   const [giftInProgress, setGiftInProgress] = useState(false);
   const [rerender, triggerRerender] = useState(false);
   const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
-
-  const cardRef = useRef<HTMLElement>();
 
   const {
     query: { Id },
@@ -39,9 +38,9 @@ const OwnedAudiobookPage = () => {
   }, [dropBundleModule, Id, address, rerender]);
 
   const highlightCard = () => {
-    cardRef.current?.classList.add('animate-highlight-once');
+    triggerHighlight(true);
     setTimeout(() => {
-      cardRef.current?.classList.remove('animate-highlight-once');
+      triggerHighlight(false);
     }, 3500);
   };
 
@@ -100,6 +99,10 @@ const OwnedAudiobookPage = () => {
     setIsVisible(true);
   };
 
+  const getHighlightClassIfAny = () => {
+    return highlight ? 'animate-highlight-once ring ring-indigo-500 ring-offset-1' : '';
+  };
+
   return (
     <div>
       <Head>
@@ -110,8 +113,7 @@ const OwnedAudiobookPage = () => {
       {localAudiobookData && (
         <div className="relative flex flex-col items-center max-h-screen p-20">
           <div
-            ref={cardRef as React.RefObject<HTMLDivElement>}
-            className="overflow-hidden bg-white rounded-lg shadow-2xl"
+            className={`overflow-hidden bg-white rounded-lg shadow-2xl ${getHighlightClassIfAny()}`}
           >
             <div className="h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
               <div className="flex items-center justify-between text-white">

@@ -12,6 +12,7 @@ export interface AudioCardProps {
   image: string;
   buttonName: string;
   buttonHandle: (name: string, tokenId: string) => void;
+  className: string;
 }
 
 export const AudioCard = (props: AudioCardProps) => {
@@ -26,6 +27,7 @@ export const AudioCard = (props: AudioCardProps) => {
     balance,
     price,
     currencyUnit,
+    className,
   } = props;
 
   const renderBalance = () => {
@@ -33,8 +35,8 @@ export const AudioCard = (props: AudioCardProps) => {
   };
 
   return (
-    <div className="block bg-white rounded-lg shadow-md hover:shadow-xl">
-      <div className="rounded-t-lg aspect-square">
+    <div className={`block bg-white rounded-lg shadow-md hover:shadow-xl ${className}`}>
+      <div className="aspect-square">
         <Image
           src={image}
           alt="audio card picture"

@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Modal from '../src/components/modal';
 
 const Home = () => {
+  const [highlightedId, setHighlightedId] = useState<string>('');
   const [purchaseInProgress, setPurchaseInProgress] = useState(false);
   const [rerender, triggerRerender] = useState(false);
   const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
@@ -43,6 +44,7 @@ const Home = () => {
       });
 
       triggerRerender(!rerender);
+      highlightCard(tokenId);
     } catch (error) {
       toast.error('Purchase failed!', {
         position: 'bottom-right',
@@ -65,12 +67,26 @@ const Home = () => {
     setFilteredAudiobooks(filteredAudiobooks);
   };
 
+  const highlightCard = (id: string) => {
+    setHighlightedId(id);
+    setTimeout(() => setHighlightedId(''), 3500);
+  };
+
+  const getHighlightClassIfAny = (id: string) => {
+    if (!highlightedId) return;
+    return highlightedId === id ? 'animate-highlight-once ring ring-indigo-500 ring-offset-1' : '';
+  };
+
   const renderAllAudiobooks = () => {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filteredAudiobooks.map((ab) => (
           <div key={ab.id}>
-            <PurchaseCard data={ab} onPurchase={handlePurchase} />
+            <PurchaseCard
+              data={ab}
+              onPurchase={handlePurchase}
+              className={getHighlightClassIfAny(ab.id)}
+            />
           </div>
         ))}
       </div>
