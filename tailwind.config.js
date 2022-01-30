@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       animation: {
         blob: 'blob 7s infinite',
+        'highlight-once': 'highlight-once 1s 3 ease-in-out',
       },
       keyframes: {
         blob: {
@@ -18,6 +19,17 @@ module.exports = {
           },
           '100%': {
             transform: 'tranlate(0px, 0px) scale(1)',
+          },
+        },
+        'highlight-once': {
+          '0%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
+          '100%': {
+            transform: 'translateY(0)',
           },
         },
       },

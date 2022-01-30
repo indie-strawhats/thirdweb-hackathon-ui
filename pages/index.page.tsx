@@ -8,8 +8,10 @@ import { IAudiobookData } from '../src/models/audiobook';
 
 import PageLayout from '../src/layouts/page-layout';
 import { toast } from 'react-toastify';
+import Modal from '../src/components/modal';
 
 const Home = () => {
+  const [purchaseInProgress, setPurchaseInProgress] = useState(false);
   const [rerender, triggerRerender] = useState(false);
   const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
   const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
@@ -33,21 +35,20 @@ const Home = () => {
     if (!dropBundleModule) return;
 
     try {
-      const response = await toast.promise(
-        purchaseAudiobook(dropBundleModule, tokenId, quantity),
-        {
-          pending: `Purchasing - ${name}`,
-          error: 'Something went wrong',
-          success: 'Purchase successful!',
-        },
-        {
-          position: 'bottom-right',
-        },
-      );
+      setPurchaseInProgress(true);
+
+      const response = await purchaseAudiobook(dropBundleModule, tokenId, quantity);
+      toast.success('Successfully purchased', {
+        position: 'bottom-right',
+      });
 
       triggerRerender(!rerender);
     } catch (error) {
-      console.error(error);
+      toast.error('Purchase failed!', {
+        position: 'bottom-right',
+      });
+    } finally {
+      setPurchaseInProgress(false);
     }
   };
 
@@ -89,9 +90,17 @@ const Home = () => {
         </div>
       </div>
       <div className="max-w-6xl pt-8 pb-4 m-auto">
-        <h2 className="pb-4 text-3xl font-semibold text-gray-800 ">Collection</h2>
+        <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">All Audiobooks</h2>
         {renderAllAudiobooks()}
       </div>
+
+      {purchaseInProgress && (
+        <Modal
+          title="Purchasing Audiobook"
+          loading
+          description="You will be prompted to authorize 1 transactions."
+        />
+      )}
     </>
   );
 };

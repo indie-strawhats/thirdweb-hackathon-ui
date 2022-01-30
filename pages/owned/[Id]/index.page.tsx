@@ -2,17 +2,22 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { ReactElement, useContext, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AppWeb3Context } from '../../../src/providers/app-web3';
 import { getAudiobook, giftAudiobook, purchaseAudiobook } from '../../../src/services/web3';
 import { AudioPlayerContext } from '../../../src/providers/audio-player';
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
+import Modal from '../../../src/components/modal';
 
 const OwnedAudiobookPage = () => {
+  const [purchaseInProgress, setPurchaseInProgress] = useState(false);
+  const [giftInProgress, setGiftInProgress] = useState(false);
   const [rerender, triggerRerender] = useState(false);
   const [localAudiobookData, setLocalAudiobookData] = useState<any>(null);
+
+  const cardRef = useRef<HTMLElement>();
 
   const {
     query: { Id },
@@ -33,31 +38,38 @@ const OwnedAudiobookPage = () => {
     })();
   }, [dropBundleModule, Id, address, rerender]);
 
+  const highlightCard = () => {
+    cardRef.current?.classList.add('animate-highlight-once');
+    setTimeout(() => {
+      cardRef.current?.classList.remove('animate-highlight-once');
+    }, 3500);
+  };
+
   const handleGiftAudiobook = async () => {
     if (!dropBundleModule) return;
 
     try {
-      const response = await toast.promise(
-        giftAudiobook(
-          dropBundleModule,
-          '0x0585Ab27743a0C0248166Ef169372B12f7C24C45',
-          // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
-          Id as string,
-          1,
-        ),
-        {
-          pending: `Gifting - ${localAudiobookData.name}`,
-          error: 'Something went wrong',
-          success: 'Gifted successful!',
-        },
-        {
-          position: 'bottom-right',
-        },
+      setGiftInProgress(true);
+
+      await giftAudiobook(
+        dropBundleModule,
+        '0x0585Ab27743a0C0248166Ef169372B12f7C24C45',
+        // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
+        Id as string,
+        1,
       );
+      toast.success('Successfully Gifted', {
+        position: 'bottom-right',
+      });
 
       triggerRerender(!rerender);
+      highlightCard();
     } catch (error) {
-      console.error(error);
+      toast.error('Gift failed!', {
+        position: 'bottom-right',
+      });
+    } finally {
+      setGiftInProgress(false);
     }
   };
 
@@ -65,21 +77,21 @@ const OwnedAudiobookPage = () => {
     if (!dropBundleModule) return;
 
     try {
-      const response = await toast.promise(
-        purchaseAudiobook(dropBundleModule, localAudiobookData.id, 1),
-        {
-          pending: `Purchasing - ${localAudiobookData.name}`,
-          error: 'Something went wrong',
-          success: 'Purchase successful!',
-        },
-        {
-          position: 'bottom-right',
-        },
-      );
+      setPurchaseInProgress(true);
+
+      await purchaseAudiobook(dropBundleModule, localAudiobookData.id, 1);
+      toast.success('Successfully Purchased', {
+        position: 'bottom-right',
+      });
 
       triggerRerender(!rerender);
+      highlightCard();
     } catch (error) {
-      console.error(error);
+      toast.error('Purchase failed!', {
+        position: 'bottom-right',
+      });
+    } finally {
+      setPurchaseInProgress(false);
     }
   };
 
@@ -97,7 +109,10 @@ const OwnedAudiobookPage = () => {
       </Head>
       {localAudiobookData && (
         <div className="relative flex flex-col items-center max-h-screen p-20">
-          <div className="overflow-hidden bg-white rounded-lg shadow-2xl">
+          <div
+            ref={cardRef as React.RefObject<HTMLDivElement>}
+            className="overflow-hidden bg-white rounded-lg shadow-2xl"
+          >
             <div className="h-40 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
               <div className="flex items-center justify-between text-white">
                 <h1 className="mb-2 text-3xl font-semibold hover:cursor-pointer">
@@ -162,6 +177,22 @@ const OwnedAudiobookPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {purchaseInProgress && (
+        <Modal
+          title="Purchasing Audiobook"
+          loading
+          description="You will be prompted to authorize 1 transactions."
+        />
+      )}
+
+      {giftInProgress && (
+        <Modal
+          title="Gifting Audiobook"
+          loading
+          description="You will be prompted to authorize 1 transactions."
+        />
       )}
     </div>
   );
