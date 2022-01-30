@@ -19,7 +19,7 @@ const SearchBox: FC<ISearchBoxProps> = ({ onSearch }) => {
       <div className="relative w-full max-w-lg">
         <input
           type="text"
-          className="z-0 pl-10 rounded shadow pr-7 h-14 w-96 focus:shadow-md focus:outline-none "
+          className="z-0 w-full pl-10 text-lg font-semibold text-gray-700 rounded shadow pr-7 h-14 ring-2 ring-offset-2 ring-gray-300 focus:shadow-md focus:outline-none"
           placeholder="Search..."
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
@@ -27,7 +27,7 @@ const SearchBox: FC<ISearchBoxProps> = ({ onSearch }) => {
         <div className="absolute top-4 left-3">
           <IconContext.Provider
             value={{
-              className: 'text-gray-400 text-2xl',
+              className: 'text-gray-400 text-2xl text-indigo-400',
             }}
           >
             <BiSearch />

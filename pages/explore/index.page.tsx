@@ -100,12 +100,12 @@ const ExplorePage = () => {
         <meta name="description" content="Awesome Audiobooks - Collection" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full bg-gray-100 shadow-inner h-30">
+      <div className="w-full mb-8 bg-gray-100 shadow-inner h-30">
         <div className="relative w-full -bottom-7">
           <SearchBox onSearch={handleSearch} />
         </div>
       </div>
-      <div className="max-w-6xl pt-8 pb-4 m-auto">
+      <div className="pt-8 pb-4 m-auto max-w-7xl">
         <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">All Audiobooks</h2>
         {renderAllAudiobooks()}
       </div>

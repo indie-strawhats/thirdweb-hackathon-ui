@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app';
 
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/globals.scss';
 import { AudioPlayerProvider } from '../src/providers/audio-player';
 import PageLayout from '../src/layouts/page-layout';
 import { ThemeProvider } from 'next-themes';
@@ -11,6 +10,7 @@ import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { RinkeByChainID } from '../src/constants';
+import '../styles/globals.scss';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

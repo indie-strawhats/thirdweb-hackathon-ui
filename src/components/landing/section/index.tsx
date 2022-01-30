@@ -17,10 +17,10 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
       <div
         className={`container flex ${
           imagePosition === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'
-        } flex-col items-center px-5 py-8 mx-auto gap-20`}
+        } flex-col items-center px-5 mx-auto gap-20`}
       >
-        <div className="w-5/6 h-full lg:max-w-xl lg:w-full md:w-1/2">
-          <ColorBlobWrapper blobSize="large">
+        <div className="w-5/6 h-full md:w-1/3">
+          <ColorBlobWrapper>
             <div className="rounded">
               <Image
                 width={'100%'}
@@ -33,10 +33,8 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
             </div>
           </ColorBlobWrapper>
         </div>
-        <div className="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
-          <h1 className="mb-4 text-3xl font-medium text-gray-900 title-font sm:text-4xl">
-            {sectionHeading}
-          </h1>
+        <div className="flex flex-col items-center p-16 mb-16 text-center lg:flex-grow md:w-1/2 md:items-start md:text-left md:mb-0">
+          <h1 className="mb-4 text-4xl font-medium text-indigo-500">{sectionHeading}</h1>
           <p className="mb-8 leading-relaxed">{textContent}</p>
         </div>
       </div>
