@@ -75,14 +75,16 @@ const PageLayout = ({ children }: any) => {
       <Header />
       {children}
 
-      <BiArrowFromBottom
-        show={!isVisible}
-        size="3vh"
-        className='fixed bottom-0'
-        onClick={() => {
-          setIsVisible(true)
-        }}
-      />
+      {!isVisible && (
+        <BiArrowFromBottom
+          size="3vh"
+          className='fixed bottom-0'
+          onClick={() => {
+            setIsVisible(true)
+          }}
+        />
+      )}
+
       <Transition
         show={isVisible}
         enter="transition-opacity duration-1000"

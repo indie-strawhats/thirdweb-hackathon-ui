@@ -12,9 +12,9 @@ export default function CustomAudioPlayer({ }: Props) {
         audiobookData,
     } = useContext<any>(AudioPlayerContext);
 
-    const [audioDuration, setAudioDuration] = useState();
+    const [audioDuration, setAudioDuration] = useState<Number>(0);
     const [audioCurrentTime, setAudioCurrentTime] = useState(0.00);
-    const [audio, setAudio] = useState();
+    const [audio, setAudio] = useState<HTMLAudioElement>();
     const [paused, setPaused] = useState(false);
 
     useEffect(() => {
@@ -26,12 +26,15 @@ export default function CustomAudioPlayer({ }: Props) {
     useEffect(() => {
         audio?.load();
         audio?.play();
-        audio?.onloadedmetadata = function () {
-            setAudioDuration(audio?.duration)
-            audio?.ontimeupdate = () => {
-                setAudioCurrentTime(audio?.currentTime)
-            };
-        };
+        audio ?
+            audio.onloadedmetadata = function () {
+                setAudioDuration(audio.duration)
+                audio.ontimeupdate = () => {
+                    setAudioCurrentTime(audio?.currentTime)
+                };
+            }
+            :
+            null;
     }, [audio])
 
     return (
@@ -76,10 +79,13 @@ export default function CustomAudioPlayer({ }: Props) {
                     <input type="range"
                         className="form-range w-4/6 h-6 p-0 focus:outline-none focus:ring-0 focus:shadow-none"
                         min="0"
-                        max={audioDuration}
+                        max={`${audioDuration}`}
                         onChange={(e) => {
-                            audio?.currentTime = e.target.value;
-                            setAudioCurrentTime(e.target.value)
+                            if (!audio) return
+                            
+                            const newCurrentTimeValue = parseFloat(e.target.value);
+                            audio.currentTime = newCurrentTimeValue
+                            setAudioCurrentTime(newCurrentTimeValue)
                         }}
                         value={audioCurrentTime}
                     />
