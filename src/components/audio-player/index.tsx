@@ -4,43 +4,39 @@ import { secondsToMinutes } from '../../helpers/utils';
 import { BiX, BiPlayCircle, BiPauseCircle } from 'react-icons/bi';
 import Image from 'next/image';
 
-export interface Props {}
-
-export default function CustomAudioPlayer({}: Props) {
+const CustomAudioPlayer = () => {
   const { setIsVisible, audiobookData } = useContext<any>(AudioPlayerContext);
 
   const [audioDuration, setAudioDuration] = useState<number>(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0.0);
-  const [audio, setAudio] = useState<HTMLAudioElement>();
-  const [paused, setPaused] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  console.log(audiobookData);
-
-  useEffect(() => {
-    if (audio) audio.pause();
-
-    setPaused(false);
-    setAudio(typeof Audio !== 'undefined' ? new Audio(audiobookData.fileUrl) : undefined);
-    return () => {
-      if (!audio) return;
-
-      audio.pause();
-      setPaused(false);
-    };
-  }, [audiobookData.fileUrl]);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(audiobookData.fileUrl));
 
   useEffect(() => {
-    if (!audio) return;
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
-    audio.load();
-    audio.play();
-    audio.onloadedmetadata = function () {
-      setAudioDuration(audio.duration);
-      audio.ontimeupdate = () => {
-        setAudioCurrentTime(audio?.currentTime);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    audioRef.current = new Audio(audiobookData.fileUrl);
+    audioRef.current.play();
+    audioRef.current.onloadedmetadata = () => {
+      setAudioDuration(audioRef.current.duration);
+      audioRef.current.ontimeupdate = () => {
+        setAudioCurrentTime(audioRef.current.currentTime);
       };
     };
-  }, [audio]);
+
+    setIsPlaying(true);
+  }, [audiobookData.fileUrl]);
 
   return (
     <div className="fixed bottom-0 flex w-full">
@@ -67,30 +63,25 @@ export default function CustomAudioPlayer({}: Props) {
             <BiX
               className="text-5xl text-indigo-500 transition-transform cursor-pointer hover:scale-125"
               onClick={() => {
-                if (!audio) return;
-
-                audio.pause();
-                setPaused(false);
+                setIsPlaying(false);
                 setIsVisible(false);
               }}
             />
           </div>
         </div>
         <div className="flex items-center w-full">
-          {paused ? (
+          {!isPlaying ? (
             <BiPlayCircle
-              className="text-4xl text-indigo-500 cursor-pointer"
+              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
               onClick={() => {
-                audio?.play();
-                setPaused(false);
+                setIsPlaying(true);
               }}
             />
           ) : (
             <BiPauseCircle
-              className="text-4xl text-indigo-500 cursor-pointer"
+              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
               onClick={() => {
-                audio?.pause();
-                setPaused(true);
+                setIsPlaying(false);
               }}
             />
           )}
@@ -105,10 +96,8 @@ export default function CustomAudioPlayer({}: Props) {
                 min="0"
                 max={`${audioDuration}`}
                 onChange={(e) => {
-                  if (!audio) return;
-
                   const newCurrentTimeValue = parseFloat(e.target.value);
-                  audio.currentTime = newCurrentTimeValue;
+                  audioRef.current.currentTime = newCurrentTimeValue;
                   setAudioCurrentTime(newCurrentTimeValue);
                 }}
                 value={audioCurrentTime}
@@ -122,4 +111,6 @@ export default function CustomAudioPlayer({}: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default CustomAudioPlayer;
