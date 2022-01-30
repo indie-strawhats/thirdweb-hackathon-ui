@@ -28,7 +28,7 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
                 layout="responsive"
                 className="object-center"
                 alt="hero"
-                src="/images/gift-ab.svg"
+                src={image}
               />
             </div>
           </ColorBlobWrapper>
