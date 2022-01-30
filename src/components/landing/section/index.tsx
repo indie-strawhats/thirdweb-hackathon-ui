@@ -16,28 +16,28 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
     <section className="text-gray-600 body-font">
       <div
         className={`container flex ${
-          imagePosition === 'right' ? 'md:flex-row' : 'md:flex-row-reverse'
-        } flex-col items-center px-5 py-24 mx-auto`}
+          imagePosition === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'
+        } flex-col items-center px-5 py-8 mx-auto gap-20`}
       >
+        <div className="w-5/6 h-full lg:max-w-xl lg:w-full md:w-1/2">
+          <ColorBlobWrapper blobSize="large">
+            <div className="rounded">
+              <Image
+                width={'100%'}
+                height={'100%'}
+                layout="responsive"
+                className="object-center"
+                alt="hero"
+                src="/images/gift-ab.svg"
+              />
+            </div>
+          </ColorBlobWrapper>
+        </div>
         <div className="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
           <h1 className="mb-4 text-3xl font-medium text-gray-900 title-font sm:text-4xl">
             {sectionHeading}
           </h1>
           <p className="mb-8 leading-relaxed">{textContent}</p>
-        </div>
-        <div className="w-5/6 h-full lg:max-w-lg lg:w-full md:w-1/2">
-          <ColorBlobWrapper blobSize="small">
-            <div className="overflow-hidden rounded">
-              <Image
-                width={'100%'}
-                height={'100%'}
-                layout="responsive"
-                className="object-cover object-center"
-                alt="hero"
-                src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-              />
-            </div>
-          </ColorBlobWrapper>
         </div>
       </div>
     </section>

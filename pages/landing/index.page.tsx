@@ -11,24 +11,23 @@ import { NewYear } from '../../src/icons/landing/newyear';
 const LandingPage: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>Awesome Audiobooks</title>
+        <meta name="description" content="Awesome Audiobooks" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="flex items-center justify-between h-16 px-8 border-b border-gray-300 shadow-sm bg-gray-50">
-        <Head>
-          <title>Awesome Audiobooks</title>
-          <meta name="description" content="Awesome Audiobooks" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <div>
-          <Link href="/landing" passHref>
-            <a className="text-xl font-semibold text-gray-600 hover:text-gray-800">
-              Awesome Audiobooks
-            </a>
-          </Link>
-        </div>
+        <Link href="/landing" passHref>
+          <a className="text-xl font-semibold text-gray-600 hover:text-gray-800">
+            Awesome Audiobooks
+          </a>
+        </Link>
         <div className="flex items-center">
           <ConnectWallet />
         </div>
       </div>
-      <div className="flex flex-row items-center justify-between w-screen h-auto bg-gray-200">
+      {/* <div className="flex flex-row items-center justify-between w-screen h-auto bg-gray-200">
         <div className="ml-48">
           <Link href="/" passHref>
             <Button className="h-16 mr-4 " variant="primary">
@@ -37,8 +36,8 @@ const LandingPage: NextPage = () => {
           </Link>
         </div>
         <NewYear />
-      </div>
-      <div className="flex flex-col w-full h-full ">
+      </div> */}
+      <div className="flex flex-col w-full h-full overflow-hidden">
         <Section
           image={''}
           sectionHeading="Before they sold"
