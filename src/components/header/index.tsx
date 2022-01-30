@@ -6,14 +6,14 @@ import Button from '../button';
 const Header = () => (
   <div className="flex items-center justify-between h-16 px-8 border-b border-gray-300 shadow-sm bg-gray-50">
     <div>
-      <Link href="/landing" passHref>
+      <Link href="/" passHref>
         <a className="text-xl font-semibold text-gray-600 hover:text-gray-800">
           Awesome Audiobooks
         </a>
       </Link>
     </div>
     <div className="flex items-center">
-      <Link href="/" passHref>
+      <Link href="/explore" passHref>
         <Button className="mr-4" variant="ghost">
           Explore
         </Button>

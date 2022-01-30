@@ -1,128 +1,74 @@
+import { ConnectWallet } from '@3rdweb/react';
+import { NextPage } from 'next';
 import Head from 'next/head';
-import { ReactElement, useCallback, useContext, useEffect, useState } from 'react';
-import PurchaseCard from '../src/components/purchase-card';
-import { AppWeb3Context } from '../src/providers/app-web3';
-import { getAllAudiobooks, purchaseAudiobook } from '../src/services/web3';
-import SearchBox from '../src/components/search-box';
-import { IAudiobookData } from '../src/models/audiobook';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import Button from '../src/components/button';
+import Section from '../src/components/landing/section';
+import { NewYear } from '../src/icons/landing/newyear';
 
-import PageLayout from '../src/layouts/page-layout';
-import { toast } from 'react-toastify';
-import Modal from '../src/components/modal';
+import styles from './styles.module.scss'
 
-const Home = () => {
-  const [highlightedId, setHighlightedId] = useState<string>('');
-  const [purchaseInProgress, setPurchaseInProgress] = useState(false);
-  const [rerender, triggerRerender] = useState(false);
-  const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
-  const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
-
-  const { dropBundleModule } = useContext(AppWeb3Context);
-
-  useEffect(() => {
-    (async () => {
-      if (!dropBundleModule) return;
-
-      const allNFTs = await getAllAudiobooks(dropBundleModule);
-
-      if (allNFTs) {
-        setAllAudiobooks(allNFTs);
-        setFilteredAudiobooks(allNFTs);
-      }
-    })();
-  }, [dropBundleModule, rerender]);
-
-  const handlePurchase = async (name: string, tokenId: string, quantity: number = 1) => {
-    if (!dropBundleModule) return;
-
-    try {
-      setPurchaseInProgress(true);
-
-      const response = await purchaseAudiobook(dropBundleModule, tokenId, quantity);
-      toast.success('Successfully purchased', {
-        position: 'bottom-right',
-      });
-
-      triggerRerender(!rerender);
-      highlightCard(tokenId);
-    } catch (error) {
-      toast.error('Purchase failed!', {
-        position: 'bottom-right',
-      });
-    } finally {
-      setPurchaseInProgress(false);
-    }
-  };
-
-  const handleSearch = (query: string) => {
-    const filteredAudiobooks = allAudiobooks.filter((ab) => {
-      const lowercaseQuery = query.toLowerCase();
-
-      return (
-        (ab.name as string).toLowerCase().includes(lowercaseQuery) ||
-        (ab.desc as string).toLowerCase().includes(lowercaseQuery)
-      );
-    });
-
-    setFilteredAudiobooks(filteredAudiobooks);
-  };
-
-  const highlightCard = (id: string) => {
-    setHighlightedId(id);
-    setTimeout(() => setHighlightedId(''), 3500);
-  };
-
-  const getHighlightClassIfAny = (id: string) => {
-    if (!highlightedId) return '';
-    return highlightedId === id ? 'animate-highlight-once ring ring-indigo-500 ring-offset-1' : '';
-  };
-
-  const renderAllAudiobooks = () => {
-    return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {filteredAudiobooks.map((ab) => (
-          <div key={ab.id}>
-            <PurchaseCard
-              data={ab}
-              onPurchase={handlePurchase}
-              className={getHighlightClassIfAny(ab.id)}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
-
+const LandingPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Awesome Audiobooks - Collection</title>
-        <meta name="description" content="Awesome Audiobooks - Collection" />
+        <title>Awesome Audiobooks</title>
+        <meta name="description" content="Awesome Audiobooks" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full bg-gray-100 shadow-inner h-30">
-        <div className="relative w-full -bottom-7">
-          <SearchBox onSearch={handleSearch} />
+
+      <div className="flex items-center justify-between h-20 px-8 bg-white">
+        <Link href="/" passHref>
+          <a className="text-xl font-semibold text-gray-600 hover:text-gray-800">
+            Awesome Audiobooks
+          </a>
+        </Link>
+        <div className="flex items-center">
+          <ConnectWallet />
         </div>
       </div>
-      <div className="max-w-6xl pt-8 pb-4 m-auto">
-        <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">All Audiobooks</h2>
-        {renderAllAudiobooks()}
+      <div className="w-full py-24 mb-24">
+        <div className='flex flex-col items-start max-w-4xl m-auto'>
+        <p className={`flex flex-col mb-16 items-start font-extrabold text-8xl ${styles['landing-text']} tracking-tighter`}>
+          <span>Experience</span>
+          <span>Premium</span>
+          <span>Story-telling</span>
+        </p>
+        <Link href="/explore" passHref>
+        <button className="relative inline-flex items-center justify-center p-0.5 mb-2 bg-white border-pink-500 border-2 hover:scale-105 transition-transform">
+          <span className={`relative px-10 py-4 text-xl font-semibold transition-all duration-75 ease-in bg-white group-hover:bg-opacity-0 ${styles['landing-text']} tracking-normal`}>
+            Explore
+          </span>
+        </button>
+        </Link>
+        </div>
       </div>
-
-      {purchaseInProgress && (
-        <Modal
-          title="Purchasing Audiobook"
-          loading
-          description="You will be prompted to authorize 1 transactions."
+      <div className="flex flex-col w-full h-full">
+        <Section
+          image={'/images/happy-music.svg'}
+          sectionHeading="Play your favorites."
+          textContent="Listen to the stories you love, and discover new stories."
         />
-      )}
+        <Section
+        image={'/images/yoga.svg'}
+        sectionHeading="Stories to expand our horizons & enrich our souls."
+        textContent="Stories open a door for us … We can travel to places we would never go, live in times we would never know, and feel joys we would have never found."
+          imagePosition="right"
+      />
+        <Section
+          image={'/images/gift-to-love.svg'}
+          sectionHeading="Spread the love"
+          textContent="Gift your favorite storybook to the someone you love most."
+          
+        />
+      </div>
+      <div className="grid w-full h-32 mt-16 text-xl text-gray-800 place-content-center">
+      <p>Powered by ThirdWeb 🚀 </p>
+      </div>
     </>
   );
 };
 
-export default Home;
-
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <PageLayout>{page}</PageLayout>;
-};
+export default LandingPage;
