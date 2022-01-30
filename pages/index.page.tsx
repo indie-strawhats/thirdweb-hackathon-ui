@@ -73,7 +73,7 @@ const Home = () => {
   };
 
   const getHighlightClassIfAny = (id: string) => {
-    if (!highlightedId) return;
+    if (!highlightedId) return '';
     return highlightedId === id ? 'animate-highlight-once ring ring-indigo-500 ring-offset-1' : '';
   };
 
