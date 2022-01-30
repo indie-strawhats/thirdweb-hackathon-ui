@@ -6,6 +6,7 @@ import Header from '../../components/header';
 import Modal from '../../components/modal';
 import { AudioPlayerContext } from '../../providers/audio-player';
 import CustomAudioPlayer from '../../components/audio-player';
+import { BiArrowFromBottom } from 'react-icons/bi';
 
 import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
 import { RinkeByChainID } from '../../constants';
@@ -15,7 +16,10 @@ const PageLayout = ({ children }: any) => {
   const { provider, error } = useWeb3();
   const { switchNetwork } = useSwitchNetwork();
 
-  const { isVisible = true, setIsVisible } = useContext<any>(AudioPlayerContext);
+  const {
+    isVisible = true,
+    setIsVisible,
+  } = useContext<any>(AudioPlayerContext);
 
   useEffect(() => {
     setTimeout(() => setReadyToCheck(true), 2000);
@@ -71,6 +75,14 @@ const PageLayout = ({ children }: any) => {
       <Header />
       {children}
 
+      <BiArrowFromBottom
+        show={!isVisible}
+        size="3vh"
+        className='fixed bottom-0'
+        onClick={() => {
+          setIsVisible(true)
+        }}
+      />
       <Transition
         show={isVisible}
         enter="transition-opacity duration-1000"
