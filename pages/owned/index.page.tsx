@@ -8,6 +8,7 @@ import { IAudiobookData, IOwnedAudiobookData } from '../../src/models/audiobook'
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../src/layouts/page-layout';
 import LoadingAudioCard from '../../src/components/audio-card/loading-state';
+import Image from 'next/image';
 
 const OwnedPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IOwnedAudiobookData[]>([]);
@@ -47,22 +48,39 @@ const OwnedPage = () => {
   };
 
   const renderPurchasedAudiobooks = () => {
-    return (
-      <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8">
-        {loading && filteredAudiobooks.length === 0 ? (
-          <>
-            <LoadingAudioCard />
-            <LoadingAudioCard />
-            <LoadingAudioCard />
-            <LoadingAudioCard />
-          </>
-        ) : (
-          filteredAudiobooks.map((ab) => (
+    if (loading && filteredAudiobooks.length === 0) {
+      return (
+        <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8">
+          <LoadingAudioCard />
+          <LoadingAudioCard />
+          <LoadingAudioCard />
+          <LoadingAudioCard />
+        </div>
+      );
+    } else if (!loading && filteredAudiobooks.length === 0) {
+      return (
+        <div className="grid w-full p-8 place-content-center">
+          <div className="w-[400px]">
+            <Image
+              width={'100%'}
+              height={'100%'}
+              layout="responsive"
+              className="object-center"
+              alt="hero"
+              src={'/images/no-data.svg'}
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8">
+          {filteredAudiobooks.map((ab) => (
             <PlayCard key={ab.id} data={ab} onPurchase={(_: number) => {}} />
-          ))
-        )}
-      </div>
-    );
+          ))}
+        </div>
+      );
+    }
   };
 
   return (
