@@ -7,7 +7,7 @@ import SearchBox from '../../src/components/search-box';
 import { IAudiobookData, IOwnedAudiobookData } from '../../src/models/audiobook';
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../src/layouts/page-layout';
-import LoadingAudioCard from '../../src/components/audio-card/loading-audio-card';
+import LoadingAudioCard from '../../src/components/audio-card/loading-state';
 
 const OwnedPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IOwnedAudiobookData[]>([]);

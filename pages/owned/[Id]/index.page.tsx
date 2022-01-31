@@ -104,6 +104,43 @@ const OwnedAudiobookPage = () => {
     return highlight ? 'animate-highlight-once ring ring-indigo-500 ring-offset-1' : '';
   };
 
+  const renderLoadingState = () => (
+    <div className="grid max-h-screen p-20 place-content-center animate-pulse">
+      <div
+        className={`overflow-hidden bg-white rounded-lg shadow-xl w-[600px]  ${getHighlightClassIfAny()}`}
+      >
+        <div className="h-64 px-4 pt-2 bg-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="w-24 h-10 bg-gray-200 rounded-lg" />
+            <div className="w-24 h-8 bg-gray-200 rounded-lg" />
+          </div>
+        </div>
+        <div className="relative flex flex-col items-center">
+          <div className="w-64 h-64 mb-4 -mt-40 overflow-hidden bg-white rounded-lg"></div>
+        </div>
+        <div className="flex flex-col items-center gap-4 px-8 py-4">
+          <div className="w-56 h-8 bg-gray-200 rounded-lg" />
+          <div className="h-6 bg-gray-200 rounded-lg w-96" />
+        </div>
+        <div className="flex flex-col items-start gap-4 px-8 py-4 pt-0 text-gray-600">
+          <div className="flex items-center justify-between gap-8">
+            <div className="w-32 h-6 bg-gray-200 rounded-lg" />
+            <div className="w-40 h-6 bg-gray-200 rounded-lg" />
+          </div>
+          <div className="flex items-center justify-between gap-8">
+            <div className="w-32 h-6 bg-gray-200 rounded-lg" />
+            <div className="w-40 h-6 bg-gray-200 rounded-lg" />
+          </div>
+        </div>
+        <div className="flex gap-2 mt-4 h-14">
+          <div className="w-full h-full bg-gray-100" />
+          <div className="w-full h-full bg-gray-100" />
+          <div className="w-full h-full bg-gray-100" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <Head>
@@ -111,18 +148,18 @@ const OwnedAudiobookPage = () => {
         <meta name="description" content={`Awesome Audiobooks - Audiobook #${Id}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {localAudiobookData && (
+      {localAudiobookData ? (
         <div className="grid max-h-screen p-20 place-content-center">
           <div
             className={`overflow-hidden bg-white rounded-lg shadow-2xl w-[600px]  ${getHighlightClassIfAny()}`}
           >
             <div className="h-64 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
               <div className="flex items-center justify-between text-white">
-                <h1 className="mb-2 text-3xl font-semibold hover:cursor-pointer">
+                <h1 className="text-3xl font-semibold hover:cursor-pointer">
                   #{localAudiobookData.id}
                 </h1>
 
-                <p className="px-2 mb-2 text-white bg-[#fff2] rounded-full">
+                <p className="px-2 text-white bg-[#fff2] rounded-full">
                   {`Owned - ${localAudiobookData.balance}`}
                 </p>
               </div>
@@ -181,7 +218,7 @@ const OwnedAudiobookPage = () => {
                 <p>{localAudiobookData.publisher}</p>
               </div>
             </div>
-            <div className="flex border-t h-14 hover:border-transparent">
+            <div className="flex border-t h-14">
               <button
                 className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500"
                 onClick={handlePurchase}
@@ -209,6 +246,8 @@ const OwnedAudiobookPage = () => {
             </div>
           </div>
         </div>
+      ) : (
+        renderLoadingState()
       )}
 
       {purchaseInProgress && (

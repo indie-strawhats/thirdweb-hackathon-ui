@@ -9,7 +9,7 @@ import { IAudiobookData } from '../../src/models/audiobook';
 import PageLayout from '../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
 import Modal from '../../src/components/modal';
-import LoadingAudioCard from '../../src/components/audio-card/loading-audio-card';
+import LoadingAudioCard from '../../src/components/audio-card/loading-state';
 
 const ExplorePage = () => {
   const [highlightedId, setHighlightedId] = useState<string>('');
