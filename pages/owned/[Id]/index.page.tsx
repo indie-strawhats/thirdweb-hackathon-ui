@@ -13,6 +13,7 @@ import Modal from '../../../src/components/modal';
 import { IEntireAudiobookData } from '../../../src/models/audiobook';
 import Button from '../../../src/components/button';
 import { FaEthereum } from 'react-icons/fa';
+import { SiApplemusic } from 'react-icons/si';
 
 const OwnedAudiobookPage = () => {
   const [localAudiobookData, setLocalAudiobookData] = useState<IEntireAudiobookData>();
@@ -166,10 +167,15 @@ const OwnedAudiobookPage = () => {
               <div className="flex items-center justify-between text-white">
                 <h1 className="text-3xl font-semibold">#{localAudiobookData.id}</h1>
 
-                <p className="px-2 text-white bg-[#fff2] rounded-full">
-                  {localAudiobookData.balance > 0
-                    ? `You own ${localAudiobookData.balance}`
-                    : 'Not purchased'}
+                <p className="flex items-center gap-[6px] px-2 py-2 text-sm font-semibold leading-none tracking-wide text-white bg-[#fff2] rounded-full">
+                  {localAudiobookData.balance > 0 ? (
+                    <>
+                      <SiApplemusic className="text-base" />
+                      You own {localAudiobookData.balance}
+                    </>
+                  ) : (
+                    'Not purchased'
+                  )}
                 </p>
               </div>
             </div>

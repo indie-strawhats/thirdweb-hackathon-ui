@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { FC, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
+import { SiApplemusic } from 'react-icons/si';
 
 export interface AudioCardProps {
   id: string;
@@ -55,9 +56,11 @@ export const AudioCard: FC<AudioCardProps> = ({
         <span className="px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full ">
           #{id}
         </span>
+
         {balance > 0 && (
-          <span className="py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercas">
-            {renderBalance()}
+          <span className="flex items-center h-4 gap-[6px] py-1 text-xs font-semibold leading-none tracking-wide text-gray-600">
+            <SiApplemusic className="text-base text-gray-400" />
+            You own {balance}
           </span>
         )}
       </div>
