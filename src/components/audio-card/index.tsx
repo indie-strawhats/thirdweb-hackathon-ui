@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import React, { FC, useRef, useState } from 'react';
-// import ColorThief from 'colorthief';
+import React, { FC, useState } from 'react';
 
 export interface AudioCardProps {
   id: string;
