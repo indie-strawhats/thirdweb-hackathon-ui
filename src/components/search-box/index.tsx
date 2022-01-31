@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { BiSearch } from 'react-icons/Bi';
+import { BiSearch } from 'react-icons/bi';
 import { IconContext } from 'react-icons/lib';
 
 export interface ISearchBoxProps {

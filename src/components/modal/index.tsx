@@ -23,7 +23,9 @@ const Modal = ({ title, description, loading = false }: IModalProps) => {
               <LoadingBar />
             </div>
           )}
-          <Dialog.Description className="text-gray-700">{description}</Dialog.Description>
+          <Dialog.Description as="div" className="text-gray-700">
+            {description}
+          </Dialog.Description>
         </div>
       </div>
     </Dialog>

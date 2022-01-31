@@ -1,6 +1,7 @@
 import { useWeb3 } from '@3rdweb/hooks';
 import { BundleDropModule, ThirdwebSDK } from '@3rdweb/sdk';
 import { createContext, useMemo, useState } from 'react';
+import { BundleDropID } from '../../constants';
 
 export interface IAppWeb3Context {
   sdk: ThirdwebSDK | undefined;
@@ -21,7 +22,7 @@ export const AppWeb3Provider = ({ children }: any) => {
   );
 
   const dropBundleModule = useMemo(
-    () => (sdk ? sdk.getBundleDropModule('0x815b11bA885E7f528BCBA97d38884aBbD3eebeEb') : undefined),
+    () => (sdk ? sdk.getBundleDropModule(BundleDropID) : undefined),
     [sdk],
   );
 

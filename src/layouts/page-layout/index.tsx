@@ -30,8 +30,11 @@ const PageLayout = ({ children }: any) => {
   };
 
   const renderWarning = () => {
-    // readyToCheck is being used to wait for metamask provider to load. Before metamask, infura provider loads which does not help.
-    if (readyToCheck && !provider) {
+    if (!readyToCheck) return;
+
+    // readyToCheck is being used to wait for metamask provider to load.
+    // window.ethereum is a check to determine if
+    if (window && !(window as any).ethereum) {
       return (
         <Modal
           title="Warning!"
@@ -47,7 +50,7 @@ const PageLayout = ({ children }: any) => {
       );
     }
 
-    if (readyToCheck && error?.name === 'UnsupportedChainIdError') {
+    if (error?.name === 'UnsupportedChainIdError') {
       return (
         <Modal
           title="Warning!"
