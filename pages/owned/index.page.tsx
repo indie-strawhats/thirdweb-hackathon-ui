@@ -7,10 +7,12 @@ import SearchBox from '../../src/components/search-box';
 import { IAudiobookData, IOwnedAudiobookData } from '../../src/models/audiobook';
 import { useWeb3 } from '@3rdweb/hooks';
 import PageLayout from '../../src/layouts/page-layout';
+import LoadingAudioCard from '../../src/components/audio-card/loading-audio-card';
 
 const OwnedPage = () => {
   const [purchasedAudiobooks, setPurchasedAudiobooks] = useState<IOwnedAudiobookData[]>([]);
   const [filteredAudiobooks, setFilteredAudiobooks] = useState<IOwnedAudiobookData[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const { address } = useWeb3();
   const { dropBundleModule } = useContext(AppWeb3Context);
@@ -19,12 +21,14 @@ const OwnedPage = () => {
     (async () => {
       if (!dropBundleModule) return;
 
+      setLoading(true);
       const claimedNFTs = await getClaimedAudiobooks(dropBundleModule);
 
       if (claimedNFTs) {
         setPurchasedAudiobooks(claimedNFTs);
         setFilteredAudiobooks(claimedNFTs);
       }
+      setLoading(false);
     })();
   }, [dropBundleModule, address]);
 
@@ -44,9 +48,17 @@ const OwnedPage = () => {
   const renderPurchasedAudiobooks = () => {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {filteredAudiobooks.map((ab) => (
-          <PlayCard key={ab.id} data={ab} onPurchase={(_: number) => {}} />
-        ))}
+        {loading && filteredAudiobooks.length === 0 ? (
+          <>
+            <LoadingAudioCard />
+            <LoadingAudioCard />
+            <LoadingAudioCard />
+          </>
+        ) : (
+          filteredAudiobooks.map((ab) => (
+            <PlayCard key={ab.id} data={ab} onPurchase={(_: number) => {}} />
+          ))
+        )}
       </div>
     );
   };
@@ -65,7 +77,7 @@ const OwnedPage = () => {
       </div>
       <div className="pt-8 m-auto max-w-7xl">
         <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">My Audiobooks</h2>
-        {purchasedAudiobooks.length > 0 && renderPurchasedAudiobooks()}
+        {renderPurchasedAudiobooks()}
       </div>
     </>
   );

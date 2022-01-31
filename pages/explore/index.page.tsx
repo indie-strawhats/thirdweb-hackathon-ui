@@ -9,6 +9,7 @@ import { IAudiobookData } from '../../src/models/audiobook';
 import PageLayout from '../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
 import Modal from '../../src/components/modal';
+import LoadingAudioCard from '../../src/components/audio-card/loading-audio-card';
 
 const ExplorePage = () => {
   const [highlightedId, setHighlightedId] = useState<string>('');
@@ -16,6 +17,7 @@ const ExplorePage = () => {
   const [rerender, triggerRerender] = useState(false);
   const [allAudiobooks, setAllAudiobooks] = useState<IAudiobookData[]>([]);
   const [filteredAudiobooks, setFilteredAudiobooks] = useState<IAudiobookData[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const { dropBundleModule } = useContext(AppWeb3Context);
 
@@ -23,12 +25,15 @@ const ExplorePage = () => {
     (async () => {
       if (!dropBundleModule) return;
 
+      setLoading(true);
       const allNFTs = await getAllAudiobooks(dropBundleModule);
 
       if (allNFTs) {
         setAllAudiobooks(allNFTs);
         setFilteredAudiobooks(allNFTs);
       }
+
+      setLoading(false);
     })();
   }, [dropBundleModule, rerender]);
 
@@ -38,7 +43,7 @@ const ExplorePage = () => {
     try {
       setPurchaseInProgress(true);
 
-      const response = await purchaseAudiobook(dropBundleModule, tokenId, quantity);
+      await purchaseAudiobook(dropBundleModule, tokenId, quantity);
       toast.success('Successfully purchased', {
         position: 'bottom-right',
       });
@@ -80,15 +85,23 @@ const ExplorePage = () => {
   const renderAllAudiobooks = () => {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {filteredAudiobooks.map((ab) => (
-          <div key={ab.id}>
-            <PurchaseCard
-              data={ab}
-              onPurchase={handlePurchase}
-              className={getHighlightClassIfAny(ab.id)}
-            />
-          </div>
-        ))}
+        {loading && filteredAudiobooks.length === 0 ? (
+          <>
+            <LoadingAudioCard />
+            <LoadingAudioCard />
+            <LoadingAudioCard />
+          </>
+        ) : (
+          filteredAudiobooks.map((ab) => (
+            <div key={ab.id}>
+              <PurchaseCard
+                data={ab}
+                onPurchase={handlePurchase}
+                className={getHighlightClassIfAny(ab.id)}
+              />
+            </div>
+          ))
+        )}
       </div>
     );
   };

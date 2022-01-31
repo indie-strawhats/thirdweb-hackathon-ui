@@ -70,7 +70,7 @@ const PageLayout = ({ children }: any) => {
   };
 
   return (
-    <div className={`w-screen ${isVisible && 'mb-32'}`}>
+    <div className={`w-full ${isVisible && 'mb-32'}`}>
       <Header />
       {children}
 
