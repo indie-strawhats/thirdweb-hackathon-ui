@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 // import ColorThief from 'colorthief';
 
 export interface AudioCardProps {
@@ -8,6 +8,7 @@ export interface AudioCardProps {
   writtenBy: string;
   currencyUnit: string;
   price: string;
+  isShowPriceEnable?: boolean;
   balance: number;
   nameHandle: (data: any) => void;
   desc?: string;
@@ -17,27 +18,26 @@ export interface AudioCardProps {
   className: string;
 }
 
-export const AudioCard = (props: AudioCardProps) => {
-  const {
-    id,
-    name,
-    writtenBy,
-    nameHandle,
-    desc,
-    image,
-    buttonName,
-    buttonHandle,
-    balance,
-    price,
-    currencyUnit,
-    className,
-  } = props;
-
+export const AudioCard: FC<AudioCardProps> = ({
+  id,
+  name,
+  writtenBy,
+  nameHandle,
+  desc,
+  image,
+  buttonName,
+  buttonHandle,
+  balance,
+  price,
+  isShowPriceEnable = true,
+  currencyUnit,
+  className,
+}) => {
   const renderBalance = () => {
     return `owned : ${balance}`;
   };
 
-  const [cardBgColor, setCardBgColor] = useState()
+  const [cardBgColor, setCardBgColor] = useState();
 
   return (
     <div className={`block bg-white rounded-lg shadow-md hover:shadow-xl ${className}`}>
@@ -76,8 +76,14 @@ export const AudioCard = (props: AudioCardProps) => {
           className="grid w-full h-full mr-2 text-sm rounded-bl-lg rounded-br-lg hover:font-bold place-content-center group hover:cursor-pointer hover:text-white hover:bg-indigo-500"
           onClick={() => buttonHandle(name, id)}
         >
-          <span className="font-semibold group-hover:hidden">{`${price} ${currencyUnit}`}</span>
-          <span className="hidden group-hover:block">{buttonName}</span>
+          {isShowPriceEnable ? (
+            <>
+              <span className="font-semibold group-hover:hidden">{`${price} ${currencyUnit}`}</span>
+              <span className="hidden group-hover:block">{buttonName}</span>
+            </>
+          ) : (
+            <span>{buttonName}</span>
+          )}
         </div>
       </div>
     </div>
