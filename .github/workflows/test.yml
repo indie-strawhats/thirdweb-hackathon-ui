@@ -23,7 +23,7 @@ jobs:
           node-version: '14.x'
 
       - name: Installing my packages
-        run: npm install
+        run: npm ci
 
       - name: Run lint
         run: npm run lint
