@@ -156,7 +156,6 @@ const OwnedAudiobookPage = () => {
       <Head>
         <title>Awesome Audiobooks - Audiobook #{Id}</title>
         <meta name="description" content={`Awesome Audiobooks - Audiobook #${Id}`} />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       {localAudiobookData ? (
         <div className="grid max-h-screen p-20 place-content-center">

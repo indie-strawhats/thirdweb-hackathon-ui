@@ -11,7 +11,6 @@ const LandingPage: NextPage = () => {
       <Head>
         <title>Awesome Audiobooks</title>
         <meta name="description" content="Awesome Audiobooks" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="w-full h-20 bg-white">

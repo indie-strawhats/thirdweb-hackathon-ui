@@ -70,7 +70,6 @@ const OwnedPage = () => {
       <Head>
         <title>Awesome Audiobooks - Owned</title>
         <meta name="description" content="Awesome Audiobooks - Owned" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="w-full mb-8 bg-gray-100 shadow-inner h-30">
         <div className="relative w-full -bottom-7">
