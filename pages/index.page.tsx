@@ -9,8 +9,8 @@ const LandingPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Awesome Audiobooks</title>
-        <meta name="description" content="Awesome Audiobooks" />
+        <title>Audiobooks</title>
+        <meta name="description" content="Audiobooks" />
       </Head>
 
       <div className="w-full h-20 bg-white">

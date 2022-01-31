@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../src/components/modal';
 import LoadingAudioCard from '../../src/components/audio-card/loading-state';
 import Image from 'next/image';
+
 const ExplorePage = () => {
   const [highlightedId, setHighlightedId] = useState<string>('');
   const [purchaseInProgress, setPurchaseInProgress] = useState(false);
@@ -128,8 +129,8 @@ const ExplorePage = () => {
   return (
     <>
       <Head>
-        <title>Awesome Audiobooks - Collection</title>
-        <meta name="description" content="Awesome Audiobooks - Collection" />
+        <title>Audiobooks - Explore</title>
+        <meta name="description" content="Audiobooks - Explore" />
       </Head>
       <div className="w-full mb-8 bg-gray-100 shadow-inner h-30">
         <div className="relative w-full -bottom-7">

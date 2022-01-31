@@ -175,8 +175,8 @@ const OwnedAudiobookPage = () => {
   return (
     <div>
       <Head>
-        <title>Awesome Audiobooks - Audiobook #{Id}</title>
-        <meta name="description" content={`Awesome Audiobooks - Audiobook #${Id}`} />
+        <title>Audiobooks - {localAudiobookData?.name}</title>
+        <meta name="description" content={`Audiobooks - ${localAudiobookData?.name}`} />
       </Head>
       {localAudiobookData ? (
         <div className="grid max-h-screen p-20 place-content-center">
