@@ -38,7 +38,8 @@ const OwnedPage = () => {
 
       return (
         (ab.name as string).toLowerCase().includes(lowercaseQuery) ||
-        (ab.desc as string).toLowerCase().includes(lowercaseQuery)
+        (ab.desc as string).toLowerCase().includes(lowercaseQuery) ||
+        (ab.writtenBy as string).toLowerCase().includes(lowercaseQuery)
       );
     });
 

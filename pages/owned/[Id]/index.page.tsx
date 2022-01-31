@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../../src/components/modal';
 import { IEntireAudiobookData } from '../../../src/models/audiobook';
 import Button from '../../../src/components/button';
-// import { SVGEther } from '../../../src/icons/ether';
+import { FaEthereum } from 'react-icons/fa';
 
 const OwnedAudiobookPage = () => {
   const [localAudiobookData, setLocalAudiobookData] = useState<IEntireAudiobookData>();
@@ -232,9 +232,9 @@ const OwnedAudiobookPage = () => {
                 className="flex items-center justify-center w-full h-full gap-2 text-sm border-r group hover:border-transparent hover:font-bold hover:text-white hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
-                {/* <span>
-                  <SVGEther className=" fill-gray-500 group-hover:fill-white" />
-                </span> */}
+                <span>
+                  <FaEthereum className=" fill-gray-500 group-hover:fill-white" />
+                </span>
                 <span> {`ETH ${localAudiobookData.price}`}</span>
                 <span>Purchase</span>
               </button>
