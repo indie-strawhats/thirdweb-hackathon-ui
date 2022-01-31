@@ -5,7 +5,7 @@ import Button from '../button';
 
 const Header = () => (
   <div className="h-16 border-b border-gray-300 shadow-sm bg-gray-50">
-    <div className="flex items-center justify-between w-full h-full m-auto max-w-7xl">
+    <div className="flex items-center justify-between w-full h-full px-8 m-auto max-w-7xl">
       <div>
         <Link href="/" passHref>
           <a className="text-4xl font-bold glowing-text" style={{ fontFamily: 'Cookie, cursive' }}>

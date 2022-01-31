@@ -47,9 +47,10 @@ const OwnedPage = () => {
 
   const renderPurchasedAudiobooks = () => {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(240px,_1fr))] gap-8">
         {loading && filteredAudiobooks.length === 0 ? (
           <>
+            <LoadingAudioCard />
             <LoadingAudioCard />
             <LoadingAudioCard />
             <LoadingAudioCard />
@@ -75,7 +76,7 @@ const OwnedPage = () => {
           <SearchBox onSearch={handleSearch} />
         </div>
       </div>
-      <div className="pt-8 m-auto max-w-7xl">
+      <div className="px-8 pt-8 m-auto max-w-7xl">
         <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">My Audiobooks</h2>
         {renderPurchasedAudiobooks()}
       </div>
