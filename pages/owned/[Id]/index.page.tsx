@@ -59,16 +59,27 @@ const OwnedAudiobookPage = () => {
     try {
       setGiftApiInProgress(true);
 
-      await giftAudiobook(
-        dropBundleModule,
-        recepientAddress,
-        // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
-        Id as string,
-        1,
+      const response = await giftAudiobook(dropBundleModule, recepientAddress, Id as string, 1);
+
+      toast.success(
+        <div>
+          <p>Successfully Gifted</p>
+          <span className="text-sm">
+            You can check transaction details{' '}
+            <a
+              href={`https://rinkeby.etherscan.io/tx/${response.transactionHash}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-indigo-500"
+            >
+              here
+            </a>
+          </span>
+        </div>,
+        {
+          position: 'bottom-right',
+        },
       );
-      toast.success('Successfully Gifted', {
-        position: 'bottom-right',
-      });
 
       triggerRerender(!rerender);
       highlightCard();
@@ -240,7 +251,7 @@ const OwnedAudiobookPage = () => {
                 <span>
                   <FaEthereum className=" fill-gray-500 group-hover:fill-white" />
                 </span>
-                <span> {`ETH ${localAudiobookData.price}`}</span>
+                <span> {`${localAudiobookData.price}`}</span>
                 <span>Purchase</span>
               </button>
 

@@ -52,7 +52,7 @@ export const AudioCard: FC<AudioCardProps> = ({
           className="rounded-t-lg"
         />
       </div>
-      <div className="flex flex-row justify-between px-4 pt-4 ">
+      <div className="flex flex-row items-center justify-between px-4 pt-4 ">
         <span className="px-2 py-1 text-xs font-semibold leading-none tracking-wide text-gray-600 uppercase bg-gray-200 rounded-full ">
           #{id}
         </span>
