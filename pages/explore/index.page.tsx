@@ -84,7 +84,7 @@ const ExplorePage = () => {
 
   const renderAllAudiobooks = () => {
     return (
-      <div className="grid grid-cols-[repeat(auto-fit,_minmax(240px,_1fr))] gap-8">
+      <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8">
         {loading && filteredAudiobooks.length === 0 ? (
           <>
             <LoadingAudioCard />
@@ -119,7 +119,7 @@ const ExplorePage = () => {
           <SearchBox onSearch={handleSearch} />
         </div>
       </div>
-      <div className="px-8 pt-8 pb-4 m-auto max-w-7xl">
+      <div className="p-8 m-auto max-w-7xl">
         <h2 className="mb-8 text-3xl font-semibold text-gray-800 ">All Audiobooks</h2>
         {renderAllAudiobooks()}
       </div>
