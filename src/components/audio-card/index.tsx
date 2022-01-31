@@ -41,7 +41,7 @@ export const AudioCard: FC<AudioCardProps> = ({
 
   return (
     <div className={`block bg-white rounded-lg shadow-md hover:shadow-xl ${className}`}>
-      <div className="aspect-square">
+      <div className="cursor-pointer aspect-square" onClick={() => nameHandle(id)}>
         <Image
           src={image}
           alt="audio card picture"
