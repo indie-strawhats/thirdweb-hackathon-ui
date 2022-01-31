@@ -8,6 +8,7 @@ enum ButtonVariants {
 
 interface ButtonProps {
   variant: string;
+  disabled?: boolean;
   icon?: JSX.Element;
   onClick?: () => void;
   children: React.ReactNode | string;
@@ -15,7 +16,7 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-  const { variant, icon, onClick, children, className } = props;
+  const { variant, disabled = false, icon, onClick, children, className } = props;
   const getVariantClass = () => {
     switch (variant) {
       case ButtonVariants.ghost:
@@ -29,7 +30,8 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      className={`inline-flex items-center text-m ${getVariantClass()} ${className}`}
+      className={`inline-flex items-center text-m disabled:cursor-not-allowed disabled:opacity-50 ${getVariantClass()} ${className}`}
+      disabled={disabled}
       onClick={onClick}
     >
       <>

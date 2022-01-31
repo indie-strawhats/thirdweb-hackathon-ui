@@ -11,14 +11,20 @@ import PageLayout from '../../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
 import Modal from '../../../src/components/modal';
 import { IEntireAudiobookData } from '../../../src/models/audiobook';
-import { SVGEther } from '../../../src/icons/ether';
+import Button from '../../../src/components/button';
+// import { SVGEther } from '../../../src/icons/ether';
 
 const OwnedAudiobookPage = () => {
-  const [highlight, triggerHighlight] = useState(false);
-  const [purchaseInProgress, setPurchaseInProgress] = useState(false);
-  const [giftInProgress, setGiftInProgress] = useState(false);
-  const [rerender, triggerRerender] = useState(false);
   const [localAudiobookData, setLocalAudiobookData] = useState<IEntireAudiobookData>();
+
+  const [purchaseInProgress, setPurchaseInProgress] = useState(false);
+
+  const [giftInProgress, setGiftInProgress] = useState(false);
+  const [giftApiInProgress, setGiftApiInProgress] = useState(false);
+
+  const [highlight, triggerHighlight] = useState(false);
+  const [rerender, triggerRerender] = useState(false);
+  const [recepientAddress, setRecepientAddress] = useState('');
 
   const {
     query: { Id },
@@ -47,14 +53,14 @@ const OwnedAudiobookPage = () => {
   };
 
   const handleGiftAudiobook = async () => {
-    if (!dropBundleModule) return;
+    if (!dropBundleModule || !recepientAddress) return;
 
     try {
-      setGiftInProgress(true);
+      setGiftApiInProgress(true);
 
       await giftAudiobook(
         dropBundleModule,
-        '0x0585Ab27743a0C0248166Ef169372B12f7C24C45',
+        recepientAddress,
         // '0x9ea3F80FC96f67CE06b2f4439625C4257c685aA8',
         Id as string,
         1,
@@ -70,6 +76,8 @@ const OwnedAudiobookPage = () => {
         position: 'bottom-right',
       });
     } finally {
+      setRecepientAddress('');
+      setGiftApiInProgress(false);
       setGiftInProgress(false);
     }
   };
@@ -224,10 +232,10 @@ const OwnedAudiobookPage = () => {
                 className="flex items-center justify-center w-full h-full gap-2 text-sm border-r group hover:border-transparent hover:font-bold hover:text-white hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
-                <span>
+                {/* <span>
                   <SVGEther className=" fill-gray-500 group-hover:fill-white" />
-                </span>
-                <span> {`${localAudiobookData.price}`}</span>
+                </span> */}
+                <span> {`ETH ${localAudiobookData.price}`}</span>
                 <span>Purchase</span>
               </button>
 
@@ -242,7 +250,7 @@ const OwnedAudiobookPage = () => {
                   </button>
                   <button
                     className="grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500"
-                    onClick={handleGiftAudiobook}
+                    onClick={() => setGiftInProgress(true)}
                   >
                     Gift
                   </button>
@@ -266,8 +274,32 @@ const OwnedAudiobookPage = () => {
       {giftInProgress && (
         <Modal
           title="Gifting Audiobook"
-          loading
-          description="You will be prompted to authorize 1 transactions."
+          loading={giftApiInProgress}
+          description={
+            <div className="flex items-center w-full gap-4 mt-4">
+              <input
+                type="text"
+                className="h-10 px-4 text-lg font-semibold text-gray-700 rounded shadow grow ring-2 ring-offset-2 ring-gray-300 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Recepient address"
+                disabled={giftApiInProgress}
+                value={recepientAddress}
+                onChange={(e) => setRecepientAddress(e.target.value)}
+              />
+              <Button variant="primary" disabled={giftApiInProgress} onClick={handleGiftAudiobook}>
+                Gift
+              </Button>
+              <Button
+                variant="primary"
+                disabled={giftApiInProgress}
+                onClick={() => {
+                  setRecepientAddress('');
+                  setGiftInProgress(false);
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          }
         />
       )}
     </div>
