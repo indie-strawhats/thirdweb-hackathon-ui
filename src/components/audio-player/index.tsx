@@ -67,7 +67,7 @@ const CustomAudioPlayer = () => {
           </div>
           <div className="self-start">
             <BiX
-              className="text-5xl text-indigo-500 transition-transform cursor-pointer hover:scale-125"
+              className="text-3xl text-indigo-500 transition-transform cursor-pointer hover:scale-125"
               onClick={() => {
                 setIsPlaying(false);
                 setIsVisible(false);
@@ -78,7 +78,7 @@ const CustomAudioPlayer = () => {
         <div className="flex items-center w-full">
           {!isPlaying ? (
             <BiPlayCircle
-              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
+              className="ml-5 text-4xl text-indigo-500 cursor-pointer animate-pulse"
               onClick={() => {
                 setIsPlaying(true);
               }}
@@ -113,32 +113,34 @@ const CustomAudioPlayer = () => {
               <p>{secondsToMinutes(audioDuration).toFixed(2)}</p>
             </div>
           </div>
-          {currentVolume ? (
-            <BiVolumeFull
-              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
-              onClick={() => {
-                setBeforeMuteVolume(currentVolume);
-                setcurrentVolume(0.0);
+          <div className='flex items-center gap-2 ml-4'>
+            {currentVolume ? (
+              <BiVolumeFull
+                className="ml-5 text-2xl text-indigo-500 cursor-pointer"
+                onClick={() => {
+                  setBeforeMuteVolume(currentVolume);
+                  setcurrentVolume(0.0);
+                }}
+              />
+            ) : (
+              <BiVolumeMute
+                className="ml-5 text-2xl text-indigo-500 cursor-pointer"
+                onClick={() => {
+                  setcurrentVolume(beforeMuteVolume);
+                }}
+              />
+            )}
+            <input
+              type="range"
+              value={currentVolume}
+              min={0}
+              max={1}
+              step={0.1}
+              onChange={(e) => {
+                setcurrentVolume(parseFloat(e.target.value));
               }}
             />
-          ) : (
-            <BiVolumeMute
-              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
-              onClick={() => {
-                setcurrentVolume(beforeMuteVolume);
-              }}
-            />
-          )}
-          <input
-            type="range"
-            value={currentVolume}
-            min={0}
-            max={1}
-            step={0.1}
-            onChange={(e) => {
-              setcurrentVolume(parseFloat(e.target.value));
-            }}
-          />
+          </div>
         </div>
       </div>
     </div>
