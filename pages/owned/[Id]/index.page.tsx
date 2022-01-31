@@ -11,6 +11,7 @@ import PageLayout from '../../../src/layouts/page-layout';
 import { toast } from 'react-toastify';
 import Modal from '../../../src/components/modal';
 import { IEntireAudiobookData } from '../../../src/models/audiobook';
+import { SVGEther } from '../../../src/icons/ether';
 
 const OwnedAudiobookPage = () => {
   const [highlight, triggerHighlight] = useState(false);
@@ -158,7 +159,9 @@ const OwnedAudiobookPage = () => {
                 <h1 className="text-3xl font-semibold">#{localAudiobookData.id}</h1>
 
                 <p className="px-2 text-white bg-[#fff2] rounded-full">
-                  {`Owned - ${localAudiobookData.balance}`}
+                  {localAudiobookData.balance > 0
+                    ? `You own ${localAudiobookData.balance}`
+                    : 'Not purchased'}
                 </p>
               </div>
             </div>
@@ -218,10 +221,14 @@ const OwnedAudiobookPage = () => {
             </div>
             <div className="flex border-t h-14">
               <button
-                className="grid w-full h-full text-sm border-r hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500"
+                className="flex items-center justify-center w-full h-full gap-2 text-sm border-r group hover:border-transparent hover:font-bold hover:text-white hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
-                Purchase @ {`${localAudiobookData.currencyUnit} : ${localAudiobookData.price}`}
+                <span>
+                  <SVGEther className=" fill-gray-500 group-hover:fill-white" />
+                </span>
+                <span> {`${localAudiobookData.price}`}</span>
+                <span>Purchase</span>
               </button>
 
               {localAudiobookData.balance > 0 && (

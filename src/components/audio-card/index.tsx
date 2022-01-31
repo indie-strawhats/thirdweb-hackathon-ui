@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { FC, useState } from 'react';
+import { SVGEther } from '../../icons/ether';
 
 export interface AudioCardProps {
   id: string;
@@ -33,7 +34,7 @@ export const AudioCard: FC<AudioCardProps> = ({
   className,
 }) => {
   const renderBalance = () => {
-    return `owned : ${balance}`;
+    return `You own ${balance}`;
   };
 
   const [cardBgColor, setCardBgColor] = useState();
@@ -77,7 +78,10 @@ export const AudioCard: FC<AudioCardProps> = ({
         >
           {isShowPriceEnable ? (
             <>
-              <span className="font-semibold group-hover:hidden">{`${price} ${currencyUnit}`}</span>
+              <span className="flex flex-row items-center gap-2 font-semibold group-hover:hidden">
+                <SVGEther className=" fill-gray-500" />
+                {`${price} `}
+              </span>
               <span className="hidden group-hover:block">{buttonName}</span>
             </>
           ) : (
