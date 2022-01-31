@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AudioPlayerContext } from '../../providers/audio-player';
 import { secondsToMinutes } from '../../helpers/utils';
-import { BiX, BiPlayCircle, BiPauseCircle } from 'react-icons/bi';
+import { BiX, BiPlayCircle, BiPauseCircle, BiVolumeFull, BiVolumeMute } from 'react-icons/bi';
 import Image from 'next/image';
 
 const CustomAudioPlayer = () => {
@@ -10,8 +10,14 @@ const CustomAudioPlayer = () => {
   const [audioDuration, setAudioDuration] = useState<number>(0);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0.0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentVolume, setcurrentVolume] = useState<number>(1.0);
+  const [beforeMuteVolume, setBeforeMuteVolume] = useState<number>(1.0);
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(audiobookData.fileUrl));
+
+  useEffect(() => {
+    audioRef.current.volume = currentVolume;
+  });
 
   useEffect(() => {
     if (isPlaying) {
@@ -107,6 +113,32 @@ const CustomAudioPlayer = () => {
               <p>{secondsToMinutes(audioDuration).toFixed(2)}</p>
             </div>
           </div>
+          {currentVolume ? (
+            <BiVolumeFull
+              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
+              onClick={() => {
+                setBeforeMuteVolume(currentVolume);
+                setcurrentVolume(0.0);
+              }}
+            />
+          ) : (
+            <BiVolumeMute
+              className="ml-5 text-4xl text-indigo-500 cursor-pointer"
+              onClick={() => {
+                setcurrentVolume(beforeMuteVolume);
+              }}
+            />
+          )}
+          <input
+            type="range"
+            value={currentVolume}
+            min={0}
+            max={1}
+            step={0.1}
+            onChange={(e) => {
+              setcurrentVolume(parseFloat(e.target.value));
+            }}
+          />
         </div>
       </div>
     </div>
