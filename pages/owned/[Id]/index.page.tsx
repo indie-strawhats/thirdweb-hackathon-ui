@@ -155,9 +155,7 @@ const OwnedAudiobookPage = () => {
           >
             <div className="h-64 px-4 pt-2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
               <div className="flex items-center justify-between text-white">
-                <h1 className="text-3xl font-semibold hover:cursor-pointer">
-                  #{localAudiobookData.id}
-                </h1>
+                <h1 className="text-3xl font-semibold">#{localAudiobookData.id}</h1>
 
                 <p className="px-2 text-white bg-[#fff2] rounded-full">
                   {`Owned - ${localAudiobookData.balance}`}
