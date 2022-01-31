@@ -1,7 +1,6 @@
 import { ConnectWallet } from '@3rdweb/react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Section from '../src/components/landing/section';
@@ -60,19 +59,19 @@ const LandingPage: NextPage = () => {
         <div className="flex flex-col w-full h-full gap-32">
           <Section
             image={'/images/happy-music.svg'}
-            sectionHeading="Play from massive library of Hand-Picked Audio books"
-            textContent="Listen to the stories you love, and discover new stories."
+            sectionHeading="Play from massive library."
+            textContent="Listen to the stories you love, and discover more from hand-picked collection."
           />
           <Section
             image={'/images/yoga.svg'}
-            sectionHeading="Stories to expand our horizons & enrich our souls"
-            textContent="Stories open a door for us … We can travel to places we would never go, live in times we would never know, and feel joys we would have never found."
+            sectionHeading="Stories that expand perspective."
+            textContent="Stories open a door for us. We can travel to places we would never go, live in times we would never know, and feel joys we would have never found."
             imagePosition="right"
           />
           <Section
             image={'/images/gift-to-love.svg'}
-            sectionHeading="Spread the love by Gifting"
-            textContent="Gift your favorite storybook to the someone you love most."
+            sectionHeading="Sharing is Caring."
+            textContent="Gift your favorite storybook to your loved ones."
           />
         </div>
       </div>
