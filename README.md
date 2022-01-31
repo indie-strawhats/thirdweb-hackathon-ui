@@ -53,9 +53,12 @@ If you want to use your own bundle drop module, then please replace the address 
 
 We are using RinkeBy TestNet. If you want to use any other chain or network, then add the chain ID(s) in `pages/_app.page.tsx`
 
-## Authors
+## Author
 
 -   [Indrajeet Nikam](https://github.com/indrajitbnikam)
+
+## Contributors
+
 -   [Vishal Shingare](https://github.com/vishal-shingare)
 -   [Ketan Shinde](https://github.com/KetanShindePro)
 -   [Shubham Tarade](https://github.com/coder-shanks)
