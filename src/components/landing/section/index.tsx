@@ -20,7 +20,7 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
         } flex-col items-center px-5 mx-auto gap-20`}
       >
         <div className="w-5/6 h-full md:w-1/2">
-          <ColorBlobWrapper>
+          <ColorBlobWrapper blobSize="large">
             <div className="rounded">
               <Image
                 width={'100%'}
@@ -39,7 +39,7 @@ const Section: FC<SectionProps> = ({ image, sectionHeading, textContent, imagePo
             fontFamily: 'Inter, sans-serif',
           }}
         >
-          <h1 className="mb-4 text-5xl font-semibold text-indigo-500">{sectionHeading}</h1>
+          <h1 className="pb-4 text-5xl font-semibold glowing-text">{sectionHeading}</h1>
           <p className="mb-8 text-xl leading-relaxed">{textContent}</p>
         </div>
       </div>
