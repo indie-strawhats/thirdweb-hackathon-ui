@@ -57,7 +57,7 @@ const OwnedPage = () => {
           <LoadingAudioCard />
         </div>
       );
-    } else if (!loading && filteredAudiobooks.length === 0) {
+    } else if (purchasedAudiobooks.length !== 0 && filteredAudiobooks.length === 0) {
       return (
         <div className="grid w-full p-8 place-content-center">
           <div className="w-[400px]">

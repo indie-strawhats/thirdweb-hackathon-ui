@@ -255,12 +255,12 @@ const OwnedAudiobookPage = () => {
             </div>
             <div className="flex border-t h-14">
               <button
-                className="flex items-center justify-center w-full h-full gap-2 border-l group hover:border-transparent hover:font-bold hover:bg-indigo-500"
+                className="flex items-center justify-center w-full h-full gap-2 group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
                 <FaEthereum className="text-xl fill-gray-500 group-hover:fill-white" />
                 <span className="text-sm group-hover:text-white">
-                  {`ETH ${localAudiobookData.price}`}
+                  {`${localAudiobookData.price}`}
                 </span>
                 <span className="text-sm group-hover:text-white">Purchase</span>
               </button>
@@ -268,7 +268,7 @@ const OwnedAudiobookPage = () => {
               {localAudiobookData.balance > 0 && (
                 <>
                   <button
-                    className="flex items-center justify-center w-full h-full gap-2 group hover:border-transparent hover:font-bold hover:bg-indigo-500"
+                    className="flex items-center justify-center w-full h-full gap-2 border-x group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                     onClick={handlePlay}
                     disabled={localAudiobookData.balance === 0}
                   >
@@ -276,7 +276,7 @@ const OwnedAudiobookPage = () => {
                     <span className="text-sm group-hover:text-white">Play</span>
                   </button>
                   <button
-                    className="flex items-center justify-center w-full h-full gap-2 border-r group hover:border-transparent hover:font-bold hover:bg-indigo-500"
+                    className="flex items-center justify-center w-full h-full gap-2 group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                     onClick={() => setGiftInProgress(true)}
                   >
                     <IoGift className="text-xl fill-gray-500 group-hover:fill-white" />
