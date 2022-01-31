@@ -1,13 +1,17 @@
-import { Transition } from '@headlessui/react';
 import React, { useContext, useEffect, useState } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
+import { Transition } from '@headlessui/react';
+import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
+
+// Components
 import Button from '../../components/button';
 import Header from '../../components/header';
 import Modal from '../../components/modal';
-import { AudioPlayerContext } from '../../providers/audio-player';
 import CustomAudioPlayer from '../../components/audio-player';
 
-import { useWeb3, useSwitchNetwork } from '@3rdweb/hooks';
+// Providers
+import { AudioPlayerContext } from '../../providers/audio-player';
+
+// Misc
 import { RinkeByChainID } from '../../constants';
 
 const PageLayout = ({ children }: any) => {

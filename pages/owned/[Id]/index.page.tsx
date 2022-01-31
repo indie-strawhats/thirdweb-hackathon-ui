@@ -1,19 +1,28 @@
-import { NextPage } from 'next';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { ReactElement, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { AppWeb3Context } from '../../../src/providers/app-web3';
-import { getAudiobook, giftAudiobook, purchaseAudiobook } from '../../../src/services/web3';
-import { AudioPlayerContext } from '../../../src/providers/audio-player';
-import { useWeb3 } from '@3rdweb/hooks';
-import PageLayout from '../../../src/layouts/page-layout';
-import { toast } from 'react-toastify';
-import Modal from '../../../src/components/modal';
-import { IEntireAudiobookData } from '../../../src/models/audiobook';
-import Button from '../../../src/components/button';
+import { useRouter } from 'next/router';
 import { FaEthereum } from 'react-icons/fa';
 import { SiApplemusic } from 'react-icons/si';
+import { toast } from 'react-toastify';
+import { useWeb3 } from '@3rdweb/hooks';
+
+// Components
+import Button from '../../../src/components/button';
+import Modal from '../../../src/components/modal';
+
+// Layouts
+import PageLayout from '../../../src/layouts/page-layout';
+
+// Providers
+import { AppWeb3Context } from '../../../src/providers/app-web3';
+import { AudioPlayerContext } from '../../../src/providers/audio-player';
+
+// Services
+import { getAudiobook, giftAudiobook, purchaseAudiobook } from '../../../src/services/web3';
+
+// Models
+import { IEntireAudiobookData } from '../../../src/models/audiobook';
 
 const OwnedAudiobookPage = () => {
   const [localAudiobookData, setLocalAudiobookData] = useState<IEntireAudiobookData>();
