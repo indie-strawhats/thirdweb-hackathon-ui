@@ -27,6 +27,7 @@ const PlayCard: FC<PlayCardProps> = ({ data, className = '', onPurchase }) => {
   return (
     <AudioCard
       {...data}
+      isShowPriceEnable={false}
       className={className}
       nameHandle={handleName}
       buttonName="Play"
