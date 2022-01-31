@@ -13,6 +13,7 @@ import Modal from '../../../src/components/modal';
 import { IEntireAudiobookData } from '../../../src/models/audiobook';
 import Button from '../../../src/components/button';
 import { FaEthereum } from 'react-icons/fa';
+import { IoPlay, IoGift } from 'react-icons/io5';
 import { SiApplemusic } from 'react-icons/si';
 
 const OwnedAudiobookPage = () => {
@@ -245,30 +246,32 @@ const OwnedAudiobookPage = () => {
             </div>
             <div className="flex border-t h-14">
               <button
-                className="flex items-center justify-center w-full h-full gap-2 text-sm border-r group hover:border-transparent hover:font-bold hover:text-white hover:bg-indigo-500"
+                className="flex items-center justify-center w-full h-full gap-2 border-l group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                 onClick={handlePurchase}
               >
-                <span>
-                  <FaEthereum className=" fill-gray-500 group-hover:fill-white" />
+                <FaEthereum className="text-xl fill-gray-500 group-hover:fill-white" />
+                <span className="text-sm group-hover:text-white">
+                  {`ETH ${localAudiobookData.price}`}
                 </span>
-                <span> {`${localAudiobookData.price}`}</span>
-                <span>Purchase</span>
+                <span className="text-sm group-hover:text-white">Purchase</span>
               </button>
 
               {localAudiobookData.balance > 0 && (
                 <>
                   <button
-                    className="grid w-full h-full text-sm hover:font-bold hover:border-transparent place-content-center hover:text-white hover:bg-indigo-500"
+                    className="flex items-center justify-center w-full h-full gap-2 group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                     onClick={handlePlay}
                     disabled={localAudiobookData.balance === 0}
                   >
-                    Play
+                    <IoPlay className="text-xl fill-gray-500 group-hover:fill-white" />
+                    <span className="text-sm group-hover:text-white">Play</span>
                   </button>
                   <button
-                    className="grid w-full h-full text-sm border-l hover:border-transparent hover:font-bold place-content-center hover:text-white hover:bg-indigo-500"
+                    className="flex items-center justify-center w-full h-full gap-2 border-r group hover:border-transparent hover:font-bold hover:bg-indigo-500"
                     onClick={() => setGiftInProgress(true)}
                   >
-                    Gift
+                    <IoGift className="text-xl fill-gray-500 group-hover:fill-white" />
+                    <span className="text-sm group-hover:text-white">Gift</span>
                   </button>
                 </>
               )}
